@@ -1,0 +1,94 @@
+{
+  "main": {
+    "id": "992b7772e2fbe0c9",
+    "type": "split",
+    "children": [
+      {
+        "id": "d25d60678ab6e738",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "cmake 添加第三方库.md",
+            "mode": "preview",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6b884a43edff02cf",
+    "type": "split",
+    "children": [
+      {
+        "id": "52f5fe77be64f9c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "390c4c4fe598b650",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "1372ec3193df0b56",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "64f5da6ae8e936c6",
+    "type": "split",
+    "children": [
+      {
+        "id": "7f23576958f42788",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "24e4ad9e0fcca59f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "cmake 添加第三方库.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "d25d60678ab6e738",
+  "lastOpenFiles": [
+    "Thread.md"
+  ]
+}
