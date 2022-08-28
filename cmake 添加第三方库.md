@@ -1,11 +1,12 @@
-使用FetchContent的步骤:
+## 使用FetchContent
+步骤:
 
-```bash
+
  1. 在cmake文件写入  include(FetchContent) ，具体看完整实例.
  2. 使用FetchContent_Declare(三方库) 获取项目。可以是一个URL也可以是一个Git仓库。
  3. 使用FetchContent_MakeAvailable(三方库) 获取我们需要库,然后引入项目。
  4. 使用 target_link_libraries(项目名PRIVATE 三方库::三方库)
-```
+
 
 ```cmake
 include(FetchContent)  
@@ -14,4 +15,29 @@ FetchContent_Declare(fmt
 FetchContent_MakeAvailable(fmt)
 
 target_link_libraries(project PRIVATE fmt)
+```
+
+```cmake
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        703bd9caab50b139428cea1aaff9974ebee5742e # release-1.10.0
+)
+FetchContent_Declare(
+  myCompanyIcons
+  URL      https://intranet.mycompany.com/assets/iconset_1.12.tar.gz
+  URL_HASH MD5=5588a7b18261c20068beabfb4f530b87
+)
+
+FetchContent_MakeAvailable(googletest myCompanyIcons)
+```
+
+
+## 使用add_subdirectory
+首先将fmt下载到工程文件夹中,然后`add_subdirectory`包含所在路径
+```cmake
+add_subdirectory(fmt EXCLUDE_FROM_ALL) # 表示将这个项目移除出 make 列表，在默认编译的时候，不会被编译
+
+add_executable(${PROJECT_NAME} main.cpp )
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
 ```

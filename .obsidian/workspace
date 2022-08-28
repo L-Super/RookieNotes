@@ -9,8 +9,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "cmake 添加第三方库.md",
-            "mode": "preview",
+            "file": "README.md",
+            "mode": "source",
             "source": false
           }
         }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "cmake 添加第三方库.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,9 +87,9 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "d25d60678ab6e738",
+  "active": "390c4c4fe598b650",
   "lastOpenFiles": [
-    "Thread.md",
-    "cmake 添加第三方库.md"
+    "cmake 添加第三方库.md",
+    "Thread.md"
   ]
 }
