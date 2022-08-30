@@ -1,5 +1,6 @@
 {
   "cssTheme": "California Coast",
   "theme": "moonstone",
-  "monospaceFontFamily": "Lucida Console"
+  "monospaceFontFamily": "Lucida Console",
+  "translucency": true
 }
