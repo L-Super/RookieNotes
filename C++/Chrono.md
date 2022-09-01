@@ -76,4 +76,28 @@ std::chrono::duration<int, std::ratio<1,5>> d2(1);//1 tick of1/5 second
 
 `d1 + d2`获得的是“8个$\frac{1}{15}$秒”，而且`d1 < d2`会导致false
 
+duration提供的其他操作和类型
+
 ![](../images/Pasted%20image%2020220901135156.png)
+
+隐式转换至一个“较精准的单位类型”永远可行。转换至“较粗糙的单位类型”就不可行了，因为这将有可能遗失信息。例如将一个42 010毫秒整数值转换为秒，结果是42，意味着这个duration中的10个毫秒不见了。但你还是可以使用`duration_cast`强迫执行这样的转换
+
+```cpp
+std::chrono::seconds sec(55);
+std::chrono::minutes m1 = sec;//ERROR
+std::chrono::minutes m2 = std::chrono::duration_cast<std::chrono::minutes>(sec);//OK
+```
+
+## Clock（时钟）和Timepoint（时间点）
+
+Timepoint和clock的关系确实有点微妙：
+
++ Clock定义出一个epoch（起始点）和一个tick周期。例如某个clock也许定义tick周期为毫秒，起始点是UNIX epoch（1970年1月1日），或定义tick周期为纳秒，起始点是程序开始时间。此外，clock还提供一个类型给“与此clock关联”的任何timepoint使用。
+
+Clock提供的函数now（）可以产出一个代表“现在时刻”的timepoint对象。
+
++ Timepoint表现出某个特定时间点，关联至某个clock的某个正值或负值duration。因此，如果duration是10天而其所关联的clock epoch是“1970年1月1日”，那么这个timepoint表现的就是1970年1月11日。Timepoint提供的能力包括：产出epoch、产出“与其clock相应”的所有timepoint中的最小值和最大值，以及timepoint的各种算术运算。
+
+### Clock（时钟）
+
+![](../images/Pasted%20image%2020220901140755.png)
