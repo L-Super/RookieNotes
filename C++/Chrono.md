@@ -25,9 +25,30 @@ std::chrono::duration<double, std::ratio<1,1000>> oneMillisecond(1);
 
 其中第一个template实参定义tick的类型，可有可无的第二个template实参定义以秒计的单位类型。因此第一行以秒为单位，第二行以分钟（$\frac{60}{1}$ 秒）为单位，第三行以毫秒（$\frac{1}{1000}$）为单位。
 
+标准库提供了以下定义：
 
+```cpp
+namespace std
+{
+   namespace chrono
+   {
+      typedef duration<signed int-type >= 64 bits, nano> nanoseconds;
+      typedef duration<signed int-type >= 55 bits, micro> microseconds;
+      typedef duration<signed int-type >= 45 bits, milli> milliseconds;
+      typedef duration<signed int-type >= 35 bits> seconds;
+      typedef duration<signed int-type >= 29 bits, ratio<60>> minutes;
+      typedef duration<signed int-type >= 23 bits, ratio<3600>> hours;
+   }
+}
+```
 
+这样就可以轻松指定时间段
 
+```cpp
+std::chrono::seconds twentySeconds(20);
+std::chrono::hours aDay (24);
+std::chrono::milliseconds oneMillisecond(1);
+```
 
 
 
