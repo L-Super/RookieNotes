@@ -110,7 +110,7 @@ unit_test.cpp
     -   Google Test：1.8.1
     -   lcov：lcov version 1.12
 
-# 关于CMake
+# 关于[CMake](cmake.md)
 
 为了简化编译的过程，这里使用CMake作为编译工具。关于CMake的更多内容请参见请官网：[https://cmake.org](https://cmake.org/)。
 
