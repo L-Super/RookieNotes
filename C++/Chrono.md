@@ -12,3 +12,11 @@ Chrono程序库的设计，是希望能够处理“timer和clock在不同系统�
 
 + Timepoint的概念其实是以某个clock（时钟）为参数。Clock是个对象，定义timepoint的epoch（起点；重要纪元）。不同的clock有着不同的epoch。一般而言，当操作函数处理多个timepoint，例如处理两个timepoint之间的差距时，必须采用相同的epoch/clock。任何clock都提供便捷函数用来产出现下（当前）的timepoint。
 ![](../images/Pasted%20image%2020220901105717.png)
+
+## Duration（时间段）
+
+Duration是一个数值（表现tick个数）和一个分数（表现时间单位，以秒计）的组合。其中的分数由class ratio描述。
+
+
+
+其中第一个template实参定义tick的类型，可有可无的第二个template实参定义以秒计的单位类型。因此第一行以秒为单位，第二行以分钟（$\frac{abc}{xyz}$）为单位，第三行以毫秒（[插图]）为单位。
