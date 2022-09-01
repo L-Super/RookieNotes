@@ -100,4 +100,56 @@ Clock提供的函数now（）可以产出一个代表“现在时刻”的timepo
 
 ### Clock（时钟）
 
+clock提供的类型定义和static成员。
+
 ![](../images/Pasted%20image%2020220901140755.png)
+
+C++标准库提供了三个clock，每一个都具备上述接口：
+
+1. **system_clock**，它所表现的timepoint将关联至现行系统的即时时钟（real-time clock）。这个clock提供便捷函数to_time_t（）和from_time_t（），允许我们在timepoint和“C的系统时间类型” time_t之间转换，这意味着你可转换至/自日历时间。
+2. **steady_clock**，它保证绝不会被调整。因此当实际时间流逝，其timepoint值绝不会减少，而且这些timepoint相对于真实时间都有稳定的前进速率。
+3. **high_resolution_clock**，它表现的是当前系统中带有最短tick周期的clock。`high_resolution_clock` 在不同标准库（gcc,MSVC,clang）实现之间实现并不一致，尽量不要使用。通常它只是 [std::chrono::steady_clock](https://zh.cppreference.com/w/cpp/chrono/steady_clock) 或 [std::chrono::system_clock](https://zh.cppreference.com/w/cpp/chrono/system_clock) 的别名。
+
+函数调用执行时间:
+
+```cpp
+long fibonacci(unsigned n)
+{
+    if (n < 2) return n;
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+ 
+int main()
+{
+    auto start = std::chrono::steady_clock::now();
+    std::cout << "f(42) = " << fibonacci(42) << '\n';
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = std::chrono::duration<double>(end-start);
+ 
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+}
+```
+
+## Timepoint（时间点）
+
+夹带（搭配）那些clock，甚至用户自定义的clock，你将可以处理timepoint。
+
+Class time_point提供了相应接口，以一个clock为参数：
+
+```cpp
+namespace std
+{
+   namespace chrono
+   {
+      template<typename Clock, typename Duration = typename Clock::duration>
+      class time_point;
+   }
+}
+```
+
+下面四个特定的timepoint扮演了特殊角色：
+
+1. Epoch，由任何clock的time_point的default构造函数产出。
+2. Current time，由任何clock的static成员函数now（）产出。
+3. Minimum timepoint，由任何clock的time_point的static成员函数min（）产出。
+4. Maximum timepoint，由任何clock的time_point的static成员函数max（）产出。
