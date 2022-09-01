@@ -50,5 +50,10 @@ std::chrono::hours aDay (24);
 std::chrono::milliseconds oneMillisecond(1);
 ```
 
+### 算术运算
 
+操作duration：
 
++ 可以计算两个duration的和、差、积或商。
++ 可以加减tick，或加减其他duration。
++ 可以比较两个duration的大小。
