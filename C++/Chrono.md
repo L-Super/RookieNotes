@@ -23,7 +23,7 @@ std::chrono::duration<double, std::ratio<60>> halfAMinute(0.5);
 std::chrono::duration<double, std::ratio<1,1000>> oneMillisecond(1);
 ```
 
-其中第一个template实参定义tick的类型，可有可无的第二个template实参定义以秒计的单位类型。因此第一行以秒为单位，第二行以分钟（$\frac{60}{1}$ 秒）为单位，第三行以毫秒（$\frac{1}{1000}$）为单位。
+其中第一个template实参定义tick的类型，可有可无的第二个template实参定义以秒计的单位类型。因此第一行以秒为单位，第二行以分钟（$\frac{60}{1}$ 秒）为单位，第三行以毫秒（$\frac{1}{1000}$ 秒）为单位。
 
 标准库提供了以下定义：
 
