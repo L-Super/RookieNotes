@@ -57,3 +57,23 @@ std::chrono::milliseconds oneMillisecond(1);
 + 可以计算两个duration的和、差、积或商。
 + 可以加减tick，或加减其他duration。
 + 可以比较两个duration的大小。
+
+这里的重点是，运算所涉及的两个duration的单位类型可以不同。
+
+```cpp
+chrono::seconds d1(42);//42s
+chrono::milliseconds d2(10);//10min
+```
+
+`d1 - d2`结果是“拥有41 990个毫秒（$\frac{1}{1000}$ 秒）单位”的一个duration。
+
+假设存在以下二式（形式更具一般性）：
+
+```cpp
+std::chrono::duration<int, std::ratio<1,3>> d1(1);//1 tick of1/3 second
+std::chrono::duration<int, std::ratio<1,5>> d2(1);//1 tick of1/5 second
+```
+
+`d1 + d2`获得的是“8个$\frac{1}{15}$秒”，而且`d1 < d2`会导致false
+
+![](../images/Pasted%20image%2020220901135156.png)
