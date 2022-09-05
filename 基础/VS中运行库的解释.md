@@ -5,11 +5,11 @@
 
 大型项目中必须要求所有组件和第三方库的运行时库是统一的，当引用的库和当前项目设置的运行库不一致时，将会出现LNK2005，LNK2038错误。
 
- /MT和/MTd（静态运行时库）表示采用多线程[[运行时库就是C Run-Time Library | CRT]]库的静态lib版本。该选项会在编译时将C和C++运行时库（LIBCMT.LIB、LIBC.LIB）集成到程序中。该选项生成的可执行文件运行时不需要运行时库dll。
- 
+ /MT和/MTd（静态运行时库）表示采用多线程 CRT[^1] 库的静态lib版本。该选项会在编译时将C和C++运行时库（LIBCMT.LIB、LIBC.LIB）集成到程序中。该选项生成的可执行文件运行时不需要运行时库dll。
+
  /MD和/MDd（动态运行时库）表示采用多线程CRT库的动态dll版本，应用程序使用运行时库特定版本的多线程DLL。链接时将动态的加载对应的LMSVCRxx.DLL，在运行时要求安装了相应版本的VC运行时库可再发行组件包（当然把这些运行时库dll放在应用程序目录下也是可以的）。 因/MD和/MDd方式不会将运行时库链接到可执行文件内部，可有效减少可执行文件大小。
  缺点：在系统没有对应DLL时程序无法运行（需添加MSVCPxx.DLL、MSVCRxx.DLL）。
- 
- > 运行时库就是C Run-Time Library
- > Standard C++ Library：包括了C run- time library 和 STL。
- 
+
+ > [^1]: 运行时库就是C Run-Time Library
+ > [^2]: Standard C++ Library：包括了C run- time library 和 STL。
+
