@@ -1,5 +1,11 @@
 当写好一个程序后，可以使用inno setup制作安装包。
 
+官方默认英文版，如需中文版需要在官网下载中文包，然后放到`Program Files (x86)\Inno Setup 6\Languages`下，在iss脚本里替换为以下代码即可。
+```
+[Languages]
+Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+```
+
 inno setup中文文档 [ISetup](ISetup.chm)
 安装包脚本可参考 [package](inno-setup-package-script.iss)
 
