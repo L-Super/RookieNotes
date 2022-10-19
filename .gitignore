@@ -1,2 +1,3 @@
 # 忽略缓存，避免冲突
 .obsidian/workspace
+.obsidian/workspace.json

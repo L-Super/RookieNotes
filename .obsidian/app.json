@@ -4,5 +4,6 @@
   "showLineNumber": true,
   "alwaysUpdateLinks": true,
   "attachmentFolderPath": "images",
-  "newLinkFormat": "relative"
+  "newLinkFormat": "relative",
+  "showInlineTitle": false
 }
