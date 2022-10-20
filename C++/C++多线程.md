@@ -10,7 +10,7 @@ std::thread my_thread(do_some_work);
 ```
 
 也可使用类对象
-```
+```c++
 class background_task
 {
 public:

@@ -1,5 +1,6 @@
 [
   "obsidian-git",
   "obsidian-excalidraw-plugin",
-  "obsidian-style-settings"
+  "obsidian-style-settings",
+  "cm-editor-syntax-highlight-obsidian"
 ]
