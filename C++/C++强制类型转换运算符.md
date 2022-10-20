@@ -29,10 +29,10 @@ const string s = "Inception";
 string& p = const_cast <string&> (s);
 string* ps = const_cast <string*> (&s);  // &s 的类型是 const string*
 
- const char* cstr = "BDEF"; 
- string str = "str";
- char *str = const_cast<char *>(cstr); //const char* 转char*
- chat* str1 = const_cast<char*>(str.c_str());	//string转char*
+const char* cstr = "BDEF"; 
+string str = "str";
+char *str = const_cast<char *>(cstr); //const char* 转char*
+chat* str1 = const_cast<char*>(str.c_str());	//string转char*
 ```
 
 # dynamic_cast
