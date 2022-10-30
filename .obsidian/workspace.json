@@ -1,19 +1,19 @@
 {
   "main": {
-    "id": "7553687a35dca506",
+    "id": "5adebfc8b907a8fe",
     "type": "split",
     "children": [
       {
-        "id": "2543395b7ade1790",
+        "id": "03c2fbc9362a31a1",
         "type": "tabs",
         "children": [
           {
-            "id": "c96682c9930deb45",
+            "id": "4d809a7f07c3864e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C++/C++多线程.md",
+                "file": "CMake/Linux 安装最新版本CMake.md",
                 "mode": "preview",
                 "source": false
               }
@@ -25,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "21ca03fa195cde8e",
+    "id": "2f96df57dce86226",
     "type": "split",
     "children": [
       {
-        "id": "882872c43c887152",
+        "id": "a9b7277188ea509d",
         "type": "tabs",
         "children": [
           {
-            "id": "8b0e30adedecd56d",
+            "id": "618b8b5700bf0219",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,7 +43,7 @@
             }
           },
           {
-            "id": "8f310b2ee8649f1d",
+            "id": "e6182cf6dabea205",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -58,21 +58,11 @@
             }
           },
           {
-            "id": "ce4c13361c38907c",
+            "id": "1e569746e1803fe6",
             "type": "leaf",
             "state": {
               "type": "starred",
               "state": {}
-            }
-          },
-          {
-            "id": "20b9cf4614b43214",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "C++/C++多线程.md"
-              }
             }
           }
         ]
@@ -82,20 +72,20 @@
     "width": 300
   },
   "right": {
-    "id": "be9155c3a91cc28c",
+    "id": "1ff84bfc59967002",
     "type": "split",
     "children": [
       {
-        "id": "c79066d6f60f5090",
+        "id": "9259087f622b1002",
         "type": "tabs",
         "children": [
           {
-            "id": "3702ea46431cfe3d",
+            "id": "b5170b4f0377d92d",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "C++/C++多线程.md",
+                "file": "CMake/Linux 安装最新版本CMake.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,19 +97,19 @@
             }
           },
           {
-            "id": "aacc9b8e6516f9af",
+            "id": "a40c58f63fd76cf4",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "C++/C++多线程.md",
+                "file": "CMake/Linux 安装最新版本CMake.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "35c6cc61e9ff76e9",
+            "id": "f98e3b2277f61350",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -130,12 +120,12 @@
             }
           },
           {
-            "id": "d40a88bf1060db50",
+            "id": "1a6a0ed792bf0065",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "C++/C++多线程.md"
+                "file": "CMake/Linux 安装最新版本CMake.md"
               }
             }
           }
@@ -146,20 +136,8 @@
     "width": 300,
     "collapsed": true
   },
-  "ribbon": {
-    "mostRecentAction": ""
-  },
-  "active": "c96682c9930deb45",
+  "active": "4d809a7f07c3864e",
   "lastOpenFiles": [
-    "C++/Chrono.md",
-    "C++/C++多线程.md",
-    "C++/C++强制类型转换运算符.md",
-    "C++/延时计时.md",
-    "C++/atomic 赋值操作是否为原子操作.md",
-    "C++/控制台字符集编码.md",
-    "CMake/添加第三方库.md",
-    "基础/程序发布/inno setup发布程序.md",
-    "C++多线程/mutex.cpp.md",
-    "C++多线程/单例.cpp.md"
+    "CMake/CMake 案例.md"
   ]
 }
