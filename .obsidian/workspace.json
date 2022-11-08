@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C++/C++多线程.md",
+                "file": "如何学习和阅读代码.md",
                 "mode": "preview",
                 "source": false
               }
@@ -71,7 +71,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "C++/C++多线程.md"
+                "file": "如何学习和阅读代码.md"
               }
             }
           }
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "C++/C++多线程.md",
+                "file": "如何学习和阅读代码.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "C++/C++多线程.md",
+                "file": "如何学习和阅读代码.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "C++/C++多线程.md"
+                "file": "如何学习和阅读代码.md"
               }
             }
           }
@@ -146,13 +146,10 @@
     "width": 300,
     "collapsed": true
   },
-  "ribbon": {
-    "mostRecentAction": ""
-  },
   "active": "c96682c9930deb45",
   "lastOpenFiles": [
-    "C++/Chrono.md",
     "C++/C++多线程.md",
+    "C++/Chrono.md",
     "C++/C++强制类型转换运算符.md",
     "C++/延时计时.md",
     "C++/atomic 赋值操作是否为原子操作.md",
