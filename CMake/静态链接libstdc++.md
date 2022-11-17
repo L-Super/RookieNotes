@@ -1,4 +1,5 @@
-Linux下，由于不同服务器可能编译器不同，会出现版本过低的问题，导致程序无法运行
+1. Clion使用Mingw配置编译，无法单独执行程序，会提示缺少libstdc++动态库。
+2. Linux下，由于不同服务器可能编译器不同，会出现版本过低的问题，导致程序无法运行
 ```
 [root@bogon monitor]# ./RaidMonitorServer 
 ./RaidMonitorServer: /lib64/libstdc++.so.6: version `CXXABI_1.3.9' not found (required by ./RaidMonitorServer)
