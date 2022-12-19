@@ -1,4 +1,4 @@
-其实，Python中的数据结构只要是可迭代的（iterable），比如列表、集合等等，那么都可以通过下面这种方式遍历：
+Python中的数据结构只要是可迭代的（iterable），比如列表、集合等等，那么都可以通过下面这种方式遍历：
 
 ```Plain Text
 for item in <iterable>:
@@ -28,7 +28,6 @@ for k, v in d.items(): # 遍历字典的键值对
 key: name, value: jason
 key: dob, value: 2000-01-01
 key: gender, value: male
-
 ```
 
 ## 通过集合中的索引来遍历元素
@@ -62,7 +61,6 @@ for index, item in enumerate(l):
 3
 4
 5
-
 ```
 
 
