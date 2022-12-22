@@ -1,7 +1,7 @@
 {
-  "cssTheme": "Origami",
+  "cssTheme": "GitHub theme",
   "theme": "moonstone",
   "monospaceFontFamily": "Lucida Console",
   "translucency": false,
-  "accentColor": ""
+  "accentColor": "#2da44f"
 }
