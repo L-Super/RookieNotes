@@ -60,14 +60,8 @@ sudo systemctl status test
 
 Dec 28 11:04:43 bogon systemd[1]: Started monitor deamon of python version app.
 Dec 28 11:04:43 bogon monitor[284962]: [2022-12-28 11:04:43,602] [main] [INFO] [main.p...3.4
-Dec 28 11:07:20 bogon monitor[284962]: [2022-12-28 11:07:20,346] [main] [INFO] [main.p...ew'
-Dec 28 11:07:20 bogon monitor[284962]: [2022-12-28 11:07:20,348] [main] [INFO] [main.p...1}}
-Dec 28 11:07:21 bogon monitor[284962]: [2022-12-28 11:07:21,351] [main] [INFO] [main.p...ew'
-Dec 28 11:07:21 bogon monitor[284962]: [2022-12-28 11:07:21,353] [main] [INFO] [main.p...1}}
-Dec 28 11:07:22 bogon monitor[284962]: [2022-12-28 11:07:22,356] [main] [INFO] [main.p...ew'
-Dec 28 11:07:22 bogon monitor[284962]: [2022-12-28 11:07:22,358] [main] [INFO] [main.p...1}}
-Dec 28 11:07:23 bogon monitor[284962]: [2022-12-28 11:07:23,361] [main] [INFO] [main.p...ew'
-Dec 28 11:07:23 bogon monitor[284962]: [2022-12-28 11:07:23,363] [main] [INFO] [main.p...1}}
+Dec 28 11:07:20 bogon monitor[284962]: [2022-12-28 11:07:20,346] 
+[main] [INFO] [main.p...1}}
 Hint: Some lines were ellipsized, use -l to show in full.
 ```
 输出结果含义如下：
@@ -117,7 +111,7 @@ systemctl daemon-reload
 
 | 设置参数      | 参数意义说明                                                 |
 | ------------- | ------------------------------------------------------------ |
-| Description   | 当我们使用 systemctl list-units 时，会输出给管理员看的简易说明以及使用 `systemctl status` 输出的此服务的说明 |
+| Description   | 服务的简单描述。当我们使用 systemctl list-units 时，会输出给管理员看的简易说明以及使用 `systemctl status` 输出的此服务的说明 |
 | Documentation | 这个项目在提供管理员能够进行进一步的文件查询的功能！提供的文件可以是如下的数据：`Documentation=http://www....` `Documentation=man:sshd（8）` `Documentation=file:/etc/ssh/sshd_config` |
 | After         | 说明此 unit 是在哪个 daemon 启动之后才启动。基本上仅是说明服务启动的顺序而已，并没有强制要求里头的服务一定要启动后此 unit 才能启动。 以 sshd.service 的内容为例，该文件提到 After 后面有 network.target 以及 sshd-keygen.service，但是若这两个 unit 没有启动而强制启动 sshd.service 的话， 那么 sshd.service 应该还是能够启动的！这与 Requires 的设置是有差异的喔！ |
 | Before        | 与 After 的意义相反，是在什么服务启动前最好启动这个服务的意思。不过这仅是规范服务启动的顺序，并非强制要求的意思。 |
