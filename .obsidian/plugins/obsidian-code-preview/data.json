@@ -15,7 +15,7 @@
   "linenumber": true,
   "alias": {
     "Code": {
-      "alias": "/../src",
+      "alias": "/Code",
       "includeFile": [
         "/\\.(j|t)s$/"
       ]

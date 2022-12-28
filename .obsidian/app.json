@@ -5,5 +5,7 @@
   "alwaysUpdateLinks": true,
   "attachmentFolderPath": "images",
   "newLinkFormat": "relative",
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "showUnsupportedFiles": false,
+  "defaultViewMode": "preview"
 }
