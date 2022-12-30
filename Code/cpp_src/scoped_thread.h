@@ -19,8 +19,7 @@ public:
 		: thread_(std::forward<Arg>(arg)...)
 	{
 	}
-	scoped_thread(
-		scoped_thread &&other)
+	scoped_thread(scoped_thread &&other)
 		: thread_(std::move(other.thread_))
 	{
 	}
