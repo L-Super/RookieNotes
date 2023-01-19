@@ -1,7 +1,7 @@
 {
   "promptDelete": false,
   "useMarkdownLinks": true,
-  "showLineNumber": true,
+  "showLineNumber": false,
   "alwaysUpdateLinks": true,
   "attachmentFolderPath": "images",
   "newLinkFormat": "relative",

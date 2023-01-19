@@ -15,7 +15,6 @@ public:
 ```
 
 
-
 ![](https://i1.wp.com/blog.feabhas.com/wp-content/uploads/2014/08/image_thumb.png?zoom=2&resize=365,332) 
 
 而对于捕获变量的lambda表达式来说，编译器在创建类的时候，通过成员函数的形式保存了需要捕获的变量，所以看起来是这个样子： 
@@ -24,10 +23,25 @@ public:
 // 用户代码
 [&total, offset](X& elem){ total += elem.get1() + offset; }
 
-```
+// 编译器生成的代码
+class _SomeComplierGeneratedName_{
+public:
+    _SomeComplierGeneratedName_(int& t, int o):total_{t},offset_{o} {}
+    void operator() (X& elem) const
+    {
+        elem.op();
+    }
+private:
+    int& total_;//引用捕获的上下文
+    int offset_;//按值捕获的上下文
+};
 
+```
 
 
 ![](https://i2.wp.com/blog.feabhas.com/wp-content/uploads/2014/08/image_thumb4.png?zoom=2&resize=529,380)
 
-似乎也没有什么神奇的地方。但正是由于编译器帮我们实现了细节，使我们的代码变得优雅和简洁了许多。
+正是由于编译器帮我们实现了细节，使我们的代码变得优雅和简洁了许多。
+
+> [C++11中的lambda，std::function以及std:bind ](https://paul.pub/cpp-lambda-function-bind/)
+
