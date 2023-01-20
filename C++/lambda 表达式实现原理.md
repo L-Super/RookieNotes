@@ -26,7 +26,7 @@ public:
 // 编译器生成的代码
 class _SomeComplierGeneratedName_{
 public:
-    _SomeComplierGeneratedName_(int& t, int o):total_{t},offset_{o} {}
+    _SomeComplierGeneratedName_(int& t, int o):total_(t),offset_(o) {}
     void operator() (X& elem) const
     {
         elem.op();
