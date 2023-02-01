@@ -8,6 +8,8 @@ rpath 全称是 `run-time search path`。Linux 下所有 elf 格式的文件都�
 -   RUNPATH： 写在elf文件中
 -   `ldconfig`的缓存： 配置`/etc/ld.conf*`可改变
 -   默认的 `/lib`, `/usr/lib`
+可以看到，RPATH 与 RUNPATH 中间隔着 LD_LIBRARY_PATH。为了让用户可以通过修改 LD_LIBRARY_PATH 来指定 `.so` 文件，大多数编译器都将输出的 RPATH 留空，并用 RUNPATH 代替 RPATH。
+
 # 查看 RPATH
 
 对于任意的elf文件，可以使用`$ readelf -d xxx'`来查看。  
@@ -26,8 +28,8 @@ gcc -Wl,-rpath,/your/rpath/ test.cpp
 gcc -Wl,-rpath,'$ORIGIN/lib' test.cpp
 ```
   
-注意，虽然选项里写着RPATH，但它设置的还是RUNPATH。原因在前文有交代。
+注意，虽然选项里写着RPATH，但它设置的还是RUNPATH。
 
-在 CMake 中，事情则有些不同。由于 CMake 需要包揽软件安装的事宜，因此 CMake 使用两个变量来控制 RPATH：`INSTALL_RPATH` 和 `BUILD_RPATH`。
+在 CMake 中，由于 CMake 需要包揽软件安装的事宜，因此 CMake 使用两个变量来控制 RPATH：`INSTALL_RPATH` 和 `BUILD_RPATH`。参见[设置链接库加载的路径](../CMake/设置链接库加载的路径.md)
 
 
