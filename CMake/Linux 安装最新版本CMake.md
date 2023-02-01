@@ -8,16 +8,11 @@ sudo apt install cmake
 wget https://github.com/Kitware/CMake/releases/download/v3.24.2/cmake-3.24.2-linux-x86_64.sh
 ```
 下载到本地后，执行以下命令即可
-两种方式都行
 ```shell
 chmod + x cmake-3.22.0-linux-x86_64.sh
 sudo ./cmake-3.22.0-linux-x86_64.sh --exclude-subdir --prefix=/usr/local/
 ```
-```shell
-chmod + x cmake-3.22.0-linux-x86_64.sh
-sudo ./cmake-3.22.0-linux-x86_64.sh --exclude-subdir --prefix=/usr/local/cmake
-ln -s /usr/local/cmake/bin/cmake /usr/bin/cmake
-```
+
 验证
 ```shell
 $ cmake --version
