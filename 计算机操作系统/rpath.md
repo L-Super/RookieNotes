@@ -32,4 +32,10 @@ gcc -Wl,-rpath,'$ORIGIN/lib' test.cpp
 
 在 CMake 中，由于 CMake 需要包揽软件安装的事宜，因此 CMake 使用两个变量来控制 RPATH：`INSTALL_RPATH` 和 `BUILD_RPATH`。参见[设置链接库加载的路径](../CMake/设置链接库加载的路径.md)
 
+# 拷贝依赖库到 lib 目录
+拷贝 Pmair 应用程序所有的依赖到当前目录下的 lib 子目录下。  
+```shell
+ldd Pamir | awk '{print $3}' | xargs -i cp -L {} ./lib
+```
+
 
