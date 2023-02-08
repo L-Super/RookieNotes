@@ -504,14 +504,12 @@ void outMsgRecvQueue()
     {
         std::unique_lock<std::mutex> sbguard(my_mutex);
         // wait用来等一个东西
-        // 如果第二个参数lambda表达式返回值是false，那么wait将解锁互斥量，并堵塞到本行
-        // 堵到其他某个线程调用notify_one()成员函数为止
+        // 如果第二个参数lambda表达式返回值是false，那么wait将解锁互斥量，并堵塞到本行堵到其他某个线程调用notify_one()成员函数为止
         // 如果wait()没有第二个参数，那么就跟返回false一样。
         // 当其他线程用notify_one()将本wait()唤醒，
         // a. wait()不断尝试重新获取互斥量锁，如果获取不到，就会卡在这里等待获取;如果获取到，就继续执行b
         // b. 
-            // b.1 如果wait()有第二个参数，就判断这个lambda表达式，如果表达式为false，那么wait将解锁互斥量，并堵塞到本行
-            // 等待再次唤醒
+            // b.1 如果wait()有第二个参数，就判断这个lambda表达式，如果表达式为false，那么wait将解锁互斥量，并堵塞到本行等待再次唤醒
             // b.2 如果为true，则wait()返回，执行下一句流程，此时互斥锁加锁
             // 如果wiat()没有第二个参数，则wait()返回，执行下一句流程
         my_cond.wait(sbguard1,[this]{
