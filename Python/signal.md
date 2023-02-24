@@ -1,0 +1,1 @@
+ [`signal`](https://docs.python.org/zh-tw/3.11/library/signal.html#module-signal "signal: Set handlers for asynchronous events.") --- 设置异步事件处理程序
