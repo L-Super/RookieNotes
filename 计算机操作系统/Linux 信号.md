@@ -10,3 +10,5 @@
 ```c
 void (*signal(int sig, void (*func)(int)))(int)
 ```
+
+> [Linux Signal - 魅族内核团队 ](https://kernel.meizu.com/linux-signal.html)
