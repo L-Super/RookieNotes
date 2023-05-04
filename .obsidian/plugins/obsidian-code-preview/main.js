@@ -1202,6 +1202,7 @@ var CodePreviewPlugin = class extends SettingPlugin {
   code(source, sourcePath) {
     return __async(this, null, function* () {
       const result = {
+        start: 1,
         code: "",
         language: "",
         highlight: "",
@@ -1229,6 +1230,7 @@ var CodePreviewPlugin = class extends SettingPlugin {
           }
           return result;
         }
+        result.start = codeSetting.start;
         result.filePath = filePath;
         result.highlight = String(codeSetting.highlight);
         result.lines = result.code.split("\n");
@@ -1244,7 +1246,7 @@ var CodePreviewPlugin = class extends SettingPlugin {
       return result;
     });
   }
-  addLineNumber(pre, div, lineSize) {
+  addLineNumber(pre, div, lineSize, start = 1) {
     div.classList.add("code-block-wrap");
     const codeEl = pre.querySelector("code");
     if (!codeEl) {
@@ -1254,7 +1256,7 @@ var CodePreviewPlugin = class extends SettingPlugin {
     const line_number = createEl("span", {
       cls: "code-block-line_num-wrap",
       attr: {
-        style: `top: ${top}; line-height: ${lineHeight}; font-size: ${fontSize};`
+        style: `top: ${top}; line-height: ${lineHeight}; font-size: ${fontSize}; counter-set: line-num ${start - 1};`
       }
     });
     Array.from({ length: lineSize }, (v, k) => k).forEach((i) => {
@@ -1320,13 +1322,13 @@ var CodePreviewPlugin = class extends SettingPlugin {
       this.removeWatchByEl(containerEl, el, sourcePath);
       const render = () => __async(this, null, function* () {
         el.empty();
-        const { code, language, lines, highlight, filePath, linenumber } = yield this.code(source, sourcePath);
+        const { code, language, lines, highlight, filePath, linenumber, start } = yield this.code(source, sourcePath);
         yield import_obsidian9.MarkdownRenderer.renderMarkdown(wrapCodeBlock(language, code), el, sourcePath, component);
         const pre = el.querySelector("pre");
         if (!pre) {
           return filePath;
         }
-        linenumber && this.addLineNumber(pre, el, lines.length);
+        linenumber && this.addLineNumber(pre, el, lines.length, start);
         highlight && this.addLineHighLight(pre, this.analyzeHighLightLines(lines, highlight), lines.length);
         return filePath;
       });
