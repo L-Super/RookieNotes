@@ -949,7 +949,7 @@ Go 支持切片运算符 `s[i:p]`，其中：
 
 假设你需要 4 个变量来表示一年的每个季度，并且你有一个包含 12 个元素的 `months` 切片。 下图演示了如何将 `months` 切片为 4 个新的 `quarter` 切片：
 
-![显示多个切片在 Go 中的外观效果的图形。](https://docs.microsoft.com/zh-cn/learn/language/go-data-types/media/go-slices-multiple.png)
+![显示多个切片在 Go 中的外观效果的图形。](images/显示多个切片在_Go_中的外观效果的图形。.png)
 
 若要用代码表示在上图中看到的内容，可使用以下代码：
 

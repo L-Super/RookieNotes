@@ -15,7 +15,7 @@ public:
 ```
 
 
-![](https://i1.wp.com/blog.feabhas.com/wp-content/uploads/2014/08/image_thumb.png?zoom=2&resize=365,332) 
+![](images/image_thumb.png) 
 
 而对于捕获变量的lambda表达式来说，编译器在创建类的时候，通过成员函数的形式保存了需要捕获的变量，所以看起来是这个样子： 
 
@@ -39,7 +39,7 @@ private:
 ```
 
 
-![](https://i2.wp.com/blog.feabhas.com/wp-content/uploads/2014/08/image_thumb4.png?zoom=2&resize=529,380)
+![](images/image_thumb4.png)
 
 正是由于编译器帮我们实现了细节，使我们的代码变得优雅和简洁了许多。
 
