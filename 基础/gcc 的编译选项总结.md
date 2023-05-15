@@ -64,7 +64,7 @@ linker input file unused because linking not done1
 2.6 给链接器使用的选项：-Wl,options
 -------------------------
 
-这里所说的链接器是指集成在可执行文件`gcc`中的链接器，而不是单独使用的`ld`。当我们通过`gcc`间接使用链接器时，需要在链接器的编译选项前面加上`-Wl,`，然后跟着编译选项，即标题中的`options`。GCC 手册中的相应介绍如下：![](https://mmbiz.qpic.cn/mmbiz_png/wqfIPAmgib2UfI3iaeUKEPG0RJ5mBMJwNIGjn6BG3ekVLib0a8uuM6HgQVpbWW0iadCgwOQrqe5F3Mu5xfgqKKPhnA/640?wx_fmt=png)那么，为什么需要`-Wl,`前缀呢？GNU 的链接器手册中是这样解释的（很好懂，就不翻译了）：![](https://mmbiz.qpic.cn/mmbiz_png/wqfIPAmgib2UfI3iaeUKEPG0RJ5mBMJwNIlLrlrDfIJuS9nr5ceIHLlmic0blKiaWUqnnLhMC6nfhjKibWW9AarerkQ/640?wx_fmt=png)
+这里所说的链接器是指集成在可执行文件`gcc`中的链接器，而不是单独使用的`ld`。当我们通过`gcc`间接使用链接器时，需要在链接器的编译选项前面加上`-Wl,`，然后跟着编译选项，即标题中的`options`。GCC 手册中的相应介绍如下：![](images/640-2.png)那么，为什么需要`-Wl,`前缀呢？GNU 的链接器手册中是这样解释的（很好懂，就不翻译了）：![](images/640-1.png)
 
 * * *
 

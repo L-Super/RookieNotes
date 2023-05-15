@@ -1,6 +1,6 @@
 对 Linux 系统的一个非常简单的介绍，主要讲解 Linux 的**进程调度、内存管理、设备驱动、文件系统、网络模块**。
 
-![Linux 内核架构图](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZthHQJApXLwFGcjNkibXyagqDojLs1NJ7xvzTI1icPLBSibfdJialACZgmw/640?wx_fmt=png)
+![Linux 内核架构图](images/Linux_内核架构图.jpg)
 
 上图就是 Linux 内核的架构图，从硬件层 ---> 操作系统内核 ---> 应用层，这套系统架构的设计应用于各类软硬件结合的系统上，比如物联网系统，单片机系统、机器人等领域。
 
@@ -32,7 +32,7 @@ CFS 使用基于时间排序的红黑树来为将来进程的执行时间线。�
 
 Linux 内核采用页表（page table）将虚拟地址映射到物理地址。虚拟地址和进程使用的用户 & 内核地址有关，物理地址用来寻址实际使用的内存。
 
-![示例图](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZaicnrVT8lCwEEicj24KibnvjNooIujibpdFyyM5fhDTrAZSiaoou2k6Pv4A/640?wx_fmt=png)
+![示例图](images/示例图.png)
 
 
 
@@ -46,7 +46,7 @@ Linux 的核心理念：everything is file。Linux 系统存在很多文件系�
 
 为了支持不同的文件系统，内核在用户态和文件系统之间包含了一层虚拟文件系统（Virtual File System）。大多数内核提供的函数都能通过 VFS 定义的接口来访问。例如内核的子系统：字符设备、块设备，管道，socket 等。另外，用于操作字符和块设备的文件是在 / dev 目录下真实文件，当读写操作执行的时候，其会被对应的驱动程序创建。
 
-![VFS 结构图](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZicXloG2qOo4J9vffwDOUgXrcUicS9M7UW62E5TT1VaoZicljKr5al4Luw/640?wx_fmt=png)
+![VFS 结构图](images/VFS_结构图.jpg)
 
 
 
@@ -70,7 +70,7 @@ Linux 的虚拟文件系统四大对象：
 
 inode 是文件从抽象 ---> 具体的关键。inode 存储了一些指针，这些指针指向存储设备的一些数据块，文件的内容就存储在这些数据块中。Linux 想打开一个文件时，只需要找到文件对应的 inode，然后沿着指针，将所有的数据块攒起来，就可以在内存中组成一个文件的数据了。
 
-![inode 结构](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZHv2qo7A1TicaULOXXib6zoxc3Lv9dYEibqORkWicvepG9VsMQg7PhtPtyA/640?wx_fmt=png)
+![inode 结构](images/inode_结构.png)
 
 
 
@@ -98,7 +98,7 @@ inode 既可以充分利用空间，在内存占据空间不与存储设备相�
 
 3. 让用户空间知道在内核中有哪些设备。
 
-![设备通信图](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZvPqdqxrvhpyYP6z8qaiaMvicVibJjlajJd3nRFsZKvOcicgSZD1KpkUrZw/640?wx_fmt=png)
+![设备通信图](images/设备通信图.png)
 
 
 
@@ -116,7 +116,7 @@ PS：块和扇区的概念：块是一个指定大小的字节序列，用于保
 
 Linux 的网络子系统的模型基于 ISO 的 OSI 模型，Linux 内核中会简化相应层级。下图为 Linux 使用的 TCP/IP 参考模型。
 
-![网络模型](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZxAgn9r4kSC0gOy97TyBOQ3VWtab15Y68DMuvFpe1AFiavPicZtfg54IQ/640?wx_fmt=png)
+![网络模型](images/网络模型.png)
 
 Host-to-Host 层：相当于 OSI 模型的物理层和数据链路层，负责将数据从一个计算机传输到另一个计算机。在 Linux 内核的角度来看，这一层是通过网卡的设备驱动程序实现的。
 
@@ -128,7 +128,7 @@ App 层：相当于 OSI 模型的会话层、表示层、应用层，网络中�
 
 Linux 内核子系统的实现通过 C 代码实现，每个层只能和它上下层通信。
 
-![Linux 网络分层图  ](https://mmbiz.qpic.cn/mmbiz_png/j3gficicyOvauoon6DuSeibqMzrKNkIHsBZcsucxicsDQn1ibYtx1aRbYiavV4ACcPn6iaDrM0y8h7YMB3ibSsbOmuwiaqw/640?wx_fmt=png)
+![Linux 网络分层图  ](images/Linux_网络分层图_.png)
 
 
 
