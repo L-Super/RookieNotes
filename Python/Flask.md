@@ -17,4 +17,8 @@ if __name__ == '__main__':
     app.run()
 ```
 
-装饰器的参数`/`代表根目录，浏览器访问`127.0.0.1:5000`（5000 Flask默认端口）就会显示hello world。
+装饰器的参数 `/` 代表根目录，浏览器访问 `127.0.0.1:5000`（5000 Flask 默认端口）就会显示 hello world。
+
+
+
+> [Flask 入门教程 (helloflask.com)](https://tutorial.helloflask.com/)
