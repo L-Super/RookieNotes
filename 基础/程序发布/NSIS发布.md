@@ -204,5 +204,8 @@ SectionEnd
 需要注意的地方：
 图片需要为 bmp 格式，且尺寸有要求。
 
+## NSIS 坑
+
+
 
 > [NSIS 用户手册](https://www.nsisfans.com/help/index.html)
