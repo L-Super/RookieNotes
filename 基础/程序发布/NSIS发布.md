@@ -204,5 +204,22 @@ SectionEnd
 需要注意的地方：
 图片需要为 bmp 格式，且尺寸有要求。
 
+## NSIS 坑
+
+NSIS 3.07版本开始，默认为 Unicode 版本。
+
+## [NsProcess plugin](https://nsis.sourceforge.io/NsProcess_plugin)
+
+检测进程插件
+
+这里需要注意，v1.6版本提供了Unicode版本插件，即`nsProcessW.dll`，在使用时需要特别注意，放入NSIS的Unicode插件路径，同时重命名为`nsProcess.dll`，**去掉W**。
+
+```
+D:\Program Files (x86)\NSIS\Plugins\x86-unicode\nsProcess.dll
+```
+
+
+
+
 
 > [NSIS 用户手册](https://www.nsisfans.com/help/index.html)

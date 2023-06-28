@@ -3756,26 +3756,27 @@ class CSSSettingsManager {
     setCSSVariables() {
         const [vars, themedLight, themedDark] = getCSSVariables(this.settings, this.config, this.gradients, this);
         this.styleTag.innerText = `
-      body.css-settings-manager {
-        ${vars.reduce((combined, current) => {
+			body.css-settings-manager {
+				${vars.reduce((combined, current) => {
             return combined + `--${current.key}: ${current.value}; `;
         }, '')}
-      }
+			}
 
-      body.theme-light.css-settings-manager {
-        ${themedLight.reduce((combined, current) => {
+			body.theme-light.css-settings-manager {
+				${themedLight.reduce((combined, current) => {
             return combined + `--${current.key}: ${current.value}; `;
         }, '')}
-      }
+			}
 
-      body.theme-dark.css-settings-manager {
-        ${themedDark.reduce((combined, current) => {
+			body.theme-dark.css-settings-manager {
+				${themedDark.reduce((combined, current) => {
             return combined + `--${current.key}: ${current.value}; `;
         }, '')}
-      }
-    `
+			}
+			`
             .trim()
             .replace(/[\r\n\s]+/g, ' ');
+        this.plugin.app.workspace.trigger('css-change', { source: 'style-settings' });
     }
     setConfig(settings) {
         this.config = {};
@@ -9640,8 +9641,10 @@ class CSSSettingsPlugin extends obsidian.Plugin {
                     this.activateView();
                 },
             });
-            this.registerEvent(this.app.workspace.on('css-change', () => {
-                this.parseCSS();
+            this.registerEvent(this.app.workspace.on('css-change', (data) => {
+                if ((data === null || data === void 0 ? void 0 : data.source) !== 'style-settings') {
+                    this.parseCSS();
+                }
             }));
             this.registerEvent(this.app.workspace.on('parse-style-settings', () => {
                 this.parseCSS();
