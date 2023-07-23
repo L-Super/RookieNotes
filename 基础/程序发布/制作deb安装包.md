@@ -118,6 +118,8 @@ echo 'The program has been installed'
 for d in /home/*/Desktop; do
   cp "/${UOS_ENTRTIES}/applications/${PACKAGE}.desktop" "\$d/${PACKAGE}.desktop"
 done
+# 或者使用$HOME环境变量（$HOME = /home/user_name）
+cp "/${UOS_ENTRTIES}/applications/${PACKAGE}.desktop" "\$HOME/${PACKAGE}.desktop"
 
 # 刷新图标缓存、桌面数据库和mime类型数据库，防止安装后desktop文件不出现在软件列表或没有图标
 update-icon-caches /usr/share/icons/hicolor || true
