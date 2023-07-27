@@ -29,11 +29,19 @@ Failing command: ['/home/leoya/monitor-py/monitor/bin/python3', '-Im', 'ensurepi
 -   激活虚拟环境
 
 在Windows上，运行:
-
+cmd
 ```
 tutorial-env\Scripts\activate.bat
 ```
-
+Powershell
+```
+tutorial-env\Scripts\activate
+```
+注意：Powershell 终端默认禁用执行 `.ps1` 脚本，需要启用才可执行。
+```
+tutorial-env\Scripts\activate : 无法加载文件 C:\Users\Listening\...\tutorial-env\Scripts\Activate.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/
+?LinkID=135170 中的 about_Execution_Policies。
+```
 在Unix或MacOS上，运行:
 
 ```
