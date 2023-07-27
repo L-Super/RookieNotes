@@ -28,12 +28,15 @@ Failing command: ['/home/leoya/monitor-py/monitor/bin/python3', '-Im', 'ensurepi
 
 ## 激活虚拟环境
 
-在Windows上，运行:
-cmd
+### Windows
+
+在Windows上
+cmd：
+
 ```
 tutorial-env\Scripts\activate.bat
 ```
-Powershell
+Powershell：
 ```
 tutorial-env\Scripts\activate
 ```
@@ -60,7 +63,7 @@ Set-ExecutionPolicy RemoteSigned
 
 更改立即生效。
 
-
+### Linux或MacOS
 
 在Unix或MacOS上，运行:
 
@@ -72,8 +75,10 @@ source tutorial-env/bin/activate
 ```
 $ leoya@DESKTOP-LMR:~/monitor-py$ source monitor/bin/activate
 (monitor) leoya@DESKTOP-LMR:~/monitor-py$
-  ...关闭虚拟环境
+  ...
 ```
+
+## 关闭虚拟环境
 
 ```python
 deactivate
