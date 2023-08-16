@@ -71,10 +71,59 @@ print(args.outfile)
 print(args.speed)
 ```
 
+输出：
+
+```sh
+$python3 search.py -h
+usage: search.py [-h] [-p pattern] [-v] [-o OUTFILE] [--speed {slow,fast}]
+                 [filename [filename ...]]
+ 
+Search some files
+ 
+positional arguments:
+  filename
+ 
+optional arguments:
+  -h, --help            show this help message and exit
+  -p pattern, --pat pattern
+                        text pattern to search for
+  -v                    verbose mode
+  -o OUTFILE            output file
+  --speed {slow,fast}   search speed
+```
+
+
+
+```sh
+$python3 search.py foo.txt bar.txt
+usage: search.py [-h] -p pattern [-v] [-o OUTFILE] [--speed {fast,slow}]
+                 [filename [filename ...]]
+search.py: error: the following arguments are required: -p/--pat
+ 
+$python3 search.py -v -p spam --pat=eggs foo.txt bar.txt
+filenames = ['foo.txt', 'bar.txt']
+patterns  = ['spam', 'eggs']
+verbose   = True
+outfile   = None
+speed     = slow
+ 
+$python3 search.py -v -p spam --pat=eggs foo.txt bar.txt -o results
+filenames = ['foo.txt', 'bar.txt']
+patterns  = ['spam', 'eggs']
+verbose   = True
+outfile   = results
+speed     = slow
+ 
+$python3 search.py -v -p spam --pat=eggs foo.txt bar.txt -o results --speed=fast
+filenames = ['foo.txt', 'bar.txt']
+patterns  = ['spam', 'eggs']
+verbose   = True
+outfile   = results
+speed     = fast
+```
 
 
 
 
-> 
->
+
 > [Python Cookbook 中文版第三版-13.3 解析命令行选项](https://www.bookstack.cn/books/python-cookbook-3rd)
