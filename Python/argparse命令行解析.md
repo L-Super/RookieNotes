@@ -8,8 +8,6 @@ argparse 是 Python 内置的一个用于命令项选项与参数解析的模块
 - 调用 add_argument() 方法添加参数
 - 使用 parse_args() 解析添加的参数
 
-
-
 ## add_argument() 方法
 
 add_argument() 方法定义如何解析命令行参数：
@@ -17,8 +15,6 @@ add_argument() 方法定义如何解析命令行参数：
 ```
 ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, default][, type][, choices][, required][, help][, metavar][, dest])
 ```
-
-
 
 - name or flags - 选项字符串的名字或者列表，例如 foo 或者 -f, --foo
 - action - 命令行遇到参数时的动作，默认值是 store，被用来存储某个值或将多个参数值收集到一个列表中
@@ -35,8 +31,6 @@ ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, defau
 - help - 参数的帮助信息，当指定为 `argparse.SUPPRESS` 时表示不显示该参数的帮助信息
 - metavar - 在 help 说明中的参数名称，对于必选参数默认就是参数名称，对于可选参数默认是全大写的参数名称
 - dest - 解析后的参数名称，默认情况下，对于可选参数选取最长的名称，中划线转换为下划线
-
-
 
 ## 示例
 
@@ -92,8 +86,6 @@ optional arguments:
   --speed {slow,fast}   search speed
 ```
 
-
-
 ```sh
 $python3 search.py foo.txt bar.txt
 usage: search.py [-h] -p pattern [-v] [-o OUTFILE] [--speed {fast,slow}]
@@ -121,9 +113,6 @@ verbose   = True
 outfile   = results
 speed     = fast
 ```
-
-
-
 
 
 > [Python Cookbook 中文版第三版-13.3 解析命令行选项](https://www.bookstack.cn/books/python-cookbook-3rd)
