@@ -21,7 +21,7 @@ ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, defau
 
 
 - name or flags - 选项字符串的名字或者列表，例如 foo 或者 -f, --foo
-- action - 命令行遇到参数时的动作，默认值是 store
+- action - 命令行遇到参数时的动作，默认值是 store，被用来存储某个值或将多个参数值收集到一个列表中
   - store_const，表示赋值为const；
   - append，将遇到的值存储成列表，也就是如果参数重复则会保存多个值;
   - append_const，将参数规范中定义的一个值保存到一个列表；
@@ -31,9 +31,9 @@ ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, defau
 - default - 不指定参数时的默认值
 - type - 命令行参数应该被转换成的类型
 - choices - 参数可允许的值的一个容器
-- required - 可选参数是否可以省略 (仅针对可选参数)
+- required - 表示该参数至少要有一个 (仅针对可选参数)
 - help - 参数的帮助信息，当指定为 `argparse.SUPPRESS` 时表示不显示该参数的帮助信息
-- metavar - 在 usage 说明中的参数名称，对于必选参数默认就是参数名称，对于可选参数默认是全大写的参数名称
+- metavar - 在 help 说明中的参数名称，对于必选参数默认就是参数名称，对于可选参数默认是全大写的参数名称
 - dest - 解析后的参数名称，默认情况下，对于可选参数选取最长的名称，中划线转换为下划线
 
 
@@ -46,17 +46,17 @@ import argparse
 parser = argparse.ArgumentParser(description='Search some files')
  
 parser.add_argument(dest='filenames',metavar='filename', nargs='*')
- 
+# 允许某个参数重复出现多次，并将它们追加到一个列表中。required 表示该参数至少要有一个。-p 和 —pat 表示两个参数名形式都可使用
 parser.add_argument('-p', '--pat',metavar='pattern', required=True,
                     dest='patterns', action='append',
                     help='text pattern to search for')
- 
+# 根据参数是否存在来设置一个 Boolean 标志 
 parser.add_argument('-v', dest='verbose', action='store_true',
                     help='verbose mode')
- 
+# 接受一个单独值并将其存储为一个字符串
 parser.add_argument('-o', dest='outfile', action='store',
                     help='output file')
- 
+# 接受一个值，但是会将其和可能的选择值做比较，以检测其合法性
 parser.add_argument('--speed', dest='speed', action='store',
                     choices={'slow','fast'}, default='slow',
                     help='search speed')
