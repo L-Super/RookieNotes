@@ -5,21 +5,21 @@ REQ-REP 套接字对是同步的。客户端在发出 `zmq_send()` ，然后再�
 
 阻塞式客户端代码：
 ```preview
-path: ../Code/zmq_client.py
+path: ../Code/py_src/zmq_client.py
 start: 1
 end: 29
 ```
 
 非阻塞式客户端：
 ```preview
-path: ../Code/zmq_client.py
+path: ../Code/py_src/zmq_client.py
 start: 32
 end: 70
 ```
 
 服务端：
 ```preview
-path: ../Code/zmq_server.py
+path: ../Code/py_src/zmq_server.py
 ```
 
 C++代码见 [client](../Code/cppzmq_client.cpp) 和 [server](../Code/cppzmq_server.cpp)
