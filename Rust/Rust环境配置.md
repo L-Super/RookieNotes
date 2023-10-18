@@ -89,3 +89,11 @@ $ ./main
 Hello, world!
 ```
 
+## Rust 生态系统
+由许多工具组成，其中的主要工具包括：
+
+- `rustc`：Rust 编译器，可将 `.rs` 文件转换为二进制文件和其他 中间格式。
+    
+- `cargo`:Rust 依赖项管理器和构建工具。Cargo 知道如何 下载托管在 [https://crates.io](https://crates.io/) 上的依赖项,并在构建项目时将它们 传递给 `rustc`。Cargo 还附带一个内置的 测试运行程序,用于执行单元测试。
+    
+- `rustup`：Rust 工具链安装程序和更新程序。发布新版本 Rust 时，此工具用于 安装并更新 `rustc` 和 `cargo`。 此外，`rustup` 还可以下载标准 库的文档。你可以同时安装多个版本的 Rust，并且 `rustup` 可让你根据需要在这些版本之间切换。
