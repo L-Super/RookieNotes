@@ -40,7 +40,7 @@ edition = "2021"
 
 最后一行文本中的[dependencies]同样是一个区域标签，它表明随后的区域会被用来声明项目的依赖。
 
-在 Rust 中，我们把代码的集合称作包（crate）[^crate]。虽然目前的项目暂时还不需要使用任何的第三方包，但你可以在第 2 章的第一个实践项目中看到这个配置区域的用法。
+在 Rust 中，我们把代码的集合称作包（crate）[^1]。虽然目前的项目暂时还不需要使用任何的第三方包，但你可以在第 2 章的第一个实践项目中看到这个配置区域的用法。
 
 ## 使用 Cargo 构建和运行项目
 通过下面的命令来完成构建任务：
@@ -104,8 +104,6 @@ cargo build --release
 
 
 
-> [1] crate 是 Rust 中最小的编译单元，package 是单个或多个 crate 的集合，crate 和 package 都可以被叫作包，因为单个 crate 也是一个 package，但 package 通常倾向于多个 crate 的组合。本书中，crate 和 package 统一被翻译为包，只在两者同时出现且需要区别对待时，将 crate 译为单元包，将 package 译为包。
->
-> [^crate]: crate 是 Rust 中最小的编译单元，package 是单个或多个 crate 的集合，crate 和 package 都可以被叫作包，因为单个 crate 也是一个 package，但 package 通常倾向于多个 crate 的组合。本书中，crate 和 package 统一被翻译为包，只在两者同时出现且需要区别对待时，将 crate 译为单元包，将 package 译为包。
->
-> 
+
+
+> [^1]: crate 是 Rust 中最小的编译单元，package 是单个或多个 crate 的集合，crate 和 package 都可以被叫作包，因为单个 crate 也是一个 package，但 package 通常倾向于多个 crate 的组合。本书中，crate 和 package 统一被翻译为包，只在两者同时出现且需要区别对待时，将 crate 译为单元包，将 package 译为包。
