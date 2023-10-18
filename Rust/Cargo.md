@@ -27,7 +27,6 @@ Cargo 使用 TOML（Tom's Obvious, Minimal Language）作为标准的配置格�
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
 edition = "2021"
 
 [dependencies]
@@ -35,8 +34,6 @@ edition = "2021"
 首行文本中的 `[package] ` 是一个区域标签，它表明接下来的语句会被用于配置当前的程序包。随着我们在这个文件中增加更多的信息，还会见识到更多其他的区域（section）。
 
 紧随标签后的 3 行语句提供了 Cargo 编译这个程序时需要的配置信息，它们分别是程序名、版本号及作者信息。
-
-在 Cargo 生成 Cargo. toml 的过程中，它会尝试着从环境变量中获得你的名字与电子邮箱，但如果这些生成的信息与实际情况不符，你也可以直接修改并保存这个文件。
 
 最后一行文本中的[dependencies]同样是一个区域标签，它表明随后的区域会被用来声明项目的依赖。
 
