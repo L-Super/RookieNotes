@@ -52,11 +52,49 @@ $ cargo build
 
 这个命令会将可执行程序生成在路径 target/debug/hello_ cargo（或者 Windows 系统下的 target\debug\hello_cargo. exe）下。
 
-可以通过如下的命令运行这个可执行程序试试看：
+可以通过如下的命令运行这个可执行程序：
 ```bash
 $ ./target/debug/hello_cargo # or .\target\debug\hello_cargo.exe on Windows 
 Hello, world!
 ```
+
+首次使用命令 cargo build 构建的时候，它还会在项目根目录下创建一个名为 Cargo. lock 的新文件，这个文件记录了当前项目所有依赖库的具体版本号。由于当前的项目不存在任何依赖，所以这个文件中还没有太多东西。你**最好不要手动编辑其中的内容，Cargo 可以帮助你自动维护它。**
+
+可以简单地使用 cargo run 命令来依次完成编译和运行任务：
+```bash
+$ cargo run
+    Compiling hello_cargo v0.1.0 (/home/virtual/Desktop/rust_code/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.13s
+     Running `target/debug/hello_cargo`
+Hello, world!!!
+```
+
+Cargo还提供了一个叫作cargo check的命令，你可以使用这个命令来快速检查当前的代码是否可以通过编译，而不需要花费额外的时间去真正生成可执行程序：
+
+```bash
+$ cargo check
+   Compiling hello_cargo v0.1.0 (/home/virtual/Desktop/rust_code/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
+```
+
+通常来讲，由于cargo check跳过了生成可执行程序的步骤，所以它的运行速度要远远快于cargo build。假如你在编码的过程中需要不断通过编译器检查错误，那么使用cargo check就会极大地加速这个过程。
+
+## 以Release模式进行构建
+
+使用命令：
+
+```bash
+cargo build --release
+```
+
+在优化模式下构建并生成可执行程序。它生成的可执行文件会被放置在target/release目录下。
+
+这种模式会以更长的编译时间为代价来优化代码，从而使代码拥有更好的运行时性能。
+
+假如你想要对代码的运行效率进行基准测试，那么请确保你会通过`cargo run --release`命令进行构建。
+
+
+
 
 - `cargo build` 可以构建项目
 - `cargo run` 可以运行项目
