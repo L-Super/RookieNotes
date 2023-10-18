@@ -10,7 +10,7 @@ curl https://sh.rustup.rs -sSf | sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-这条命令会下载并执行一个脚本来安装rustup工具，进而安装最新的Rust稳定版本。
+这条命令会下载并执行一个脚本来安装 rustup 工具，进而安装最新的 Rust 稳定版本。
 
 下载过程中会出现下面的选项，直接回车默认配置即可。
 
@@ -35,13 +35,13 @@ Current installation options:
 Rust is installed now. Great!
 ```
 
-安装过程会自动将Rust工具链添加到环境变量PATH中，让配置立即生效：
+安装过程会自动将 Rust 工具链添加到环境变量 PATH 中，让配置立即生效：
 
 ```bash
 source "$HOME/.cargo/env"
 ```
 
-检查Rust是否已经被正确地安装：
+检查 Rust 是否已经被正确地安装：
 
 ```bash
 rustc --version
@@ -54,20 +54,19 @@ rustc 1.73.0 (cc66ad468 2023-10-03)
 ```
 
 
+## Windows 环境
 
-## Windows环境
-
-Rust官网下载安装器 `rustup-init.exe`，需要同时安装Visual Studio
+Rust 官网下载安装器 `rustup-init.exe`，需要同时安装 Visual Studio
 
 ## 更新与卸载
 
-更新Rust版本：
+更新 Rust 版本：
 
 ```bash
 rustup update
 ```
 
-卸载rustup及Rust工具链：
+卸载 rustup 及 Rust 工具链：
 
 ```bash
 rustup self uninstall
