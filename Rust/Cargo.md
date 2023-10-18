@@ -40,7 +40,7 @@ edition = "2021"
 
 最后一行文本中的[dependencies]同样是一个区域标签，它表明随后的区域会被用来声明项目的依赖。
 
-在 Rust 中，我们把代码的集合称作包（crate）[1]。虽然目前的项目暂时还不需要使用任何的第三方包，但你可以在第 2 章的第一个实践项目中看到这个配置区域的用法。
+在 Rust 中，我们把代码的集合称作包（crate）[^crate]。虽然目前的项目暂时还不需要使用任何的第三方包，但你可以在第 2 章的第一个实践项目中看到这个配置区域的用法。
 
 ## 使用 Cargo 构建和运行项目
 通过下面的命令来完成构建任务：
@@ -69,7 +69,7 @@ $ cargo run
 Hello, world!!!
 ```
 
-Cargo还提供了一个叫作cargo check的命令，你可以使用这个命令来快速检查当前的代码是否可以通过编译，而不需要花费额外的时间去真正生成可执行程序：
+Cargo 还提供了一个叫作 cargo check 的命令，你可以使用这个命令来快速检查当前的代码是否可以通过编译，而不需要花费额外的时间去真正生成可执行程序：
 
 ```bash
 $ cargo check
@@ -77,7 +77,7 @@ $ cargo check
     Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
 ```
 
-通常来讲，由于cargo check跳过了生成可执行程序的步骤，所以它的运行速度要远远快于cargo build。假如你在编码的过程中需要不断通过编译器检查错误，那么使用cargo check就会极大地加速这个过程。
+通常来讲，由于 cargo check 跳过了生成可执行程序的步骤，所以它的运行速度要远远快于 cargo build。假如你在编码的过程中需要不断通过编译器检查错误，那么使用 cargo check 就会极大地加速这个过程。
 
 ## 以Release模式进行构建
 
@@ -87,14 +87,14 @@ $ cargo check
 cargo build --release
 ```
 
-在优化模式下构建并生成可执行程序。它生成的可执行文件会被放置在target/release目录下。
+在优化模式下构建并生成可执行程序。它生成的可执行文件会被放置在 target/release 目录下。
 
 这种模式会以更长的编译时间为代价来优化代码，从而使代码拥有更好的运行时性能。
 
-假如你想要对代码的运行效率进行基准测试，那么请确保你会通过`cargo run --release`命令进行构建。
+假如你想要对代码的运行效率进行基准测试，那么请确保你会通过 `cargo run --release` 命令进行构建。
 
 
-
+## cargo 常见命令
 
 - `cargo build` 可以构建项目
 - `cargo run` 可以运行项目
@@ -102,4 +102,10 @@ cargo build --release
 - `cargo doc` 可以为项目构建文档
 - `cargo publish` 可以将库发布到 [crates.io](https://crates.io/)。
 
+
+
 > [1] crate 是 Rust 中最小的编译单元，package 是单个或多个 crate 的集合，crate 和 package 都可以被叫作包，因为单个 crate 也是一个 package，但 package 通常倾向于多个 crate 的组合。本书中，crate 和 package 统一被翻译为包，只在两者同时出现且需要区别对待时，将 crate 译为单元包，将 package 译为包。
+>
+> [^crate]: crate 是 Rust 中最小的编译单元，package 是单个或多个 crate 的集合，crate 和 package 都可以被叫作包，因为单个 crate 也是一个 package，但 package 通常倾向于多个 crate 的组合。本书中，crate 和 package 统一被翻译为包，只在两者同时出现且需要区别对待时，将 crate 译为单元包，将 package 译为包。
+>
+> 
