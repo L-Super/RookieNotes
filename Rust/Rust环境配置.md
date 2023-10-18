@@ -29,8 +29,6 @@ Current installation options:
 >  
 ```
 
-
-
 一旦安装成功，你将能够看到如下所示的输出：
 
 ```bash
@@ -73,5 +71,22 @@ rustup update
 
 ```bash
 rustup self uninstall
+```
+
+## hello_world
+
+```rust
+//main.rs
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+终端编译并运行：
+
+```bash
+$ rustc main.rs
+$ ./main
+Hello, world!
 ```
 
