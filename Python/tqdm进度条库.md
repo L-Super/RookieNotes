@@ -128,34 +128,31 @@ Parameters
           or similar in `bar_format`, or specifying `unit_scale`.
       
 + position  : int, optional
-          Specify the line offset to print this bar (starting from 0)
-          Automatic if unspecified.
-          Useful to manage multiple bars at once (eg, from threads).
+    指定线路偏移以打印此栏（从0开始）自动（如果未指定）。对于一次管理多个条（例如，来自线程）很有用。
       
 + postfix  : dict or *, optional
-          Specify additional stats to display at the end of the bar.
-          Calls `set_postfix(**postfix)` if possible (dict).
+     指定要在工具栏末尾显示的其他统计信息。Calls `set_postfix(**postfix)` if possible (dict).
       
 + unit_divisor  : float, optional
-          [default: 1000], ignored unless `unit_scale` is True.
+     默认值：1000，除非unit_scale为True，否则将被忽略。
       
 + write_bytes  : bool, optional
-          Whether to write bytes. If (default: False) will write unicode.
+     是否写入字节。如果(默认值: False)将写入 Unicode。
       
 + lock_args  : tuple, optional
           Passed to `refresh` for intermediate output
           (initialisation, iterating, and updating).
       
 + nrows  : int, optional
-          The screen height. If specified, hides nested bars outside this
+     屏幕高度。If specified, hides nested bars outside this
           bound. If unspecified, attempts to use environment height.
           The fallback is 20.
       
 + colour  : str, optional
-          Bar colour (e.g. 'green', '#00ff00').
+     进度条颜色 (e.g. 'green', ' #00ff00 ').
       
 + delay  : float, optional
-          Don't display until [default: 0] seconds have elapsed.
+     在 (默认值：0）秒之后才显示。
       
 + gui  : bool, optional
           WARNING: internal parameter - do not use.
