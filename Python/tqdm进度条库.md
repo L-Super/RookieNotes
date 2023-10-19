@@ -81,16 +81,13 @@ Parameters
    最小进度显示更新间隔（以迭代为单位）。
 
 + ascii  : bool or str, optional
-          If unspecified or False, use unicode (smooth blocks) to fill
-          the meter. The fallback is to use ASCII characters " 123456789#".
+     If unspecified or False, use unicode (smooth blocks) to fill the meter. The fallback is to use ASCII characters " 123456789#".
 
 + disable  : bool, optional
-          Whether to disable the entire progressbar wrapper
-          [default: False]. If set to None, disable on non-TTY.
+     是否禁用整个 progressbar 包装器。 默认值：false。If set to None, disable on non-TTY.
       
 + unit  : str, optional
-          String that will be used to define the unit of each iteration
-          [default: it].
+     将用于定义每个迭代的单元的字符串。默认：it。
       
 + unit_scale  : bool or int or float, optional
           If 1 or True, the number of iterations will be reduced/scaled
@@ -123,12 +120,11 @@ Parameters
           if the latter is empty.
       
 + initial  : int or float, optional
-          The initial counter value. Useful when restarting a progress
-          bar [default: 0]. If using float, consider specifying `{n:.3f}`
+    初始计数器值。重新启动进度条时很有用。默认值：0. If using float, consider specifying `{n:.3f}`
           or similar in `bar_format`, or specifying `unit_scale`.
       
 + position  : int, optional
-    指定线路偏移以打印此栏（从0开始）自动（如果未指定）。对于一次管理多个条（例如，来自线程）很有用。
+    指定进度条偏移位置（从0开始）。如果未指定，则自动。对于一次管理多个条（例如，来自线程）很有用。
       
 + postfix  : dict or *, optional
      指定要在工具栏末尾显示的其他统计信息。Calls `set_postfix(**postfix)` if possible (dict).
