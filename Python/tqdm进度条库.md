@@ -75,16 +75,10 @@ Parameters
   最短进度显示更新间隔。默认值：0.1秒。
 
 + maxinterval  : float, optional
-  最大进度显示更新间隔。默认值: 10秒。在长时间显示更新延迟之后，自动调整 `miniters` 以对应 `mintime`。只有在启用 Dynamic _ miniters 或 monitor 线程时才能工作。
+  最大进度显示更新间隔。默认值: 10秒。在长时间显示更新延迟之后，自动调整 `miniters` 以对应 `mininterval`。只有在启用 ` dynamic_miniters ` 或 monitor 线程时才能工作。
 
 + miniters  : int or float, optional
-          Minimum progress display update interval, in iterations.
-          If 0 and `dynamic_miniters`, will automatically adjust to equal
-          `mininterval` (more CPU efficient, good for tight loops).
-          If > 0, will skip display of specified number of iterations.
-          Tweak this and `mininterval` to get very efficient loops.
-          If your progress is erratic with both fast and slow iterations
-          (network, skipping items, etc) you should set miniters=1.
+   最小进度显示更新间隔（以迭代为单位）。
 
 + ascii  : bool or str, optional
           If unspecified or False, use unicode (smooth blocks) to fill
@@ -93,22 +87,27 @@ Parameters
 + disable  : bool, optional
           Whether to disable the entire progressbar wrapper
           [default: False]. If set to None, disable on non-TTY.
+      
 + unit  : str, optional
           String that will be used to define the unit of each iteration
           [default: it].
+      
 + unit_scale  : bool or int or float, optional
           If 1 or True, the number of iterations will be reduced/scaled
           automatically and a metric prefix following the
           International System of Units standard will be added
           (kilo, mega, etc.) [default: False]. If any other non-zero
           number, will scale `total` and `n`.
+      
 + dynamic_ncols  : bool, optional
           If set, constantly alters `ncols` and `nrows` to the
           environment (allowing for window resizes) [default: False].
+      
 + smoothing  : float, optional
           Exponential moving average smoothing factor for speed estimates
           (ignored in GUI mode). Ranges from 0 (average speed) to 1
           (current/instantaneous speed) [default: 0.3].
+      
 + bar_format  : str, optional
           Specify a custom bar string formatting. May impact performance.
           [default: '{l_bar}{bar}{r_bar}'], where
@@ -122,32 +121,42 @@ Parameters
               remaining, remaining_s, eta.
           Note that a trailing ": " is automatically removed after {desc}
           if the latter is empty.
+      
 + initial  : int or float, optional
           The initial counter value. Useful when restarting a progress
           bar [default: 0]. If using float, consider specifying `{n:.3f}`
           or similar in `bar_format`, or specifying `unit_scale`.
+      
 + position  : int, optional
           Specify the line offset to print this bar (starting from 0)
           Automatic if unspecified.
           Useful to manage multiple bars at once (eg, from threads).
+      
 + postfix  : dict or *, optional
           Specify additional stats to display at the end of the bar.
           Calls `set_postfix(**postfix)` if possible (dict).
+      
 + unit_divisor  : float, optional
           [default: 1000], ignored unless `unit_scale` is True.
+      
 + write_bytes  : bool, optional
           Whether to write bytes. If (default: False) will write unicode.
+      
 + lock_args  : tuple, optional
           Passed to `refresh` for intermediate output
           (initialisation, iterating, and updating).
+      
 + nrows  : int, optional
           The screen height. If specified, hides nested bars outside this
           bound. If unspecified, attempts to use environment height.
           The fallback is 20.
+      
 + colour  : str, optional
           Bar colour (e.g. 'green', '#00ff00').
+      
 + delay  : float, optional
           Don't display until [default: 0] seconds have elapsed.
+      
 + gui  : bool, optional
           WARNING: internal parameter - do not use.
           Use tqdm.gui.tqdm(...) instead. If set, will attempt to use
