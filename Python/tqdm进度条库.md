@@ -47,8 +47,6 @@ class tqdm():
                  **kwargs):
 ```
 
-
-    ----------
 Parameters
 
 + iterable  : iterable, optional
@@ -90,34 +88,16 @@ Parameters
      将用于定义每个迭代的单元的字符串。默认：it。
       
 + unit_scale  : bool or int or float, optional
-          If 1 or True, the number of iterations will be reduced/scaled
-          automatically and a metric prefix following the
-          International System of Units standard will be added
-          (kilo, mega, etc.) [default: False]. If any other non-zero
-          number, will scale `total` and `n`.
+     如果为1或 True，则迭代次数将自动减少/缩放，并添加一个遵循国际单位制标准的度量前缀 (kilo、 mega 等)[默认值: False ]。如果任何其他非零数，将缩放 `total` 和 `n`。
       
 + dynamic_ncols  : bool, optional
-          If set, constantly alters `ncols` and `nrows` to the
-          environment (allowing for window resizes) [default: False].
+    If set, constantly alters `ncols` and `nrows` to the environment (allowing for window resizes) [default: False].
       
 + smoothing  : float, optional
-          Exponential moving average smoothing factor for speed estimates
-          (ignored in GUI mode). Ranges from 0 (average speed) to 1
-          (current/instantaneous speed) [default: 0.3].
+    Exponential moving average smoothing factor for speed estimates (ignored in GUI mode). Ranges from 0 (average speed) to 1 (current/instantaneous speed) [default: 0.3].
       
 + bar_format  : str, optional
-          Specify a custom bar string formatting. May impact performance.
-          [default: '{l_bar}{bar}{r_bar}'], where
-          l_bar='{desc}: {percentage:3.0f}%|' and
-          r_bar='| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, '
-              '{rate_fmt}{postfix}]'
-          Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt,
-              percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,
-              rate, rate_fmt, rate_noinv, rate_noinv_fmt,
-              rate_inv, rate_inv_fmt, postfix, unit_divisor,
-              remaining, remaining_s, eta.
-          Note that a trailing ": " is automatically removed after {desc}
-          if the latter is empty.
+Specify a custom bar string formatting. May impact performance. [default: '{l_bar}{bar}{r_bar}'], where l_bar='{desc}: {percentage:3.0f}%|' and r_bar='| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, ' '{rate_fmt}{postfix}]' Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt, percentage, elapsed, elapsed_s, ncols, nrows, desc, unit, rate, rate_fmt, rate_noinv, rate_noinv_fmt, rate_inv, rate_inv_fmt, postfix, unit_divisor, remaining, remaining_s, eta. Note that a trailing ": " is automatically removed after {desc} if the latter is empty.
       
 + initial  : int or float, optional
     初始计数器值。重新启动进度条时很有用。默认值：0. If using float, consider specifying `{n:.3f}`
@@ -136,13 +116,10 @@ Parameters
      是否写入字节。如果(默认值: False)将写入 Unicode。
       
 + lock_args  : tuple, optional
-          Passed to `refresh` for intermediate output
-          (initialisation, iterating, and updating).
+     Passed to `refresh` for intermediate output (initialisation, iterating, and updating).
       
 + nrows  : int, optional
-     屏幕高度。If specified, hides nested bars outside this
-          bound. If unspecified, attempts to use environment height.
-          The fallback is 20.
+     屏幕高度。If specified, hides nested bars outside this bound. If unspecified, attempts to use environment height. The fallback is 20.
       
 + colour  : str, optional
      进度条颜色 (e.g. 'green', ' #00ff00 ').
@@ -151,9 +128,7 @@ Parameters
      在 (默认值：0）秒之后才显示。
       
 + gui  : bool, optional
-          WARNING: internal parameter - do not use.
-          Use tqdm.gui.tqdm(...) instead. If set, will attempt to use
-          matplotlib animations for a graphical output [default: False].
+     WARNING: internal parameter - do not use. Use tqdm.gui.tqdm (...) instead. If set, will attempt to use matplotlib animations for a graphical output [default: False].
 
 ## 常见场景
 
