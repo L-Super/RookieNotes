@@ -41,7 +41,7 @@ set(VERSION_STR "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 ```
 //version.h.in
 #define VERSION @VERSION@
-#define VERSION_STR "@VERSION_STR@""
+#define VERSION_STR "@VERSION_STR@"
 ```
 
 ## Linux 查看版本信息
