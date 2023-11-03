@@ -10,5 +10,13 @@ if (auto it = m.find(10); it != m.end()) {
 if (std::lock_guard lock(mutex); shared_flag) { 
     unsafe_ping(); shared_flag = false; 
 }
+
+if (auto result = getValue(); result != 0){
+    std::cout << result << std::endl;
+}
+else{
+    result = 0;
+    std::cout << "result=" << result << std::endl;
+}//result变量的有效范围到此为止
 ```
 
