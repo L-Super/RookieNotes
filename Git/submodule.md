@@ -34,3 +34,11 @@ git clone https://github.com/L-Super/QClipboard --recurse-submodules
 git submodule init  
 git submodule update
 ```
+
+## 子模块内容的更新
+
+对于主项目而言，子模块的内容发生变动时，通常有三种情况：
+
++ 当前项目下子模块文件夹内的内容发生了未跟踪的内容变动
++ 当前项目下子模块文件夹内的内容发生了版本变化
++ 当前项目下子模块文件夹内的内容没变，远程有更新
