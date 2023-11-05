@@ -116,3 +116,27 @@ git submodule foreach 'git pull origin master'
 ```
 
 ## 删除子模块
+
+使用 `git submodule deinit` 命令卸载一个子模块。这个命令如果添加上参数 `--force`，则子模块工作区内即使有本地的修改，也会被移除。
+
+```bash
+git submodule deinit sub-1
+git rm sub-1
+```
+
+执行 `git submodule deinit sub-1` 的实际效果，是自动在 `.git/config` 中删除了以下内容：
+
+```
+[submodule "sub-1"]
+url = https://github.com/xxx/sub-1.git
+```
+
+执行 `git rm project-sub-1` 的效果，是移除了 `sub-1` 文件夹，并自动在 `.gitmodules` 中删除了以下内容：
+
+```
+[submodule "sub-1"]
+path = sub-1
+url = https://github.com/xxx/sub-1.git
+```
+
+此时，主项目中关于子模块的信息基本已经删除，然后就可以提交代码，完成对子模块的删除。
