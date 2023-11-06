@@ -64,7 +64,8 @@ make_deb()
     mkdir -p ${OUTPUT_DIR}/${UOS_FILES}
     mkdir -p ${OUTPUT_DIR}/${UOS_ENTRTIES}/applications
     mkdir -p ${OUTPUT_DIR}/${ICOSVG}
-    cp ${ICONDIR}/${ICON} ${OUTPUT_DIR}/${ICOSVG}        #假定图片名称和可执行程序名一样
+    # 复制图片
+    cp ${ICONDIR}/${ICON} ${OUTPUT_DIR}/${ICOSVG}
  
 cat  << EOF > ${OUTPUT_DIR}/DEBIAN/control
 Package: ${PACKAGE}
@@ -157,9 +158,10 @@ exit 0
 
 EOF
 
-cp -r ${EXECDIR}/* ${OUTPUT_DIR}/${UOS_FILES}       #把程序和程序依赖的库复制过去
+# 复制程序和依赖库
+cp -r ${EXECDIR}/* ${OUTPUT_DIR}/${UOS_FILES}
  
-#下面是快捷方式的文件 #gksu 这个命令可以对该程序提权 pkexec 不可以
+# 下面是快捷方式的文件 #gksu 这个命令可以对该程序提权 pkexec 不可以
 # Icon 推荐使用相对名称以便于系统根据主题规范查找对应的图标文件
 cat  << EOF  > ${OUTPUT_DIR}/${UOS_ENTRTIES}/applications/${PACKAGE}.desktop
 [Desktop Entry]
@@ -173,11 +175,13 @@ Exec=/${UOS_FILES}/${EXEC}
 Icon=/${ICOSVG}/changxie.svg
 EOF
 
-chmod 775 ${OUTPUT_DIR} -R        #有些文件需要权限 在这里将该树下文件都做了修改
-dpkg -b ${OUTPUT_DIR}        #deb打包命令 -b == --build
+# 有些文件需要权限
+chmod 775 ${OUTPUT_DIR} -R
+# deb打包命令 -b == --build
+dpkg -b ${OUTPUT_DIR}
 }
-
-make_deb        #在脚本中调用函数不需要小括号 直接写函数名执行
+# 在脚本中调用函数不需要小括号
+make_deb
  
 #end
 
