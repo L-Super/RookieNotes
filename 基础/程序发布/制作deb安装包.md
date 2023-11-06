@@ -208,9 +208,9 @@ make_deb
 #end
 ```
 
-将相关的图标放在根目录，可执行文件放在`./src`里，然后终端执行该sh脚本即可，会在`output`目录下生成deb安装包。
+将相关的图标放在根目录，可执行文件放在 `./src` 里，然后终端执行该 sh 脚本即可，会在 `output` 目录下生成 deb 安装包。
 
-动态获取版本号，使用Python从项目工程`version.h`中读取版本号
+动态获取版本号，使用 Python 从项目工程 `version.h` 中读取版本号：
 
 ```sh
 # 从version.h获取版本号
@@ -227,7 +227,7 @@ cp "/${UOS_ENTRTIES}/applications/${PACKAGE}.desktop" /etc/skel/Desktop/
 
 注意，删除时也应同步删除。
 
-postrm脚本中，由于升级和卸载都会执行postrm脚本，所以需要加判断区分：
+postrm 脚本中，由于升级和卸载都会执行 postrm 脚本，所以需要加判断区分：
 
 ```sh
 set -e
