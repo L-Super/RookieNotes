@@ -7,3 +7,10 @@ netstat -tunlp | grep 8000
 ```shell
 nohup ./MonitorStorageServer &
 ```
+#### 拷贝依赖库到 lib 目录
+
+拷贝 Pmair 应用程序所有的依赖到当前目录下的 lib 子目录下。
+
+```shell
+ldd Pamir | awk '{print $3}' | xargs -i cp -L {} ./lib
+```
