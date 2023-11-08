@@ -1,3 +1,4 @@
+#!bin/bash
 # 从version.h获取版本号
 VER=$(python -c 'import re;content=open("../src/version.h").read(); match=re.search(r"#define VERSION_STR \"(.*?)\"",content); print(match.group(1))')
 
