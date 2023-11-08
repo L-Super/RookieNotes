@@ -21,9 +21,9 @@ configure_file(version.h.in version.h @ONLY)
 #define VERSION @VERSION@
 ```
 
-configure_file命令会使用CMake中的变量替换version.h.in中的变量，生成version.h头文件。
+`configure_file` 命令会使用 CMake 中的变量替换 `version.h.in` 中的变量，生成 `version.h` 头文件。
 
-version.h默认生成在可执行文件路径下，也可指定生成的路径，如生成到`${CMAKE_SOURCE_DIR}`路径下
+version. h 默认生成在可执行文件路径下，也可指定生成的路径，如生成到 `${CMAKE_SOURCE_DIR}` 路径下：
 
 ```cmake
 configure_file(version.h.in ${CMAKE_SOURCE_DIR}/version.h)
