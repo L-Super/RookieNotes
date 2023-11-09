@@ -248,3 +248,6 @@ esac
 exit 0
 ```
 
+
+
+> https://www.debian.org/doc/manuals/debian-reference/ch12.zh-cn.html
