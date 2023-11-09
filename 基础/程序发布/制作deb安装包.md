@@ -197,8 +197,10 @@ Exec=/${UOS_FILES}/${EXEC}
 Icon=/${ICOSVG}/changxie.svg
 EOF
 
-# 有些文件需要权限
-chmod 775 ${OUTPUT_DIR} -R
+# 脚本需要加权限
+chmod 775 ${OUTPUT_DIR}/DEBIAN/postinst
+chmod 775 ${OUTPUT_DIR}/DEBIAN/prerm
+chmod 775 ${OUTPUT_DIR}/DEBIAN/postrm
 # deb打包命令 -b == --build
 dpkg -b ${OUTPUT_DIR}
 }
@@ -248,6 +250,17 @@ esac
 exit 0
 ```
 
-
+还可以自动获取当前系统的架构：
+```sh
+#获取系统架构 
+ARCH=$(uname -m)
+if [ ${ARCH} = "x86_64" ] ; then
+    ARCH=amd64
+elif [ ${ARCH} = "aarch64" ]; then
+    ARCH=arm64
+elif [ ${ARCH} = "mips64" ]; then
+    ARCH=mips64el
+fi
+```
 
 > https://www.debian.org/doc/manuals/debian-reference/ch12.zh-cn.html
