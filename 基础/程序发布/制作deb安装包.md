@@ -64,11 +64,11 @@ SIZE=`du -s ${EXECDIR} | awk '{print int($1)}'`
 
 #获取系统架构 
 #ARCH=$(uname -m)
-#if [ ${ARCH} == "x86_64" ] ; then
+#if [ ${ARCH} = "x86_64" ] ; then
 #    ARCH=amd64
-#elif [ ${ARCH} == "aarch64" ]; then
+#elif [ ${ARCH} = "aarch64" ]; then
 #    ARCH=arm64
-#elif [ ${ARCH} == "mips64" ]; then
+#elif [ ${ARCH} = "mips64" ]; then
 #    ARCH=mips64el
 #fi
 
