@@ -14,3 +14,22 @@ nohup ./MonitorStorageServer &
 ```shell
 ldd Pamir | awk '{print $3}' | xargs -i cp -L {} ./lib
 ```
+
+#### 查看 CPU 信息
+查看 CPU 处理器信息：
+
+```
+  $ lscpu
+```
+
+查看内存信息：
+
+```
+  $ lsmem
+```
+
+查看磁盘信息：
+
+```
+  $ fdisk -l
+```
