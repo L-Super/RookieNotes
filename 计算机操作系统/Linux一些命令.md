@@ -15,6 +15,45 @@ nohup ./MonitorStorageServer &
 ldd Pamir | awk '{print $3}' | xargs -i cp -L {} ./lib
 ```
 
+### 查看系统信息
+
+#### 操作系统版本信息
+
+```sh
+cat /etc/os-release
+```
+
+示例：
+
+```sh
+$ cat /etc/os-release
+PRETTY_NAME="UnionTech OS Desktop 20 Pro"
+NAME="uos"
+VERSION_ID="20"
+VERSION="20"
+ID=uos
+HOME_URL="https://www.chinauos.com/"
+BUG_REPORT_URL="http://bbs.chinauos.com"
+VERSION_CODENAME=eagle
+```
+
+#### 显示操作系统信息
+
+```sh
+uname -a
+```
+
+示例：
+
+```sh
+$ uname -a
+Linux Leou-PC 4.19.0-amd64-desktop #5310 SMP Mon Oct 10 19:43:13 CST 2022 x86_64 GNU/Linux
+```
+
+
+
+
+
 ### 查看系统配置
 
 #### 查看 CPU 处理器信息
