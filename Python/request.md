@@ -11,4 +11,14 @@ s.get('http://httpbin.org/cookies/set/sessioncookie/123456789')
 r = s.get("http://httpbin.org/cookies")
 print(r.text)
 ```
-第二次请求已经携带上了第一次请求所设置的cookie，即通过session达到了保持cookie的目的。
+第二次请求已经携带上了第一次请求所设置的 cookie，即通过 session 达到了保持 cookie 的目的。
+
+有时我只是想让单独的一条请求带上临时的参数：
+```python
+s = requests.Session()
+s.auth = ('user', 'pass')
+s.headers.update({'x-test': 'true'})
+
+# both 'x-test' and 'x-test2' are sent
+s.get('https://httpbin.org/headers', headers={'x-test2': 'true'})
+```
