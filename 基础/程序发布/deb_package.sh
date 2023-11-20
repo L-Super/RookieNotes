@@ -176,8 +176,11 @@ Exec=/${UOS_FILES}/${EXEC}
 Icon=/${ICOSVG}/changxie.svg
 EOF
 
-# 有些文件需要权限
-chmod 775 ${OUTPUT_DIR} -R
+# 脚本文件需要权限
+chmod 775 ${OUTPUT_DIR}/DEBIAN/postinst
+chmod 775 ${OUTPUT_DIR}/DEBIAN/prerm
+chmod 775 ${OUTPUT_DIR}/DEBIAN/postrm
+
 # deb打包命令 -b == --build
 dpkg -b ${OUTPUT_DIR}
 }
