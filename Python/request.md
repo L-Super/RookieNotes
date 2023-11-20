@@ -11,14 +11,29 @@ s.get('http://httpbin.org/cookies/set/sessioncookie/123456789')
 r = s.get("http://httpbin.org/cookies")
 print(r.text)
 ```
+输出：
+```
+{
+  "cookies": {
+    "sessioncookie": "123456789"
+  }
+}
+```
 第二次请求已经携带上了第一次请求所设置的 cookie，即通过 session 达到了保持 cookie 的目的。
 
 有时我只是想让单独的一条请求带上临时的参数：
 ```python
-s = requests.Session()
-s.auth = ('user', 'pass')
-s.headers.update({'x-test': 'true'})
-
-# both 'x-test' and 'x-test2' are sent
-s.get('https://httpbin.org/headers', headers={'x-test2': 'true'})
+s = requests.Session()  
+s.auth = ('user', 'pass')  
+s.headers.update({'x-test': 'true'})  
+  
+print(s.headers)  
+# both 'x-test' and 'x-test2' are sent  
+r = s.get('https://httpbin.org/headers', headers={'x-test2': 'true'})  
+print(r.request.headers)
+```
+输出：
+```
+{'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'x-test': 'true'}
+{'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'x-test': 'true', 'x-test2': 'true', 'Authorization': 'Basic dXNlcjpwYXNz'}
 ```
