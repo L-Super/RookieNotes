@@ -10,5 +10,8 @@ Docker 是一个客户-服务器 (C/S)架构的程序。Docker 客户端只需�
 Docker 的架构：
 ![](../images/Pasted%20image%2020231121220255.png)
 ## Docker 镜像
-
+用户基于镜像来运行自己的容器。镜像也是 docker 生命周期中的"构建"部分。镜像基于联合（Union）文件系统的一种层式的结构，由一系列指令一步一步构建出来。
+可以把镜像看作容器的"源代码"
+## Registry
+用来保存用户构建的镜像。Registry 分为公共和私有两种。docker 公司运营的gong
 
