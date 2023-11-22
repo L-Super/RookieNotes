@@ -114,10 +114,69 @@ docker logs -ft daemon_dave
 docker top daemon_dave
 ```
 ## 在容器内运行进程
+可通过 `docker exec` 命令在容器内部额外启动新进程。可用在容器内运行的进程有两种类型：后台任务和交互式任务。
 
+在容器中运行后台任务：
+```sh
+docker exec -d daemon_dave touch /etc/new_config_file
+```
++ -d：表明需要运行一个后台进程。-d 之后指定容器名以及要执行的命令。
+在容器中运行交互式任务：
+```sh
+docker exec -t -i daemon_dave /bin/bash
+```
+这条命令会在 daemon_dave 容器内从创建一个新的 bash 会话。
 ## 停止守护式容器
-
+```sh
+docker stop daemon_dave
+docker stop 85246a3819b1
+```
+`docker stop` 会向 Docker 容器进程发送 SIGTERM 信号。如果想快速停止某个容器，可使用 `docker kill` 向容器发送 SIGKILL 信号
 ## 自动重启容器
+由于某些错误而导致容器停止运行，还可以通过 `--restart` 标志，让 Docker 自动重新启动该容器。`--restart` 标志会检查容器的退出代码，并以此来决定是否要重启容器。默认的行为是 Docker 不会重启容器。
+
+```sh
+docker run --restart=always --name daemon_dave -d ubuntu /bin/sh -c "while true;do echo hello world;sleep 1;done"
+```
+`--restart` 标志设置为 always。无论容器退出代码是什么，都会自动重启该容器。
+
+`--restart` 标志：
 
 ## 深入容器
+可使用 `docker inspect` 来获得更多的容器信息
+
+```sh
+docker inspect daemon_dave
+```
+会对容器进行详细的检查，然后返回其配置信息，包括名称、命令、网络配置以及很多有用的数据。
+可使用 `-f` 或 `--format` 标志来选定查看结果。
+
+返回容器运行状态：
+```
+docker inspect --format='{{ .State.Running }}' daemon_dave
+```
+获取容器 IP 地址：
+```
+docker inspect --format='{{ .NetworkSettings.IPAddress }}' daemon_dave
+```
+同时指定多个容器，并显示每个容器的输出结果：
+```
+docker inspect --format='{{ .Name }} {{ .State.Running }}' daemon_dave hello_docker
+```
+
+> 还可以在 `/var/lib/docker` 目录下了解 Docker 的工作原理。该目录下存放着 docker 镜像、容器以及容器的配置。
+> 所有的容器都保存在 `/var/lib/docker/containers` 目录下
 ## 删除容器
+如果容器不再使用，可使用 `docker rm` 删除它们
+
+```sh
+docker rm 85246a3819b1
+```
+
+注：运行中的容器无法删除。
+
+删除所有容器：
+```
+docker rm `docker ps -a -q`
+```
+-a 列出所有容器，-q 只返回容器的 ID
