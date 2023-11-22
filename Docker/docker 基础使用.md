@@ -140,7 +140,6 @@ docker run --restart=always --name daemon_dave -d ubuntu /bin/sh -c "while true;
 ```
 `--restart` 标志设置为 always。无论容器退出代码是什么，都会自动重启该容器。
 
-`--restart` 标志：
 
 ## 深入容器
 可使用 `docker inspect` 来获得更多的容器信息
