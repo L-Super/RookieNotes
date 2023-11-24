@@ -58,5 +58,20 @@ docker search
 docker login
 ```
 完成 Docker Hub 登录工作，并将认证信息保存起来供以后使用。
+
+```sh
+# docker login
+Log in with your Docker ID or email address to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com/ to create one.
+You can log in with your password or a Personal Access Token (PAT). Using a limited-scope PAT grants better security and is required for organizations using SSO. Learn more at https://docs.docker.com/go/access-tokens/
+
+Username: chumoshi
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+```
+
 > 个人认证信息会保存到 `$HOME/.dockercfg` 文件中
 
