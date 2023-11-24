@@ -172,14 +172,6 @@ Docker 构建过程中会将之前的镜像层看作缓存。比如，第 1-3步
 docker build --no-cache -t="chumoshi/docker_demo" .
 ```
 
-#### 
-
-
-
-
-
-
-
 
 
 ## 发布镜像到Docker Hub
