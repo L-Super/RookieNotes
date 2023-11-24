@@ -128,7 +128,48 @@ Dockerfile 由一系列指令和参数组成。每条指令都必须大写，且
 
 如果某些原因（如某条指令执行失败）没有正常结束，那么将得到一个可用的镜像。对调试很有帮助，可基于该最后创建的镜像运行，调试指令失败的问题。
 
-每个 Dockerfile 的第一条命令都应该是 FROM。FROM 指定一个已存在的镜像，后续指令都将基于该镜像进行，这个镜像称为基础镜像（base image）
+1. 每个 Dockerfile 的第一条命令都应该是 FROM。FROM 指定一个已存在的镜像，后续指令都将基于该镜像进行，这个镜像称为基础镜像（base image）
+2. LABEL 使用键值对的形式，添加镜像的元数据，这里添加的作者信息。
+3. RUN 指令会在当前镜像中运行指定的命令。默认情况下，RUN 指令会在 shell 里使用命令包装器 `/bin/sh -c` 来执行。如果在不支持 shell 的平台上运行或者不希望在 shell 中运行（比如避免 shell 字符串篡改），也可以使用 exec 格式的 RUN 指令：
+```dockerfile
+RUN ["apt", " install", "-y", "nginx"]
+```
+在这种方式中，使用数组来指定运行的命令和传递给该命令的每个参数
+3. EXPOSE 指令告诉容器内的应用程序将会使用容器的指定端口
+可以指定多个 EXPOSE 指令来向外部公开多个端口
+
+#### 基于 Dockerfile 构建新镜像
+
+执行 `docker build` 命令时，Dockerfile 中所有指令都会被执行并提交，并且在该命令成功结束后返回一个新镜像。
+
+```
+docker build -t="chumoshi/docker_demo" .
+```
+-t 选项为新镜像设置了仓库和名称。
+![](../images/Pasted%20image%2020231124165549.png)
+
+也可在构建镜像时，设置标签：
+```
+docker build -t="chumoshi/docker_demo:v1" .
+```
+
+> 如果没有制定任何标签，会自动为镜像设置一个 latest 标签
+
+还可以指定一个 Git 仓库的源地址来指定 Dockerfile 的位置：
+```
+docker build -t="chumoshi/docker_demo:v1" git@github.com:chumoshi/docker-demo
+```
+
+#### 调试指令执行失败
+假设软件包名写错，如 nginx 写成 ngin：
+![](../images/Pasted%20image%2020231124170749.png)
+
+可以使用 `docker run` 命令基于成功的最后一步创建一个容器，
+
+
+
+
+
 
 
 
