@@ -29,3 +29,34 @@ Docker Hub 中有用户仓库（user repository）和顶层仓库（top-level re
 `docker run` 命令从镜像启动容器时，如果镜像不在本地，会先从 Docker Hub 下载该镜像。如果没有指定具体的镜像标签，会自动下载 latest 标签的镜像。
 
 可通过 `docker pull` 命令来预先拉取镜像到本地。
+
+## 查找镜像
+查找所有 Docker Hub 上公共的可用镜像
+```
+docker search
+```
+这条命令会完成镜像查找工作，并返回如下信息：
++ 仓库名
++ 镜像描述
++ 用户评价（Stars）：反映镜像的受欢迎程度
++ 是否官方（Official）：由上游开发者管理的镜像（如 fedora 镜像由 Fedora 团队管理）
++ 自动构建（Automated）：表示由 Docker Hub 的自动构建（Automated Build）流程创建的。
+
+![](../images/Pasted%20image%2020231124113026.png)
+
+## 构建镜像
+构建 Docker 镜像有以下两种方法：
++ `docker commit` 命令
++ `docker build` 和 Dockerfile 文件
+
+现在不推荐使用 `docker commit` 命令，应该使用更灵活、更强大的 Dockerfile 构建镜像。
+
+## 创建并登录 Docker Hub
+最重要的一环是如何共享和发布镜像。可将镜像推送到 Docker Hub 或私有 Registry 中。
+
+```
+docker login
+```
+完成 Docker Hub 登录工作，并将认证信息保存起来供以后使用。
+> 个人认证信息会保存到 `$HOME/.dockercfg` 文件中
+
