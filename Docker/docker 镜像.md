@@ -217,3 +217,10 @@ latest: digest: sha256:9538ace0b30d4f07d839f076277beac15b26422e5a5da4ddb965682c5
 ```
 然后就可以在 Docker Hub 上看到上传的镜像
 ![](../images/Pasted%20image%2020231124155240.png)
+
+## 删除镜像
+如果不需要镜像了，可以使用 `docker rmi` 命令删除。
+```
+docker rmi
+```
+该命令只会将本地的镜像删除，如果要删除 Docker Hub 上的镜像仓库，需要在网站上进行删除。
