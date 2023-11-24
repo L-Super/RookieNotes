@@ -164,10 +164,13 @@ docker build -t="chumoshi/docker_demo:v1" git@github.com:chumoshi/docker-demo
 假设软件包名写错，如 nginx 写成 ngin：
 ![](../images/Pasted%20image%2020231124170749.png)
 
-可以使用 `docker run` 命令基于成功的最后一步创建一个容器，
+可以看到 Docker 会提示哪一步执行失败，可以根据错误信息进行修正。
 
-
-
+#### 构建缓存
+Docker 构建过程中会将之前的镜像层看作缓存。比如，第 1-3步执行成功，再次构建时，会直接从第 3 步开始。有时，需要确保构建过程中不会使用缓存，可以使用 `--no-cache` 标志：
+```
+docker build --no-cache -t="chumoshi/docker_demo" .
+```
 
 
 
