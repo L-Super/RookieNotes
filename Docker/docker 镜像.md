@@ -105,8 +105,30 @@ cd docker_demo/
 vim Dockerfile
 ```
 
+Dockerfile 内容：
+```dockerfile
+# Version 0.0.1
+FROM ubuntu:20.04
+LABEL maintainer="chumoshi"
+RUN apt update
+RUN apt install -y nginx
+RUN echo 'Hi, I am your container' \
+    >/usr/share/nginx/html/index.html
+EXPOSE 80
+```
+Dockerfile 由一系列指令和参数组成。每条指令都必须大写，且后面要跟随一个参数。指令会按从上到下的顺序执行，所以需要合理安排指令的顺序。
 
+每条指令都会创建一个新的镜像层并对镜像进行提交。
+大体指令执行流程如下：
++ Docker 从基础镜像运行一个容器
++ 执行一条指令，对容器做出修改
++ 执行类似 `docker commit` 的操作，提交一个新的镜像层
++ 再基于刚提交的镜像运行一个新容器
++ 执行下一条指令，直到所有指令都执行完毕
 
+如果某些原因（如某条指令执行失败）没有正常结束，那么将得到一个可用的镜像。对调试很有帮助，可基于该最后创建的镜像运行，调试指令失败的问题。
+
+每个 Dockerfile 的第一条命令都应该是 FROM。FROM 指定一个已存在的镜像，后续指令都将基于该镜像进行，这个镜像称为基础镜像（base image）
 
 
 
