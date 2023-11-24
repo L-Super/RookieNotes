@@ -64,7 +64,7 @@
   "experimentalFileType": false,
   "experimentalFileTag": "✏️",
   "experimentalLivePreview": true,
-  "experimentalEnableFourthFont": false,
+  "experimentalEnableFourthFont": true,
   "experimantalFourthFont": "Virgil",
   "fieldSuggester": true,
   "compatibilityMode": false,
@@ -73,7 +73,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://excalidraw.com",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.0.3",
     "libraryItems": []
   },
   "imageElementNotice": true,
