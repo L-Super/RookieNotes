@@ -50,8 +50,74 @@ docker search
 + `docker build` 和 Dockerfile 文件
 
 现在不推荐使用 `docker commit` 命令，应该使用更灵活、更强大的 Dockerfile 构建镜像。
+### commit 创建镜像
+可想象为往版本控制系统里提交变更。
+先创建一个容器，然后在容器里做出修改，最后再将修改提交为一个新镜像。
 
-## 创建并登录 Docker Hub
+1. 创建容器
+```sh
+docker run -i -t ubuntu /bin/bash
+```
+2. 安装 nginx
+```sh
+apt install nginx
+```
+然后 `exit` 命令从容器退出
+3. 运行 commit
+先使用 `docker ps -l -q` 命令得到刚创建的容器 ID：
+```sh
+# docker ps -l -q
+64c45d46f54a
+```
+然后执行 commit：
+```sh
+# docker commit 64c45d46f54a chumoshi/nginx                                                                    
+sha256:f4c3e80666f5ac11f02769015ca291aacac441ad868fed1a32c3412e868cdbec
+```
+commit 指定了容器 ID 以及目标镜像仓库和镜像名。
+
+> `docker commit` 提交的只是创建容器的镜像与容器的当前状态之间有差异的部分，这使得该更新非常轻量。
+
+查看新创建的镜像：
+```
+# docker images chumoshi/nginx
+REPOSITORY       TAG       IMAGE ID       CREATED              SIZE
+chumoshi/nginx   latest    f4c3e80666f5   About a minute ago   180MB
+```
+也可以在提交镜像时指定更多的数据（包括标签）来详细描述所做的修改：
+```
+docker commit -m="custom image" --author="Chu Moshi" 64c45d46f54a chumoshi/nginx:webserver
+```
+在这条命令中，
++ -m 指定新创建的镜像的提交信息
++ --author 列出镜像的作者信息
+然后就是容器 ID，镜像的用户名和仓库名并增加了 webserver 的标签。
+
+### Dockerfile 构建镜像
+
+Dockerfile 使用基于 DSL 语法指令来构建 Docker 镜像，之后使用 `docker build` 命令基于该 Dockerfile 中的指令构建一个新的镜像。
+#### 创建 Dockerfile
+创建一个目录并在里面创建初始的 Dockerfile
+
+```
+mkdir docker_demo
+cd docker_demo/
+vim Dockerfile
+```
+
+
+
+
+
+
+
+
+
+
+
+
+## 发布镜像到Docker Hub
+### 创建并登录 Docker Hub
 最重要的一环是如何共享和发布镜像。可将镜像推送到 Docker Hub 或私有 Registry 中。
 
 ```
@@ -75,3 +141,21 @@ Login Succeeded
 
 > 个人认证信息会保存到 `$HOME/.dockercfg` 文件中
 
+
+### 推送到 Docker Hub
+镜像构建完毕之后，可以上传到 Docker Hub。
+```
+docker push 
+```
+
+以上面的 nginx 为例：
+```sh
+# docker push chumoshi/nginx
+Using default tag: latest
+The push refers to repository [docker.io/chumoshi/nginx]
+955d0d297c3a: Pushed 
+256d88da4185: Mounted from library/ubuntu 
+latest: digest: sha256:9538ace0b30d4f07d839f076277beac15b26422e5a5da4ddb965682c5788034e size: 741
+```
+然后就可以在 Docker Hub 上看到上传的镜像
+![](../images/Pasted%20image%2020231124155240.png)
