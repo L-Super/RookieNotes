@@ -3,5 +3,6 @@
   "theme": "moonstone",
   "monospaceFontFamily": "Lucida Console",
   "translucency": false,
-  "accentColor": "#2da44f"
+  "accentColor": "#2da44f",
+  "baseFontSize": 15
 }
