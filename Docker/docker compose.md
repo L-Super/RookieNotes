@@ -41,3 +41,10 @@ docker compose down
 docker compose up -d
 ```
 这样就完成了修改。
+
+## 升级容器
+
+```bash
+docker compose pull
+docker compose up -d
+```
