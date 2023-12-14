@@ -47,4 +47,5 @@ docker compose up -d
 ```bash
 docker compose pull
 docker compose up -d
+docker image prune  # prune 命令用来删除不再使用的 docker 对象。删除所有未被 tag 标记和未被容器使用的镜像
 ```
