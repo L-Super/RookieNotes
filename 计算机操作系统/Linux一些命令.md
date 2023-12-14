@@ -1,13 +1,13 @@
 
-#### 查看端口占用
+## 查看端口占用
 ```shell
 netstat -tunlp | grep 8000
 ```
-#### 后台启动程序
+## 后台启动程序
 ```shell
 nohup ./MonitorStorageServer &
 ```
-#### 拷贝依赖库到 lib 目录
+## 拷贝依赖库到 lib 目录
 
 拷贝 Pmair 应用程序所有的依赖到当前目录下的 lib 子目录下。
 
@@ -15,9 +15,9 @@ nohup ./MonitorStorageServer &
 ldd Pamir | awk '{print $3}' | xargs -i cp -L {} ./lib
 ```
 
-### 查看系统信息
+## 查看系统信息
 
-#### 操作系统版本信息
+### 操作系统版本信息
 
 ```sh
 cat /etc/os-release
@@ -37,7 +37,7 @@ BUG_REPORT_URL="http://bbs.chinauos.com"
 VERSION_CODENAME=eagle
 ```
 
-#### 显示操作系统信息
+### 显示操作系统信息
 
 ```sh
 uname -a
@@ -49,10 +49,6 @@ uname -a
 $ uname -a
 Linux Leou-PC 4.19.0-amd64-desktop #5310 SMP Mon Oct 10 19:43:13 CST 2022 x86_64 GNU/Linux
 ```
-
-
-
-
 
 ### 查看系统配置
 
@@ -114,8 +110,6 @@ NUMA node0 CPU(s):   0-3
 Flags:               cpucfg lam ual fpu lsx lasx complex crypto lvz lbt_x86 lbt_arm lbt_mips
 ```
 
-
-
 #### 查看内存信息
 
 ```sh
@@ -127,4 +121,10 @@ lsmem
 ```sh
 df -h
 sudo fdisk -l
+```
+
+#### 查看 Linux 系统信息，测试网络带宽及硬盘读写速率
+`bench.sh` 脚本
+```bash
+wget -qO- bench.sh | bash
 ```
