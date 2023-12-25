@@ -49,3 +49,11 @@ docker compose pull
 docker compose up -d
 docker image prune  # prune 命令用来删除不再使用的 docker 对象。删除所有未被 tag 标记和未被容器使用的镜像
 ```
+
+## yml 配置常见指令参考
+### restart
+
+- no：是默认的重启策略，在任何情况下都不会重启容器。
+- always：容器总是重新启动。
+- on-failure：在容器非正常退出时（退出状态非0），才会重启容器。
+- unless-stopped：在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器
