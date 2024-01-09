@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
 
 现在编译一下这个项目，为了便于交互式的选择该变量的值，可以使用 `ccmake` 命令（也可以使用 `cmake -i` 命令，该命令会提供一个会话式的交互式配置界面）：
 
-![图片](images/图片-1.png)
+![](../images/CMake的交互式配置界面.png)
 
 CMake的交互式配置界面
 
