@@ -4,19 +4,19 @@ Chrome的开发者工具是个很强大的东西，相信程序员们都不会�
 
 有很多css/js的代码都会被 minify 掉，你可以点击代码窗口左下角的那个 **`{ }`**  标签，chrome会帮你给格式化掉。
 
-![](images/pretty-code.gif)
+![](../Go/images/pretty-code.gif)
 
 #### 强制DOM状态
 
 有些HTML的DOM是有状态的，比如<a> 标签，其会有 active，hover， focus，visited这些状态，有时候，我们的CSS会来定关不同状态的样式，在分析网页查看网页上DOM的CSS样式时，我们可以点击CSS样式上的 **`:hov`** 这个小按钮来强制这个DOM的状态。
 
-![](images/state.gif)
+![](../Go/images/state.gif)
 
 #### 动画
 
 现在的网页上都会有一些动画效果。在Chrome的开发者工具中，通过右上角的菜单中的 `More Tools` => `Animations` 呼出相关的选项卡。于是你就可以慢动作播放动画了（可以点选 `25%` 或 `10%`），然后，Chrome还可以帮你把动画录下来，你可以拉动动再画的过程，甚至可以做一些简单的修改。
 
-![](images/animation.gif)
+![](../Go/images/animation.gif)
 
 #### 直接编辑网页
 
@@ -30,19 +30,19 @@ document.designMode = "on"
 
 P.S. 下面这个抓屏中还演示了一个如何清空console的示例。你可以输入 clear() 或是 按 `Ctrl+L`（Windows下），`CMD + K` (Mac下)
 
-![](images/editor.gif)
+![](../Go/images/editor.gif)
 
 #### 网络限速
 
 你可以设置你的网络的访问速度来模拟一个网络很慢的情况。
 
-![](images/custom-network-throttling-profiles.gif)
+![](../Go/images/custom-network-throttling-profiles.gif)
 
 #### 复制HTTP请求
 
 这个是我很喜欢 的一个功能，你可以在 network选项卡里，点击 XHR 过滤相关的Ajax请求，然后在相关的请求上点鼠标右键，在菜单中选择： `Copy` =\> `Copy as cURL`，然后就可以到你的命令行下去 执行 `curl` 的命令了。这个可以很容易做一些自动化的测试。
 
-![](images/curl.gif)
+![](../Go/images/curl.gif)
 
 **友情提示：这个操作有可能会把你的个人隐私信息复制出去，比如你个人登录后的cookie。** 
 
@@ -52,11 +52,11 @@ P.S. 下面这个抓屏中还演示了一个如何清空console的示例。你�
 
 在device显示中，先选择一个手机，然后在右上角选 `Show Device Frame`，然后你就看到手机的样子了，然后再到那个菜中中选 Capture snapshot，就可以抓下一个有手机样子的截图了。
 
-![](images/device.gif)
+![](../Go/images/device.gif)
 
 我抓的图如下（当然，不是所有的手机都有frame的）
 
-![](images/coolshell.cn-iPhone-6-Plus-1-148x300.png)
+![](../Go/images/coolshell.cn-iPhone-6-Plus-1-148x300.png)
 
 #### 设置断点
 
@@ -66,13 +66,13 @@ P.S. 下面这个抓屏中还演示了一个如何清空console的示例。你�
 
 选中一个DOM，然后在右键菜单中选 Break on … 你可以看到如下三个选项：
 
-#### ![](images/break.dom_-1024x708.png)
+#### ![](../Go/images/break.dom_-1024x708.png)
 
 ##### 给XHR和Event Lisener设置断点
 
 在 Sources 面页中，你可以看到右边的那堆break points中，除了上面我们说的给DOM设置断点，你还可以给XHR和Event Listener设置断点，载图如下：
 
-![](images/breakpoints-834x1024.png)
+![](../Go/images/breakpoints-834x1024.png)
 
 #### 关于Console中的技巧
 
@@ -86,7 +86,7 @@ P.S. 下面这个抓屏中还演示了一个如何清空console的示例。你�
 
 *   你可以使用 `getEventListeners($("selector"))` 来查看某个DOM对象上的事件（如下图所示）。
 
-![](images/events-geteventlisteners_expanded.png)
+![](../Go/images/events-geteventlisteners_expanded.png)
 
 *   你还可以使用 `monitorEvents($("selector"))` 来监控相关的事件。比如：
 
@@ -94,7 +94,7 @@ monitorEvents(document.body, "click");
 
 `monitorEvents(document.body, "click");`
 
-![](images/monitor-events-1024x378.png)
+![](../Go/images/monitor-events-1024x378.png)
 
 ##### Console中的一些函数
 
@@ -102,7 +102,7 @@ monitorEvents(document.body, "click");
 
 使用 monitor函数来监控一函数，如下面的示例
 
-![](images/monitor-300x112.png)
+![](../Go/images/monitor-300x112.png)
 
 **2）copy函数**
 
@@ -112,7 +112,7 @@ copy函数可以把一个变量的值copy到剪贴板上。
 
 inspect函数可以让你控制台跳到你需要查看的对象上。如：
 
-![](images/inspect-1024x459.png)
+![](../Go/images/inspect-1024x459.png)
 
 更多的函数请参数官方文档 – [Using the Console / Command Line Reference](https://developers.google.com/web/tools/chrome-devtools/console/command-line-reference)
 
@@ -124,7 +124,7 @@ inspect函数可以让你控制台跳到你需要查看的对象上。如：
 console.log("%c左耳朵", "font-size:90px;color:#888")
 ```
 
-![](images/console.log_-300x92.png)
+![](../Go/images/console.log_-300x92.png)
 
 于是，你可以定义一些相关的log函数，如：
 
@@ -137,7 +137,7 @@ console.important = function( msg){
 }
 ```
 
-![](images/console.log2_-1024x411.png)
+![](../Go/images/console.log2_-1024x411.png)
 
 关于console.log中的格式化，你可以参看如下表格：
 
@@ -162,7 +162,7 @@ var pets = [
 console.table(pets)
 ```
 
-![](images/console.table_-1024x438.png)
+![](../Go/images/console.table_-1024x438.png)
 
 #### 关于console对象
 
@@ -181,7 +181,7 @@ console.table(pets)
 
 点击在 DevTools的右上角的那三个坚排的小点，你会看到一个菜单，点选 `Shortcuts`，你就可以看到所有的快捷键了
 
-![](images/shortcuts-1024x466.png)
+![](../Go/images/shortcuts-1024x466.png)
 
 
 

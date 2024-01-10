@@ -23,7 +23,7 @@ root@37b0673c0d19:/#
 输入 exit，可以返回宿主机。退出容器后，容器也随之停止运行。
 `docker ps -a ` 可以看到容器状态为已停止
 
-![](../images/Pasted%20image%2020231121225217.png)
+![](../Go/images/Pasted%20image%2020231121225217.png)
 
 ```sh
 # docker ps -a
@@ -36,7 +36,7 @@ Docker 会为创建的每个容器自动生成一个随机的名称。比如刚�
 ```sh
 docker run --name hello_docker -i -t ubuntu /bin/bash
 ```
-![](../images/Pasted%20image%2020231121230146.png)
+![](../Go/images/Pasted%20image%2020231121230146.png)
 ## 重新启动已停止的容器
 ```sh
 docker start hello_docker

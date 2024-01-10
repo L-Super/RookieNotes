@@ -13,7 +13,7 @@ rpath 全称是 `run-time search path`。Linux 下所有 elf 格式的文件都�
 # 查看 RPATH
 
 对于任意的elf文件，可以使用`$ readelf -d xxx'`来查看。  
-![](../images/Pasted%20image%2020230201093741.png)
+![](../Go/images/Pasted%20image%2020230201093741.png)
 
 # 设置 RPATH
 RPATH 中有个特殊的标识符 `$ORIGIN`。这个标识符代表 elf 文件自身所在的目录。当希望使用相对位置寻找 `.so` 文件，就需要利用 `$ORIGIN` 设置 RPATH。多个路径之间使用冒号 `:` 隔开。

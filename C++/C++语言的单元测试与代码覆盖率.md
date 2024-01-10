@@ -613,11 +613,11 @@ TEST_F(UtilityTest, ArithmeticCalculationIsLeapYear) {
 
 测试的结果像下面这样：
 
-![](images/test_case.png)
+![](../Go/images/test_case.png)
 
 如果测试中包含了失败的case，则会以红色的形式输出。同时，会看到失败的case所处的源码行数，这样可以很方便的知道哪一个测试失败了，像下面这样：
 
-![](images/test_case_fail.png)
+![](../Go/images/test_case_fail.png)
 
 如果只想有选择性的跑部分case，可以通过`--gtest_filter`参数进行过滤，这个参数支持`*`通配符。
 
@@ -889,11 +889,11 @@ genhtml --rc genhtml_branch_coverage=1 ${COVERAGE_FILE} -o ${REPORT_FOLDER}
 
 可以通过浏览器查看覆盖率报告的结果，像下面这样：
 
-![](images/report_overview.png)
+![](../Go/images/report_overview.png)
 
 从这个报告的首页，我们已经可以看到代码的语句覆盖率（Lines），函数覆盖率（Functions）以及分支覆盖率（Branches）。而对于条件覆盖率可以从详细页面中看到。如下图所示：
 
-![](images/code_coverage.png)
+![](../Go/images/code_coverage.png)
 
 在上面这张图中，我们可以看到哪些代码被覆盖了，哪些没有。而对于对于`if-else`之类的语句，也能很清楚的看到条件覆盖率的覆盖情况。例如，对于代码的27行，只覆盖了`if`成立时的情况，没有覆盖`if`不成立时的情况。
 

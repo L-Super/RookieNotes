@@ -65,8 +65,8 @@ linker input file unused because linking not done1
 -------------------------
 
 这里所说的链接器是指集成在可执行文件 `gcc` 中的链接器，而不是单独使用的 `ld`。当我们通过 `gcc` 间接使用链接器时，需要在链接器的编译选项前面加上 `-Wl,`，然后跟着编译选项，即标题中的 `options`。GCC 手册中的相应介绍如下：
-![](../images/gcc-wl.png)那么，为什么需要 `-Wl,` 前缀呢？GNU 的链接器手册中是这样解释的（很好懂，就不翻译了）：
-![](../images/gcc-wl1.png)
+![](../Go/images/gcc-wl.png)那么，为什么需要 `-Wl,` 前缀呢？GNU 的链接器手册中是这样解释的（很好懂，就不翻译了）：
+![](../Go/images/gcc-wl1.png)
 
 * * *
 

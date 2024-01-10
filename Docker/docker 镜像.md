@@ -42,7 +42,7 @@ docker search
 + 是否官方（Official）：由上游开发者管理的镜像（如 fedora 镜像由 Fedora 团队管理）
 + 自动构建（Automated）：表示由 Docker Hub 的自动构建（Automated Build）流程创建的。
 
-![](../images/Pasted%20image%2020231124113026.png)
+![](../Go/images/Pasted%20image%2020231124113026.png)
 
 ## 构建镜像
 构建 Docker 镜像有以下两种方法：
@@ -146,7 +146,7 @@ RUN ["apt", " install", "-y", "nginx"]
 docker build -t="chumoshi/docker_demo" .
 ```
 -t 选项为新镜像设置了仓库和名称。
-![](../images/Pasted%20image%2020231124165549.png)
+![](../Go/images/Pasted%20image%2020231124165549.png)
 
 也可在构建镜像时，设置标签：
 ```
@@ -162,7 +162,7 @@ docker build -t="chumoshi/docker_demo:v1" git@github.com:chumoshi/docker-demo
 
 #### 调试指令执行失败
 假设软件包名写错，如 nginx 写成 ngin：
-![](../images/Pasted%20image%2020231124170749.png)
+![](../Go/images/Pasted%20image%2020231124170749.png)
 
 可以看到 Docker 会提示哪一步执行失败，可以根据错误信息进行修正。
 
@@ -216,7 +216,7 @@ The push refers to repository [docker.io/chumoshi/nginx]
 latest: digest: sha256:9538ace0b30d4f07d839f076277beac15b26422e5a5da4ddb965682c5788034e size: 741
 ```
 然后就可以在 Docker Hub 上看到上传的镜像
-![](../images/Pasted%20image%2020231124155240.png)
+![](../Go/images/Pasted%20image%2020231124155240.png)
 
 ## 删除镜像
 如果不需要镜像了，可以使用 `docker rmi` 命令删除。
