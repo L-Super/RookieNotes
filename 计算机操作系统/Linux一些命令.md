@@ -15,6 +15,10 @@ nohup ./MonitorStorageServer &
 ldd Pamir | awk '{print $3}' | xargs -i cp -L {} ./lib
 ```
 
+## 清空文件内容
+```bash
+> file.txt
+```
 ## 查看系统信息
 
 ### 操作系统版本信息
