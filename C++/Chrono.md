@@ -11,7 +11,7 @@ Chrono程序库的设计，是希望能够处理“timer和clock在不同系统�
   1970年1月1日是UNIX和POSIX的system clock（系统时钟）起始点。
 
 + Timepoint的概念其实是以某个clock（时钟）为参数。Clock是个对象，定义timepoint的epoch（起点；重要纪元）。不同的clock有着不同的epoch。一般而言，当操作函数处理多个timepoint，例如处理两个timepoint之间的差距时，必须采用相同的epoch/clock。任何clock都提供便捷函数用来产出现下（当前）的timepoint。
-![](../Go/images/Pasted%20image%2020220901105717.png)
+![](../images/Pasted%20image%2020220901105717.png)
 
 ## Duration（时间段）
 
@@ -78,7 +78,7 @@ std::chrono::duration<int, std::ratio<1,5>> d2(1);//1 tick of1/5 second
 
 duration提供的其他操作和类型
 
-![](../Go/images/Pasted%20image%2020220901135156.png)
+![](../images/Pasted%20image%2020220901135156.png)
 
 隐式转换至一个“较精准的单位类型”永远可行。转换至“较粗糙的单位类型”就不可行了，因为这将有可能遗失信息。例如将一个42 010毫秒整数值转换为秒，结果是42，意味着这个duration中的10个毫秒不见了。但你还是可以使用`duration_cast`强迫执行这样的转换
 
@@ -102,7 +102,7 @@ Clock提供的函数now（）可以产出一个代表“现在时刻”的timepo
 
 clock提供的类型定义和static成员。
 
-![](../Go/images/Pasted%20image%2020220901140755.png)
+![](../images/Pasted%20image%2020220901140755.png)
 
 C++标准库提供了三个clock，每一个都具备上述接口：
 
