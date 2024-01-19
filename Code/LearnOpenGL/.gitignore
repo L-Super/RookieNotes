@@ -1,0 +1,14 @@
+# Executables
+*.exe
+*.out
+*.app
+
+# JetBrains
+.idea/
+
+# CMake
+cmake-build-*/
+
+# IntelliJ
+out/
+
