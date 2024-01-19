@@ -11,4 +11,6 @@
 
 着色器语言 GLSL (OpenGL Shading Language)
 着色器程序(Shader Program)
-着色器程序对象(Shader Program Object)
+着色器程序对象 (Shader Program Object)
+
+顶点属性(Vertex Attribute)
