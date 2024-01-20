@@ -8,9 +8,7 @@ void processInput(GLFWwindow* window);
 const char* vertexShaderSource = R"(
 	#version 330 core
 	layout (location = 0) in vec3 aPos; // 位置变量的属性位置值为0
-
 	out vec4 vertexColor; // 为片段着色器指定一个颜色输出
-
 	void main()
 	{
 		gl_Position = vec4(aPos, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
@@ -20,12 +18,10 @@ const char* vertexShaderSource = R"(
 const char* fragmentShaderSource = R"(
 	#version 330 core
 	out vec4 FragColor;
-
-	in vec4 vertexColor; // 从顶点着色器传来的输入变量（名称相同、类型相同）
-
+	uniform vec4 ourColor; // 在OpenGL程序代码中设定这个变量
 	void main()
 	{
-		FragColor = vertexColor;
+		FragColor = ourColor;
 	}
 )";
 
@@ -116,7 +112,7 @@ int main()
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	// 首先绑定顶点数组对象，然后绑定并设置顶点缓冲区，然后配置顶点属性
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -125,10 +121,8 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindVertexArray(0);
-
+	// 绑定VAO(它已经绑定了，但只是为了演示): 因为我们只有一个 VAO，所以我们可以只需在呈现相应的三角形之前预先绑定它; 这是另一种方法
+     glBindVertexArray(VAO);
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -148,9 +142,15 @@ int main()
 
 		// draw our first triangle
 		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+		// 更新uniform颜色
+		double  timeValue = glfwGetTime();
+		float greenValue = static_cast<float>(sin(timeValue) / 2.0 + 0.5);
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+		// render the triangle
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		// glBindVertexArray(0); // no need to unbind it every time
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
