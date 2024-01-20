@@ -1,3 +1,17 @@
+/**
+ * 使用out关键字把顶点位置输出到片段着色器，并将片段的颜色设置为与顶点位置相等（来看看连顶点位置值都在三角形中被插值的结果）
+ * 做完这些后，尝试回答下面的问题：为什么在三角形的左下角是黑的?
+*/
+
+/*
+Answer to the question: Do you know why the bottom-left side is black?
+-- --------------------------------------------------------------------
+Think about this for a second: the output of our fragment's color is equal to the (interpolated) coordinate of
+the triangle. What is the coordinate of the bottom-left point of our triangle? This is (-0.5f, -0.5f, 0.0f). Since the
+xy values are negative they are clamped to a value of 0.0f. This happens all the way to the center sides of the
+triangle since from that point on the values will be interpolated positively again. Values of 0.0f are of course black
+and that explains the black side of the triangle.
+*/
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -47,7 +61,7 @@ int main()
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader ourShader("shader.vs", "shader.fs"); // you can name your shader files however you like
+	Shader ourShader("shader_p3.vs", "shader_p3.fs"); // you can name your shader files however you like
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
