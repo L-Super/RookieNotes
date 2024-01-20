@@ -90,8 +90,8 @@ public:
 private:
 	/**
 	 * 用于检查着色器编译/链接错误
-	 * @param shader
-	 * @param type
+	 * @param shader 着色器
+	 * @param type 着色器类型
 	 */
 	void checkCompileErrors(unsigned int shader, std::string type)
 	{

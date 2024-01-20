@@ -9,3 +9,6 @@ target_link_libraries(shader_uniform PRIVATE glad::glad glfw)
 
 add_executable(shaders_interpolation shaders_interpolation.cpp)
 target_link_libraries(shaders_interpolation PRIVATE glad::glad glfw)
+
+add_executable(shaders_class shaders_class.cpp)
+target_link_libraries(shaders_class PRIVATE glad::glad glfw)
