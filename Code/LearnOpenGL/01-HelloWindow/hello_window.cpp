@@ -53,7 +53,6 @@ int main()
 	// 前两个参数控制窗口左下角的位置。第三个和第四个参数控制渲染窗口的宽度和高度（像素）。
 	glViewport(0, 0, 800, 600);
 
-
 	// 渲染循环(Render Loop)
 	// 每次循环的开始前检查一次GLFW是否被要求退出，如果是的话，该函数返回true，渲染循环便结束了
 	while (!glfwWindowShouldClose(window))
