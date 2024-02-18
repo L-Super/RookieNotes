@@ -1,5 +1,46 @@
 ## CMake 设置版本号
 
+### 方法一
+
+直接在 `project()` 指令里设置版本号：
+
+```cmake
+project(Tutorial VERSION 1.0.0)
+```
+
+当 `project()` 命令被调用时，CMake 会定义 `Tutorial_VERSION_MAJOR` 、 `Tutorial_VERSION_MINOR`、`Tutorial_VERSION_PATCH`。与 CMake 的 `PROJECT_VERSION` 的参数一致。
+
+比如：
+```cmake
+project(Demo VERSION 1.0.5)
+
+set(CMAKE_CXX_STANDARD 17)
+
+configure_file(version.h.in version.h)
+
+message(STATUS "Version: ${PROJECT_VERSION} ${PROJECT_VERSION_MAJOR} ${PROJECT_VERSION_MINOR}")
+message(STATUS "Version: ${Demo_VERSION_MAJOR}.${Demo_VERSION_MINOR}.${Demo_VERSION_PATCH}")
+```
+输出：
+```
+-- Version: 1.0.5 1 0
+-- Version: 1.0.5
+```
+然后创建 `version.h.in` 文件：
+```
+// method 1
+#define VERSION_MAJOR @PROJECT_VERSION_MAJOR@  
+#define VERSION_MINOR @PROJECT_VERSION_MINOR@  
+#define VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define VERSION "@PROJECT_VERSION@"
+// method 2  
+#define VERSION_MAJOR @Demo_VERSION_MAJOR@  
+#define VERSION_MINOR @Demo_VERSION_MINOR@  
+#define VERSION_PATCH @Demo_VERSION_PATCH@
+```
+两种方式生成版本宏均可。第一种可以更方便生成版本号字符串。
+### 方法二
+
 在CMakeLists.txt中
 
 ```cmake
