@@ -43,3 +43,4 @@ int main()
 }
 ```
 
+注：尚有缺陷，无法打印命名空间内的 enum class，如 `pp::enum_class`
