@@ -13,4 +13,6 @@
 着色器程序(Shader Program)
 着色器程序对象 (Shader Program Object)
 
-顶点属性(Vertex Attribute)
+顶点属性 (Vertex Attribute)
+
+纹理坐标 (Texture Coordinate)
