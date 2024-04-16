@@ -49,7 +49,7 @@ int main()
 
     // build and compile our shader program
     // ------------------------------------
-    Shader ourShader("texture.vs", "texture.fs");
+    Shader ourShader("texture.vs", "texture1.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
