@@ -47,14 +47,14 @@ int main()
         return -1;
     }
 
-    // build and compile our shader zprogram
+    // build and compile our shader program
     // ------------------------------------
     Shader ourShader("texture.vs", "texture.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
-            // positions          // colors           // texture coords
+            // positions                      // colors                        // texture coords
             0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
             0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
             -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
