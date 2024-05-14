@@ -15,4 +15,13 @@
 
 顶点属性 (Vertex Attribute)
 
+纹理 (Texture)
 纹理坐标 (Texture Coordinate)
+片段插值 (Fragment Interpolation)
+纹理像素 (Texture Pixel，也叫 Texel)
+纹理过滤 (Texture Filtering)
+邻近过滤（Nearest Neighbor Filtering）
+线性过滤（(Bi) linear Filtering）
+多级渐远纹理 (Mipmap)
+纹理单元 (Texture Unit)
+
