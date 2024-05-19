@@ -93,6 +93,7 @@ enum{
 
 `\brief` 和 `@brief`区别不大，更多使用的是后者
 
-> 参考链接：
+参考链接：
 >
 > [C++标准注释原则 - 基于doxygen的C++注释](https://blog.csdn.net/czyt1988/article/details/8901191)
+> [Doxygen: Documenting the code](https://doxygen.nl/manual/docblocks.html)
