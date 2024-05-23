@@ -16,153 +16,138 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
-    // glfw: initialize and configure
-    // ------------------------------
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  // glfw：初始化和配置
+  glfwInit();
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    // glfw window creation
-    // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  // GLFW 窗口创建
+  GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+  if (window == NULL)
+  {
+    std::cerr << "Failed to create GLFW window" << std::endl;
+    glfwTerminate();
+    return -1;
+  }
+  glfwMakeContextCurrent(window);
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
+  // glad：加载所有 OpenGL 函数指针
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+  {
+    std::cerr << "Failed to initialize GLAD" << std::endl;
+    return -1;
+  }
 
-    // build and compile our shader program
-    // ------------------------------------
-    Shader ourShader("texture.vs", "texture1.fs");
+  // 构建和编译我们的着色器程序
+  Shader ourShader("texture.vs", "texture1.fs");
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    float vertices[] = {
-            // positions                      // colors                        // texture coords
-            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-    unsigned int indices[] = {
-            0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
-    };
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+  // 设置顶点数据（和缓冲区）并配置顶点属性
+  float vertices[] = {
+      // positions         // colors           // texture coords
+      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+      -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+      -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+  };
+  unsigned int indices[] = {
+      0, 1, 3, // first triangle
+      1, 2, 3  // second triangle
+  };
+  unsigned int VBO, VAO, EBO;
+  glGenVertexArrays(1, &VAO);
+  glGenBuffers(1, &VBO);
+  glGenBuffers(1, &EBO);
 
-    glBindVertexArray(VAO);
+  glBindVertexArray(VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+  // position 属性
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+  glEnableVertexAttribArray(0);
+  // color 属性
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
+  // 纹理坐标属性
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+  glEnableVertexAttribArray(2);
 
-    // load and create a texture
-    // -------------------------
-    unsigned int texture;
-    // 生成纹理
-    glGenTextures(1, &texture);
-    // 绑定纹理
+  // 加载并创建纹理
+  unsigned int texture;
+  // 生成纹理
+  glGenTextures(1, &texture);
+  // 绑定纹理
+  glBindTexture(GL_TEXTURE_2D, texture);
+
+  // 加载并生成纹理
+  int width, height, nrChannels;
+  unsigned char *data = stbi_load("images/container.jpg", &width, &height, &nrChannels, 0);
+  if (data)
+  {
+    // 使用载入的图片数据生成一个纹理
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    // 为当前绑定的纹理自动生成所有需要的多级渐远纹理
+    glGenerateMipmap(GL_TEXTURE_2D);
+  }
+  else
+  {
+    std::cerr << "Failed to load texture" << std::endl;
+  }
+  stbi_image_free(data);
+
+  // 渲染循环
+  while (!glfwWindowShouldClose(window))
+  {
+    // input
+    processInput(window);
+
+    // render
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // 将纹理绑定到相应的纹理单元上
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    // 加载并生成纹理
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("images/container.jpg", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        // 使用载入的图片数据生成一个纹理
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        // 为当前绑定的纹理自动生成所有需要的多级渐远纹理
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
+    // 渲染容器
+    ourShader.use();
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-    // render loop
-    // -----------
-    while (!glfwWindowShouldClose(window))
-    {
-        // input
-        // -----
-        processInput(window);
+    // glfw：交换缓冲区和轮询 IO 事件（按下/释放键、移动鼠标等）
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
 
-        // render
-        // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+  // 可选：一旦所有资源超出其用途，就取消分配它们：
+  glDeleteVertexArrays(1, &VAO);
+  glDeleteBuffers(1, &VBO);
+  glDeleteBuffers(1, &EBO);
 
-        // 将纹理绑定到相应的纹理单元上
-        glBindTexture(GL_TEXTURE_2D, texture);
-
-        // render container
-        ourShader.use();
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
-
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
-    glfwTerminate();
-    return 0;
+  // glfw：终止，清除所有以前分配的 GLFW 资源。
+  glfwTerminate();
+  return 0;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
+// 处理所有输入：查询GLFW是否按下相关键释放此帧并做出相应反应
 void processInput(GLFWwindow *window)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, true);
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
+// glfw: 每当窗口大小发生变化（通过操作系统或用户调整大小）时，都会执行此回调函数
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and
-    // height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, width, height);
+  // 确保视口与新窗口尺寸匹配;请注意，宽度和高度将明显大于视网膜显示屏上指定的尺寸。
+  glViewport(0, 0, width, height);
 }
