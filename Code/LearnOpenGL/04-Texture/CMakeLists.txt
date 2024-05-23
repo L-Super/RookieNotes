@@ -3,3 +3,6 @@ target_link_libraries(texture PRIVATE glad::glad glfw)
 
 add_executable(texture1 texture1.cpp)
 target_link_libraries(texture1 PRIVATE glad::glad glfw)
+
+add_executable(texture2 texture2.cpp)
+target_link_libraries(texture2 PRIVATE glad::glad glfw)
