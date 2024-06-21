@@ -122,7 +122,7 @@ Specify a custom bar string formatting. May impact performance. [default: '{l_ba
      屏幕高度。If specified, hides nested bars outside this bound. If unspecified, attempts to use environment height. The fallback is 20.
       
 + colour  : str, optional
-     进度条颜色 (e.g. 'green', ' #00ff00 ').
+     进度条颜色 (e.g. 'green', ' `#00ff00` ').
       
 + delay  : float, optional
      在 (默认值：0）秒之后才显示。
