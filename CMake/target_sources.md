@@ -18,6 +18,7 @@ target_sources(<target>
 ```cmake
 add_executable(my_app main.c)
 
+# 注意，在add_executable()之后
 target_sources(my_app PRIVATE utils.c)
 target_sources(my_app PUBLIC api.h)
 ```
