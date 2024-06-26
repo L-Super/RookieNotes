@@ -1,4 +1,4 @@
-[`String`](https://doc.rust-lang.org/std/string/struct.String.html) 是标准堆分配的可扩容 UTF-8 字符串缓冲区
+[`String`](https://doc.rust-lang.org/std/string/struct.String.html) 是标准堆分配的可扩容 UTF-8 编码字符串缓冲区
 
 ```rust
 fn main() {
