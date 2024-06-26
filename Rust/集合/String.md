@@ -27,3 +27,14 @@ s3: len = 6, number of chars = 2
 - `String::with_capacity` 指定字符串容量
 - `String::len` 会返回“String”的大小（以字节为单位，可能不同于以字符为单位的长度）。
 - `String::chars` 会针对实际字符返回一个迭代器。
+
+字符串字面值创建字符串：
+```rust
+let data = "initial contents";
+
+let s = data.to_string();
+// 该方法也可直接用于字符串字面值：
+let s = "initial contents".to_string();
+
+let s = String::from("initial contents");
+```
