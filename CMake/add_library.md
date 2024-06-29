@@ -6,7 +6,7 @@ add_library(<name> [STATIC | SHARED | MODULE]
             [EXCLUDE_FROM_ALL]
             [<source>...])
 ```
-若没有指定 STATIC 还是 SHARED，且 `BUILD_SHARED_LIBS` 变量没有设置为 ON，将默认生成一个静态库。
+若没有指定 STATIC 还是 SHARED，且 `BUILD_SHARED_LIBS` 变量没有设置为 ON，将**默认生成一个静态库**。
 ## 对象库
 ```
 add_library(<name> OBJECT [<source>...])
