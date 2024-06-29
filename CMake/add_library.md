@@ -7,6 +7,8 @@ add_library(<name> [STATIC | SHARED | MODULE]
             [<source>...])
 ```
 若没有指定 STATIC 还是 SHARED，且 `BUILD_SHARED_LIBS` 变量没有设置为 ON，将**默认生成一个静态库**。
+
+ CMake 期望 `SHARED` 库在 Windows 上始终具有关联的导入库，所以 `SHARED` **默认导出任何符号**。
 ## 对象库
 ```
 add_library(<name> OBJECT [<source>...])
