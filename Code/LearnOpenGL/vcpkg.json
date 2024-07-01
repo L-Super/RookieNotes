@@ -1,0 +1,18 @@
+{
+  "name" : "learnopengl",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "c561d1ec136c79a8ff1e3ea125876e51006b8361",
+  "dependencies" : [ {
+    "name" : "fmt",
+    "version>=" : "9.1.0"
+  }, {
+    "name" : "glad",
+    "version>=" : "0.1.36"
+  }, {
+    "name" : "glfw3",
+    "version>=" : "3.3.8#2"
+  }, {
+    "name" : "glm",
+    "version>=" : "1.0.1#2"
+  } ]
+}

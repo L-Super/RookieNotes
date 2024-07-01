@@ -10,8 +10,10 @@ endif ()
 
 find_package(glad CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 add_subdirectory(01-HelloWindow)
 add_subdirectory(02-Triangle)
 add_subdirectory(03-Shader)
 add_subdirectory(04-Texture)
+add_subdirectory(05-Transformations)

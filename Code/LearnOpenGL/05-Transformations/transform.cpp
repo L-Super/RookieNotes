@@ -1,12 +1,17 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "third_party/stb_image.h"
 
 #include "shader_s.h"
 
 #include <iostream>
-#include <filesystem>
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -16,8 +21,6 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main(int argc, char **argv)
 {
-//  std::cout<<std::filesystem::current_path()<<std::endl;
-
   // glfw：初始化和配置
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -47,15 +50,15 @@ int main(int argc, char **argv)
   }
 
   // 构建和编译我们的着色器程序
-  Shader ourShader("texture.vs", "texture2.fs");
+  Shader ourShader("transform.vs", "transform.fs");
 
   // 设置顶点数据（和缓冲区）并配置顶点属性
   float vertices[] = {
-      // positions         // colors           // texture coords
-      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-      -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-      -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+      // positions         // texture coords
+      0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
+      0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
+      -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+      -0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left
   };
   unsigned int indices[] = {
       0, 1, 3, // first triangle
@@ -75,14 +78,11 @@ int main(int argc, char **argv)
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
   // position 属性
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
-  // color 属性
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-  glEnableVertexAttribArray(1);
   // 纹理坐标属性
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
 
   // 加载并创建纹理
   unsigned int texture1;
@@ -145,9 +145,10 @@ int main(int argc, char **argv)
   }
   stbi_image_free(data);
 
-  ourShader.use(); // 不要忘记在设置uniform变量之前激活着色器程序！
-  glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0); // 手动设置
-  ourShader.setInt("texture2", 1); // 或者使用着色器类设置
+  // 告诉每个OpenGL 的采样器它属于哪个纹理单元（只需执行一次）
+  ourShader.use();
+  ourShader.setInt("texture1", 0);
+  ourShader.setInt("texture2", 1);
 
   // 渲染循环
   while (!glfwWindowShouldClose(window))
@@ -165,8 +166,19 @@ int main(int argc, char **argv)
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
-    // 渲染容器
+
+    // 创建变换
+    // 确保先将 matrix 初始化为 identity matrix
+    glm::mat4 transform = glm::mat4(1.0f);
+    transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+    transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    // 获取矩阵uniform变量的地址，设置矩阵
     ourShader.use();
+    unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+    // 渲染容器
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -198,3 +210,4 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
   // 确保视口与新窗口尺寸匹配;请注意，宽度和高度将明显大于视网膜显示屏上指定的尺寸。
   glViewport(0, 0, width, height);
 }
+
