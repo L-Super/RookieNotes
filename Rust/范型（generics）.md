@@ -43,6 +43,12 @@ impl<T> Point<T> {
     // fn set_x(&mut self, x: T)
 }
 
+// 多个泛型类型参数
+struct Point2<T, U> {
+	x: T, 
+	y: U, 
+}
+
 fn main() {
     let integer = Point { x: 5, y: 10 };
     let float = Point { x: 1.0, y: 4.0 };

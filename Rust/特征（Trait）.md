@@ -10,6 +10,7 @@ struct Cat {
     lives: i8,
 }
 
+// 声明一个 trait
 trait Pet {
     fn talk(&self) -> String;
 
@@ -18,12 +19,14 @@ trait Pet {
     }
 }
 
+// 提供其自定义行为的方法体
 impl Pet for Dog {
     fn talk(&self) -> String {
         format!("Woof, my name is {}!", self.name)
     }
 }
 
+// 提供其自定义行为的方法体
 impl Pet for Cat {
     fn talk(&self) -> String {
         String::from("Miau!")
