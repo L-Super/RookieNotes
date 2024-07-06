@@ -43,5 +43,7 @@ private:
 
 正是由于编译器帮我们实现了细节，使我们的代码变得优雅和简洁了许多。
 
+可用 [cppinsights]( https://cppinsights.io/ ) 查看 lambda 实现。
+
 > [C++11中的lambda，std::function以及std:bind ](https://paul.pub/cpp-lambda-function-bind/)
 
