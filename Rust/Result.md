@@ -52,3 +52,5 @@ fn main() {
     };
 }
 ```
+`File::open` 返回的 `Err` 成员中的值类型 `io::Error`，它是一个标准库中提供的结构体。这个结构体有一个返回 `io::ErrorKind` 值的 `kind` 方法可供调用。`io::ErrorKind` 是一个标准库提供的枚举，它的成员对应 `io` 操作可能导致的不同错误类型。
+`ErrorKind::NotFound`，它代表尝试打开的文件并不存在。
