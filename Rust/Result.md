@@ -72,3 +72,33 @@ fn main() {
     });
 }
 ```
+## unwrap 和 expect
+如果 `Result` 值是成员 `Ok`，`unwrap` 会返回 `Ok` 中的值。如果 `Result` 是成员 `Err`，`unwrap` 会为我们调用 `panic!`。
+```rust
+use std::fs::File;
+
+fn main() {
+    let f = File::open("hello.txt").unwrap();
+}
+```
+如果不存在 _hello. txt_ 文件，将会看到一个 `unwrap` 调用 `panic!` 时提供的错误信息：
+```
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error {
+repr: Os { code: 2, message: "No such file or directory" } }',
+src/libcore/result.rs:906:4
+```
+
+
+使用 `expect` 提供一个好的错误信息可以表明你的意图并更易于追踪 panic 的根源。
+```rust
+use std::fs::File;
+
+fn main() {
+    let f = File::open("hello.txt").expect("Failed to open hello.txt");
+}
+```
+`expect` 在调用 `panic!` 时使用的错误信息将是我们传递给 `expect` 的参数
+```
+thread 'main' panicked at 'Failed to open hello.txt: Error { repr: Os { code:
+2, message: "No such file or directory" } }', src/libcore/result.rs:906:4
+```
