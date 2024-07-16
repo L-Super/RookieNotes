@@ -169,20 +169,31 @@ int main(int argc, char **argv)
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
-
     // 创建变换
     // 确保先将 matrix 初始化为 identity matrix
     glm::mat4 transform = glm::mat4(1.0f);
+    // 第一个变换
     transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
 
     // 获取矩阵uniform变量的地址，设置矩阵
-    ourShader.use();
     unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
     // 渲染容器
     glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // 第二个变换
+    // ---------------------
+    transform = glm::mat4(1.0f); // reset it to identity matrix
+    transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
+    float scaleAmount = static_cast<float>(sin(glfwGetTime()));
+    transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+    // 这一次，将矩阵值数组的第一个元素作为其内存指针值
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]);
+
+    // 现在，随着均匀矩阵被新的变换替换，再次绘制它。
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     // glfw：交换缓冲区和轮询 IO 事件（按下/释放键、移动鼠标等）
