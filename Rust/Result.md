@@ -104,6 +104,7 @@ thread 'main' panicked at 'Failed to open hello.txt: Error { repr: Os { code:
 ```
 
 ## 传播错误
+当函数的实现调用某些可能失败的内容时，您可以将错误返回给调用代码，以便它决定如何处理，而不是在函数本身内部处理错误。这被称为 **传播**（_propagating_）错误
 ```rust
 use std::io;
 use std::io::Read;
