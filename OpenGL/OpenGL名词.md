@@ -31,6 +31,13 @@
 观察空间 (View Space，或者称为视觉空间 (Eye Space))
 裁剪空间 (Clip Space)
 屏幕空间 (Screen Space)
+投影矩阵(Projection Matrix)
 模型矩阵 (Model Matrix)
 正射投影 (Orthographic Projection Matrix)
 透视投影 (Perspective Projection Matrix)
+摄像机 (Camera)（摄像机空间 (Camera Space) 或视觉空间 (Eye Space)）
+观察矩阵 (View Matrix)
+坐标集 (Coordinate Set)
+裁剪体积 (Clipping Volume)
+观察箱 (Viewing Box)
+透视除法(Perspective Division)
