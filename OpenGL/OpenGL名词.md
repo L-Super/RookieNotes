@@ -25,3 +25,12 @@
 多级渐远纹理 (Mipmap)
 纹理单元 (Texture Unit)
 
+
+局部空间 (Local Space，或者称为物体空间 (Object Space))
+世界空间 (World Space)
+观察空间 (View Space，或者称为视觉空间 (Eye Space))
+裁剪空间 (Clip Space)
+屏幕空间 (Screen Space)
+模型矩阵 (Model Matrix)
+正射投影 (Orthographic Projection Matrix)
+透视投影 (Perspective Projection Matrix)
