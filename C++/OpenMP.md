@@ -77,7 +77,7 @@ MinGW 编译器输出：
 
 [已完成]
 
-``` 
+```
 ### 常用示例
 开启 8 个线程
 ```cpp
@@ -111,28 +111,29 @@ int main()
 }
 ```
  OpenMP 实现的角度来看，上面的代码等同于这样：
- ```cpp
- #include <omp.h>  
-#include <vector>  
-#include <cstdint>  
-  
-int main()  
-{  
-   int size = 10 * 1024 * 1024;  
-    std::vector<int> squares(size, 0);  
-#pragma omp parallel  
-    {  
-        int thread_id = omp_get_thread_num();     // 线程 ID, 范围从 0 到 N - 1        int thread_nums = omp_get_num_threads();  // 线程的数量  
-        int first = thread_id * size / thread_nums;  
-        int last = (thread_id + 1) * size / thread_nums;  
-        for (int i = first; i < last; ++i)  
-        {  
-            squares[i] = i * i;  
-        }  
-    }  
-    return 0;  
+```cpp
+#include <omp.h>
+#include <vector>
+#include <cstdint>
+
+int main() 
+{
+    int size = 10 * 1024 * 1024;
+    std::vector<int> squares(size, 0); 
+#pragma omp parallel 
+    { 
+        int thread_id = omp_get_thread_num(); // 线程 ID, 范围从 0 到 N - 1
+        int thread_nums = omp_get_num_threads(); // 线程的数量
+        int first = thread_id * size / thread_nums;
+        int last = (thread_id + 1) * size / thread_nums;
+        for (int i = first; i < last; ++i)
+        {
+            squares[i] = i * i;
+        }
+    }
+    return 0;
 }
- ```
+```
 
 
 ## 函数列表
