@@ -9,6 +9,10 @@ add_library(<name> [STATIC | SHARED | MODULE]
 若没有指定 STATIC 还是 SHARED，且 `BUILD_SHARED_LIBS` 变量没有设置为 ON，将**默认生成一个静态库**。
 
  CMake 期望 `SHARED` 库在 Windows 上始终具有关联的导入库，所以 `SHARED` **默认导出任何符号**。
+
+>[!note]
+> `BUILD_SHARED_LIBS` 作用于全局，将导致所有库以动态库方式构建，除非库被显式添加为静态库。
+
 ## 对象库
 ```
 add_library(<name> OBJECT [<source>...])
@@ -98,3 +102,5 @@ add_library(<name> ALIAS <target>)
 
 
 `ALIAS` 目标可以用作可链接的目标和从中读取属性的目标。也可以使用常规的 `if(TARGET)` 子命令来测试它们是否存在。 `<name>` 不得用于修改 `<target>` 的属性，也就是说，它不得用作 [`set_property()`](https://cmake-doc.readthedocs.io/zh-cn/latest/command/set_property.html#command:set_property)、 [`set_target_properties()`](https://cmake-doc.readthedocs.io/zh-cn/latest/command/set_target_properties.html#command:set_target_properties) 的操作数， [`target_link_libraries()`](https://cmake-doc.readthedocs.io/zh-cn/latest/command/target_link_libraries.html#command:target_link_libraries) 等 `ALIAS` 目标可能无法安装或导出。
+
+> https://cmake-doc.readthedocs.io/zh-cn/latest/variable/BUILD_SHARED_LIBS.html#variable:BUILD_SHARED_LIBS
