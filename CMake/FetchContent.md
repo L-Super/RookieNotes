@@ -1,6 +1,10 @@
 
 该模块允许在配置时通过 ExternalProject 模块支持的任何方法填充内容。
+
+## include (FetchContent) 
+使用 include(FetchContent) 将模块添加到项目中
 ## FetchContent_Declare
+配置依赖项。告知 FetchContent 依赖项的位 置，以及应该使用哪个版本。
 
 ```
 FetchContent_Declare(
@@ -17,6 +21,7 @@ FetchContent_Declare(
 
 即使用 `FetchContent_Declare(MyName)` 从 URL、Git 仓库等地方获取软件包或数据。
 ## FetchContent_MakeAvailable
+完成依赖项设置。这将下载、构建、安装， 并将列表文件添加到主项目以供解析。
 
 ```
 FetchContent_MakeAvailable(<name1> [<name2>...])
