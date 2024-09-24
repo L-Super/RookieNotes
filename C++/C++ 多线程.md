@@ -293,3 +293,111 @@ public:
 - 使用层次锁结构
 
 虽然，定义锁的顺序是一种特殊情况，但层次锁的意义在于，在运行时会约定是否进行检查。这个建议需要 对应用进行分层，并且识别在给定层上所有互斥量。当代码试图对互斥量上锁，而低层已持有该层锁时，不 允许锁定。可以通过每个互斥量对应的层数，以及每个线程使用的互斥量，在运行时检查锁定操作是否可以 进行。
+
+
+
+## 条件变量
+
+`std::condition_variable` 和 `std::condition_variable_any`，前者和mutex工作，后者和合适的互斥量工作。 `std::condition_variable_any` 更加通用，但在性能和系统资源的使用方面会有更多的开销。
+
+通知：
+
+- notify_one()：通知一个等待的线程
+- notify_all()：通知所有等待的线程
+
+等待：
+
+- wait()：阻塞当前线程，直到条件变量被唤醒
+- wait_for()：阻塞当前线程，直到条件变量被唤醒，或到指定时长后
+- wait_until()：阻塞当前线程，直到条件变量被唤醒，或直到指定时间点后
+
+```cpp
+class A{
+public:
+void inMsgRecvQueue()
+{
+    for(int i=0;i<100000;++i)
+    {
+        std::unique_lock<std::mutex> guard(mymutex1);
+        msgRecvQueue.push_back(i);
+        my_cond.notify_one(); //尝试唤醒wait()，执行该语句后，就会被唤醒
+        // .......
+    }
+}
+
+void outMsgRecvQueue()
+{
+    int command = 0;
+    while(true)
+    {
+        std::unique_lock<std::mutex> guard(my_mutex);
+        // wait用于等待
+        my_cond.wait(guard,[this]{
+            if(!msgRecvQueue.empty())
+                return true;
+            return false;
+        })；
+
+        command = msgRecvQueue.front();
+        msgRecvQueue.popfront();
+    }
+}
+private:
+    std::list<int> msgRecvQueue;
+    std::mutex my_mutex;
+    std::condition_variable my_cond;
+};
+```
+
+如果wait()第二个参数返回值是false，那么wait()将解锁互斥量，并阻塞至本行，堵塞到其他线程调用notify_one()成员函数为止。如果是true，直接返回。
+
+如果没有第二个参数，那么跟返回false一样。
+
+当其他线程用notify_one()将本wait()唤醒：
+
+1. wait()不断尝试重新获取互斥量锁，如果获取不到，就会阻塞这里等待获取;如果获取到，就继续执行第二步
+2.  如果wait()有第二个参数，就判断这个lambda表达式，如果表达式为false，那么wait将解锁互斥量，并堵塞到本行，等待再次唤醒；如果为true，则wait()返回，执行下一句流程，此时互斥锁加锁；如果wiat()没有第二个参数，则wait()返回，执行下一句流程
+
+
+
+```cpp
+std::mutex mut; 
+std::queue<data_chunk> data_queue; 
+std::condition_variable data_cond; 
+ 
+void data_preparation_thread() 
+{ 
+  while(more_data_to_prepare()) 
+  { 
+    data_chunk const data=prepare_data(); 
+    std::lock_guard<std::mutex> lk(mut);
+    // 上锁，压入队列
+    data_queue.push(data);
+    // 对等待的线程(如果有等待线程)进行通知
+    data_cond.notify_one();
+  } 
+} 
+ 
+void data_processing_thread() 
+{ 
+  while(true) 
+  { 
+    // 需使用unique_lock
+    std::unique_lock<std::mutex> lk(mut);
+    data_cond.wait( 
+         lk,[]{return !data_queue.empty();});  // 5 
+    data_chunk data=data_queue.front(); 
+    data_queue.pop(); 
+    lk.unlock();  // 6 
+    process(data); 
+    if(is_last_chunk(data)) 
+      break; 
+  } 
+} 
+```
+
+首先，队列中中有两个线程，两个线程之间会对数据`data_queue`进行传递
+
+`wait()`会去检查这些条件(通过Lambda函数)，当条件满足(Lambda函数返回true)时返回。如果条件不满足 (Lambda函数返回false)，wait()将解锁互斥量，并且置于阻塞或等待状态。
+
+当准备数据的线程调用`notify_one()`通知条件变量时，处理数据的线程从睡眠中苏醒，重新获取互斥锁，并再次进行条件检查。在条件满足的情况下，从wait()返回并继续持有锁。当条件不满足时，线程将对互斥量解锁，并重 新等待。这就是为什么用 `std::unique_lock` 而不使用 `std::lock_guard` 的原因——等待中的线程必须在等待期间解锁互斥量，并对互斥量再次上锁，而 std::lock_guard 没有这么灵活。
