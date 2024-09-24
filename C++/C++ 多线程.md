@@ -51,6 +51,118 @@ int main()
 >
 > 成对使用，不允许非对称调用。
 
+### std::recursive_mutex
+
+递归锁允许同一线程多次获得该互斥锁，用于解决同一线程需要多次获取互斥量时死锁的问题。
+
+```cpp
+struct Complex
+{
+  std::mutex mutex;
+  int i;
+  Complex()
+    : i(0)
+  {
+  }
+  void mul(int x)
+  {
+    std::lock_guard<std::mutex> lock(mutex);
+    1 *= x;
+  }
+  void div(int x)
+  {
+    std::lock_guard<std::mutex> lock(mutex);
+    i /= x;
+  }
+  void both(int x, int y)
+  {
+    std::lock_guard<std::mutex> lock(mutex);
+    mul(x);
+    div(y);
+  }
+};
+
+int main()
+{
+  Complex complex;
+  complex.both(32, 23);
+  return 0;
+}
+```
+
+这段代码运行后会发生死锁，因为在调用`both()`时获取了互斥量，之后再调用`mul()`又获取相同的互斥量，但是这个互斥量已经被当前线程获取了，无法释放，这时就会发生死锁。
+
+解决这个死锁的问题，一个简单的办法就是用递归锁（`std::recursive_mutex`），它允许同一线程多次获得互斥量：
+
+```cpp
+struct Complex
+{
+  std::recursive_mutex mutex;
+  int i;
+  Complex()
+    : i(0)
+  {
+  }
+  void mul(int x)
+  {
+    std::lock_guard<std::recursive_mutex> lock(mutex);
+    1 *= x;
+  }
+  void div(int x)
+  {
+    std::lock_guard<std::recursive_mutex> lock(mutex);
+    i /= x;
+  }
+  void both(int x, int y)
+  {
+    std::lock_guard<std::recursive_mutex> lock(mutex);
+    mul(x);
+    div(y);
+  }
+};
+
+int main()
+{
+  Complex complex;
+  complex.both(32, 23);
+  return 0;
+}
+```
+
+> [note!]
+>
+> 尽量不使用递归锁
+>
+> - 需要递归锁的地方往往可以简化，避免复杂逻辑
+> - 递归锁效率更低一些
+> - 虽然递归锁可以允许同一线程多次获得同一个互斥量，可重复获得的最大次数未定义，一旦超过一定次数，再对lock进行调用会抛出`std::system`错误
+
+### std::timed_mutex
+
+通过 `try_lock_for()` 和 `try_lock_until()` 方法，提供尝试带超时的互斥量。
+
+```cpp
+using namespace std::chrono_literals;
+ 
+std::mutex cout_mutex; // 控制到 std::cout 的访问
+std::timed_mutex mutex;
+ 
+void job(int id)
+{
+    // 尝试在100毫秒内获取锁
+    if (mutex.try_lock_for(100ms))
+    {
+        //  成功获取锁
+        std::this_thread::sleep_for(100ms);
+        mutex.unlock();
+    }
+    else
+    {
+        // 获取锁失败
+    }
+}
+```
+
 ### std::lock_guard
 
 RAII模板类，在构造时提供已锁的互斥量，并在析构时进行解锁，从而保证了互斥量能被正确解锁。
