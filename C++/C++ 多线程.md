@@ -4,17 +4,12 @@
 
 线程在std::thread对象创建时启动。
 
-### join()与detach()
-
-`join()`等待线程执行完成
 
 
-
-`detach()`让线程在后台运行，这就意味着与主线程不能直接交互。如果线程分离，就不能有std::thread对象能引用它，分离线程的确在后台运行，所以分离的线程不能汇入。
+- `join()`等待线程执行完成
+- `detach()`让线程在后台运行，这就意味着与主线程不能直接交互。如果线程分离，就不能有std::thread对象能引用它，分离线程的确在后台运行，所以分离的线程不能汇入。分离线程通常称为守护线程(daemon threads)
 
 C++运行库保证，当线程退出时，相关资源的能够正确回收。
-
-分离线程通常称为守护线程(daemon threads)
 
 ### 传递参数
 
@@ -38,6 +33,17 @@ int main()
 ```
 
 `std::ref` 强制传引用，以达到修改值的作用。
+
+### 管理当前线程
+
+| 函数        | 说明                                 |
+| :---------- | :----------------------------------- |
+| yield       | 让出处理器，重新调度各执行线程       |
+| get_id      | 返回当前线程的线程 id                |
+| sleep_for   | 使当前线程的执行停止指定的时间段     |
+| sleep_until | 使当前线程的执行停止直到指定的时间点 |
+
+上面是一些在线程内部使用的API，它们用来对当前线程做一些控制。
 
 ## 互斥量
 
@@ -414,3 +420,211 @@ void data_processing_thread()
 
 1. wait()不断尝试重新获取互斥量锁，如果获取不到，就会阻塞这里等待获取;如果获取到，就继续执行第二步
 2. 如果wait()有第二个参数，就判断这个lambda表达式，如果表达式为false，那么wait将解锁互斥量，并堵塞到本行，等待再次唤醒；如果为true，则wait()返回，执行下一句流程，此时互斥锁加锁；如果wiat()没有第二个参数，则wait()返回，执行下一句流程
+
+## std::future
+
+C++标准库中有两种future，unique future( `std::future` )和shared futures( `std::shared_future` )。`std::future`只能与指定事件相关联，而 `std::shared_future` 能关联多个事件。
+
+当线程需要等待特定事件时，某种程度上来说需要知道期望的结果。
+
+当调用抛出一个异常时，这个异常会存储到future中，future的状态置为“就绪”，之后调用`get()`会抛出已存储的异常
+
+```cpp
+int main()
+{
+    std::promise<int> p;
+    std::future<int> f = p.get_future();
+ 
+    std::thread t([&p]
+    {
+        try
+        {
+            // 抛出异常的代码
+            throw std::runtime_error("Example");
+        }
+        catch (...)
+        {
+            try
+            {
+                // 存储 promise 中抛出的任何异常
+                p.set_exception(std::current_exception());
+            }
+            catch (...) {} // set_exception() 也可能抛出异常
+        }
+    });
+ 
+    try
+    {
+        std::cout << f.get();
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << "来自线程的异常: " << e.what() << '\n';
+    }
+    t.join();
+}
+```
+
+这里使用`std::current_exception()`来检索抛出的异常。当异常类型已知时，可用 `std::copy_exception()` 作为替代方案，`std::copy_exception()`会直接存储新的异常而不抛出:
+
+```cpp
+some_promise.set_exception(std::copy_exception(std::logic_error("foo ")));
+```
+`std::shared_future`的实例同步`std::future`实例的状态。当`std::future`对象没有与其他对象共享同步状态所有权，那么所有权必须使用`std::move`将所有权传递到`std::shared_future`
+
+```cpp
+std::promise<int> p;
+std::future<int> f(p.get_future()); 
+assert(f.valid()); // f 是合法的 
+std::shared_future<int> sf(std::move(f)); 
+assert(!f.valid()); // f 现在是不合法的 
+assert(sf.valid()); // sf 现在是合法的
+```
+
+future也有`wait_for()`与 `wait_util()`，并返回`future_status`
+
+| 常量                      | 解释                                                         |
+| ------------------------- | ------------------------------------------------------------ |
+| `future_status::deferred` | 共享状态包含一个使用惰性求值的延迟函数，仅在明确请求时才计算其结果 |
+| `future_status::ready`    | 共享状态已就绪                                               |
+| `future_status::timeout`  | 已超时                                                       |
+
+```cpp
+int main()
+{
+    std::future<int> future = std::async(std::launch::async, []()
+    {
+        std::this_thread::sleep_for(3s);
+        return 8;
+    });
+ 
+    std::cout << "等待...\n";
+    std::future_status status;
+ 
+    do
+    {
+        switch (status = future.wait_for(1s); status)
+        {
+            case std::future_status::deferred:
+                std::cout << "延后\n";
+                break;
+            case std::future_status::timeout:
+                std::cout << "超时\n";
+                break;
+            case std::future_status::ready:
+                std::cout << "就绪!\n";
+                break;
+        }
+    }
+    while (status != std::future_status::ready);
+ 
+    std::cout << "结果为 " << future.get() << '\n';
+}
+```
+
+
+
+## std::async
+
+启动一个异步任务。 std::async 允许通过添加额外的调用参数，向函数传递额外的参数。
+
+std::launch枚举类型：
+
+- `launch::defered`：表明函数调用延迟到wait()或get()函数调用时才执行
+- `launch::async`：表明函数必须在其所在的独立线程上执行
+- `launch::deferred | launch::async`：`std::async`的默认参数，系统会自行决定异步（创建新线程）还是同步（不创建新线程）方式运行。
+
+```cpp
+int main()
+{
+  std::future<int> the_answer=std::async(find_the_answer_to_ltuae);
+  do_other_stuff();
+  // get()阻塞线程直到future为就绪为止，并返回计算结果。
+  std::cout<<"The answer is "<<the_answer.get()<<std::endl;
+}
+```
+
+## std::packaged_task
+
+打包任务，把任务包装起来。会将future与函数或可调用对象进行绑定。当调用 `std::packaged_task`对象时，就会调用相关函数或可调用对象，当future状态为就绪时，会存储返回值。这可以用在构建线程池或其他任务的管理中。
+
+```cpp
+int f(int x, int y) { return std::pow(x,y); }
+ 
+void task_lambda()
+{
+    std::packaged_task<int(int, int)> task([](int a, int b){
+        return std::pow(a, b); 
+    });
+    std::future<int> result = task.get_future();
+ 
+    task(2, 9);
+ 
+    std::cout << "task_lambda:\t" << result.get() << '\n';
+}
+ 
+void task_bind()
+{
+    std::packaged_task<int()> task(std::bind(f, 2, 11));
+    std::future<int> result = task.get_future();
+ 
+    task();
+ 
+    std::cout << "task_bind:\t" << result.get() << '\n';
+}
+ 
+void task_thread()
+{
+    std::packaged_task<int(int, int)> task(f);
+    std::future<int> result = task.get_future();
+ 
+    std::thread task_td(std::move(task), 2, 10);
+    task_td.join();
+ 
+    std::cout << "task_thread:\t" << result.get() << '\n';
+}
+```
+
+## std::promise
+
+ `std::promise`和`std::future` 提供一种机制：future可以阻塞等待线程，提供数据的线程可以使用promise对 相关值进行设置，并将future的状态置为“就绪”。
+
+```cpp
+void accumulate(std::vector<int>::iterator first,
+                std::vector<int>::iterator last,
+                std::promise<int> accumulate_promise)
+{
+    int sum = std::accumulate(first, last, 0);
+    accumulate_promise.set_value(sum); // 提醒 future
+}
+ 
+void do_work(std::promise<void>& barrier)
+{
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    barrier.set_value();
+}
+ 
+int main()
+{
+    // 用 promise<int> 在线程间传递结果。
+    std::vector<int> numbers = {1, 2, 3, 4, 5, 6};
+    std::promise<int> accumulate_promise;
+    std::future<int> accumulate_future = accumulate_promise.get_future();
+    std::thread work_thread(accumulate, numbers.begin(), numbers.end(),
+                            std::move(accumulate_promise));
+ 
+    // future::get() 将等待直至该 future 拥有合法结果并取得它
+    // 无需在 get() 前调用 wait()
+    // accumulate_future.wait(); // 等待结果
+    std::cout << "result=" << accumulate_future.get() << '\n';
+    work_thread.join(); // wait for thread completion
+ 
+    // 用 promise<void> 在线程间对状态发信号
+    std::promise<void> barrier;
+    std::future<void> barrier_future = barrier.get_future();
+    std::thread new_work_thread(do_work, std::ref(barrier)); // 使用ref传引用
+    barrier_future.wait();
+    new_work_thread.join();
+}
+```
+
