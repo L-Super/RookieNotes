@@ -2,12 +2,11 @@
 
 ## std::thread
 
-线程在std::thread对象创建时启动。
+线程在 std:: thread 对象创建时启动。
 
 
-
-- `join()`等待线程执行完成
-- `detach()`让线程在后台运行，这就意味着与主线程不能直接交互。如果线程分离，就不能有std::thread对象能引用它，分离线程的确在后台运行，所以分离的线程不能汇入。分离线程通常称为守护线程(daemon threads)
+- `join()` 等待线程执行完成
+- `detach()` 让线程在后台运行，这就意味着与主线程不能直接交互。如果线程分离，就不能有 `std::thread` 对象能引用它，分离线程的确在后台运行，所以分离的线程不能汇入。分离线程通常称为守护线程 (daemon threads)
 
 C++运行库保证，当线程退出时，相关资源的能够正确回收。
 
@@ -43,22 +42,21 @@ int main()
 | sleep_for   | 使当前线程的执行停止指定的时间段     |
 | sleep_until | 使当前线程的执行停止直到指定的时间点 |
 
-上面是一些在线程内部使用的API，它们用来对当前线程做一些控制。
+上面是一些在线程内部使用的 API，它们用来对当前线程做一些控制。
 
 ## 互斥量
 
 ### std::mutex
 
-通过实例化 `std::mutex` 创建互斥量实例，`lock()`可对互斥量上锁，`unlock()`为解锁。
+通过实例化 `std::mutex` 创建互斥量实例，`lock()` 可对互斥量上锁，`unlock()` 为解锁。
 
 > [!note]
 >
 > 成对使用，不允许非对称调用。
 
-
 ### std::lock_guard
 
-RAII模板类，在构造时提供已锁的互斥量，并在析构时进行解锁，从而保证了互斥量能被正确解锁。
+RAII 模板类，在构造时提供已锁的互斥量，并在析构时进行解锁，从而保证了互斥量能被正确解锁。
 
 ```cpp
 std::lock_guard<std::mutex> guard(some_mutex);
@@ -74,12 +72,12 @@ std::lock_guard<std::mutex> lock2(m2, std::adopt_lock);
 
 ### std::unique_lock
 
-`std::unique_lock`比`std::lock_guard`更灵活，但效率差一点，内存占用多一点。
+`std::unique_lock` 比 `std::lock_guard` 更灵活，但效率差一点，内存占用多一点。
 
 可在构造函数传入第二个参数进行管理：
 
-- `std::adopt_lock`：表示互斥量已经`lock()`，不需要再次`lock()`
-- `std::try_to_lock`：尝试用lock()去锁定mutex，如果没有锁定成功，也会立即返回，并不会阻塞在那里。
+- `std::adopt_lock`：表示互斥量已经 `lock()`，不需要再次 `lock()`
+- `std::try_to_lock`：尝试用 lock () 去锁定 mutex，如果没有锁定成功，也会立即返回，并不会阻塞在那里。
 
 - `std::defer_lock`：不进行加锁
 
@@ -110,10 +108,10 @@ lk_2.lock();//可再次lock
 
 成员函数：
 
-- lock() ：加锁
-- unlock()：解锁
-- try_lock()：尝试给互斥量加锁，如果拿不到锁，则返回false；拿到锁，返回true。不阻塞
-- release()：返回它所管理的mutex对象指针，并释放所有权。即，unique_lock和mutex不再有关系
+- `lock()` ：加锁
+- `unlock()`：解锁
+- `try_lock() `：尝试给互斥量加锁，如果拿不到锁，则返回 false；拿到锁，返回 true。不阻塞
+- `release()`：返回它所管理的 mutex 对象指针，并释放所有权。即，unique_lock 和 mutex 不再有关系
 
 ### std::lock
 
@@ -128,7 +126,7 @@ std::lock_guard<mutex> myguard(mymutex2, std::adopt_lock);
 
 ### std::scoped_lock
 
-C++17提供。`std::lock`的RAII包装类，通常它比裸调用 `std::lock` 更好。
+C++17 提供。`std::lock` 的 RAII 包装类，通常它比裸调用 `std::lock` 更好。
 
 ```cpp
 std::scoped_lock lock(m1, m2);
@@ -142,10 +140,7 @@ struct Complex
 {
   std::mutex mutex;
   int i;
-  Complex()
-    : i(0)
-  {
-  }
+  Complex() : i(0) {}
   void mul(int x)
   {
     std::lock_guard<std::mutex> lock(mutex);
@@ -217,7 +212,7 @@ int main()
 >
 > - 需要递归锁的地方往往可以简化，避免复杂逻辑
 > - 递归锁效率更低一些
-> - 虽然递归锁可以允许同一线程多次获得同一个互斥量，可重复获得的最大次数未定义，一旦超过一定次数，再对lock进行调用会抛出`std::system`错误
+> - 虽然递归锁可以允许同一线程多次获得同一个互斥量，可重复获得的最大次数未定义，一旦超过一定次数，再对 lock 进行调用会抛出`std::system`错误
 
 ### std::timed_mutex
 
@@ -245,7 +240,7 @@ void job(int id)
 }
 ```
 
-### std::shared_mutex 
+### std:: shared_mutex 
 
 C++ 17 读写锁，写线程独占访问，读线程共享并发访问。
 
@@ -276,8 +271,6 @@ public:
 ```
 
 
-
-
 ## 死锁
 
 死锁通常是对锁的使用不当造成。
@@ -290,15 +283,15 @@ public:
 
 - 避免在持有锁时调用外部代码
 
-因为代码是外部提供的，所以没有办法确定外部的行为。外部程序可能做任何事情，包括获取锁。在持有锁的情况下，如果用外部代码要获取一个锁，就会违反第一个指导意见，并造成死锁(有时这是无法避免的)。
+因为代码是外部提供的，所以没有办法确定外部的行为。外部程序可能做任何事情，包括获取锁。在持有锁的情况下，如果用外部代码要获取一个锁，就会违反第一个指导意见，并造成死锁 (有时这是无法避免的)。
 
 - 使用固定顺序获取锁
 
-当硬性要求获取两个或两个以上的锁，并且不能使用 std::lock 单独操作来获取它们时，最好在每个线程上， 用固定的顺序获取它们(锁)。
+当硬性要求获取两个或两个以上的锁，并且不能使用 std:: lock 单独操作来获取它们时，最好在每个线程上，用固定的顺序获取它们 (锁)。
 
 - 使用层次锁结构
 
-虽然，定义锁的顺序是一种特殊情况，但层次锁的意义在于，在运行时会约定是否进行检查。这个建议需要 对应用进行分层，并且识别在给定层上所有互斥量。当代码试图对互斥量上锁，而低层已持有该层锁时，不 允许锁定。可以通过每个互斥量对应的层数，以及每个线程使用的互斥量，在运行时检查锁定操作是否可以 进行。
+虽然，定义锁的顺序是一种特殊情况，但层次锁的意义在于，在运行时会约定是否进行检查。这个建议需要对应用进行分层，并且识别在给定层上所有互斥量。当代码试图对互斥量上锁，而低层已持有该层锁时，不允许锁定。可以通过每个互斥量对应的层数，以及每个线程使用的互斥量，在运行时检查锁定操作是否可以进行。
 
 ## std::call_once
 
@@ -353,20 +346,18 @@ int main()
 
 ## 条件变量
 
-`std::condition_variable` 和 `std::condition_variable_any`，前者和mutex工作，后者和合适的互斥量工作。 `std::condition_variable_any` 更加通用，但在性能和系统资源的使用方面会有更多的开销。
+`std::condition_variable` 和 `std::condition_variable_any`，前者和 mutex 工作，后者和合适的互斥量工作。 `std::condition_variable_any` 更加通用，但在性能和系统资源的使用方面会有更多的开销。
 
 通知：
 
-- notify_one()：通知一个等待的线程
-- notify_all()：通知所有等待的线程
+- `notify_one()`：通知一个等待的线程
+- `notify_all() `：通知所有等待的线程
 
 等待：
 
-- wait()：阻塞当前线程，直到条件变量被唤醒
-- wait_for()：阻塞当前线程，直到条件变量被唤醒，或到指定时长后
-- wait_until()：阻塞当前线程，直到条件变量被唤醒，或直到指定时间点后
-
-
+- `wait()`：阻塞当前线程，直到条件变量被唤醒
+- `wait_for() `：阻塞当前线程，直到条件变量被唤醒，或到指定时长后
+- `wait_until()`：阻塞当前线程，直到条件变量被唤醒，或直到指定时间点后
 
 ```cpp
 std::mutex mut; 
@@ -404,30 +395,29 @@ void data_processing_thread()
 } 
 ```
 
-首先，队列中中有两个线程，两个线程之间会对数据`data_queue`进行传递
+首先，队列中有两个线程，两个线程之间会对数据`data_queue`进行传递
 
-`wait()`会去检查这些条件(通过Lambda函数)，当条件满足(Lambda函数返回true)时返回。如果条件不满足 (Lambda函数返回false)，wait()将解锁互斥量，并且置于阻塞或等待状态。
+`wait()` 会去检查这些条件 (通过 Lambda 函数)，当条件满足 (Lambda 函数返回 true) 时返回。如果条件不满足 (Lambda 函数返回 false)，`wait()` 将解锁互斥量，并且置于阻塞或等待状态。
 
-当准备数据的线程调用`notify_one()`通知条件变量时，处理数据的线程从睡眠中苏醒，重新获取互斥锁，并再次进行条件检查。在条件满足的情况下，从wait()返回并继续持有锁。当条件不满足时，线程将对互斥量解锁，并重 新等待。这就是为什么用 `std::unique_lock` 而不使用 `std::lock_guard` 的原因——等待中的线程必须在等待期间解锁互斥量，并对互斥量再次上锁，而 std::lock_guard 没有这么灵活。
+当准备数据的线程调用 `notify_one()` 通知条件变量时，处理数据的线程从睡眠中苏醒，重新获取互斥锁，并再次进行条件检查。在条件满足的情况下，从 `wait()` 返回并继续持有锁。当条件不满足时，线程将对互斥量解锁，并重新等待。这就是为什么用 ` std::unique_lock ` 而不使用 ` std::lock_guard ` 的原因——等待中的线程必须在等待期间解锁互斥量，并对互斥量再次上锁，而 std:: lock_guard 没有这么灵活。
 
 
+如果 `wait()` 第二个参数返回值是 false，那么 `wait()` 将解锁互斥量，并阻塞至本行，堵塞到其他线程调用 `notify_one()` 成员函数为止。如果是 true，直接返回，执行下一条语句。
 
-如果wait()第二个参数返回值是false，那么wait()将解锁互斥量，并阻塞至本行，堵塞到其他线程调用notify_one()成员函数为止。如果是true，直接返回，执行下一条语句。
+如果没有第二个参数，那么跟返回 false 一样。
 
-如果没有第二个参数，那么跟返回false一样。
+当其他线程用 `notify_one()` 将本 `wait()` 唤醒：
 
-当其他线程用notify_one()将本wait()唤醒：
-
-1. wait()不断尝试重新获取互斥量锁，如果获取不到，就会阻塞这里等待获取;如果获取到，就继续执行第二步
-2. 如果wait()有第二个参数，就判断这个lambda表达式，如果表达式为false，那么wait将解锁互斥量，并堵塞到本行，等待再次唤醒；如果为true，则wait()返回，执行下一句流程，此时互斥锁加锁；如果wiat()没有第二个参数，则wait()返回，执行下一句流程
+1. `wait()` 不断尝试重新获取互斥量锁，如果获取不到，就会阻塞这里等待获取; 如果获取到，就继续执行第二步
+2. 如果 `wait()` 有第二个参数，就判断这个 lambda 表达式，如果表达式为 false，那么将解锁互斥量，并堵塞到本行，等待再次唤醒；如果为 true，则 `wait()` 返回，执行下一句流程，此时互斥锁加锁；如果 `wiat()` 没有第二个参数，则 `wait()` 返回，执行下一句流程
 
 ## std::future
 
-C++标准库中有两种future，unique future( `std::future` )和shared futures( `std::shared_future` )。`std::future`只能与指定事件相关联，而 `std::shared_future` 能关联多个事件。
+C++标准库中有两种 future，unique future ( `std::future` ) 和 shared futures ( `std::shared_future` )。`std::future`只能与指定事件相关联，而 `std::shared_future` 能关联多个事件。
 
 当线程需要等待特定事件时，某种程度上来说需要知道期望的结果。
 
-当调用抛出一个异常时，这个异常会存储到future中，future的状态置为“就绪”，之后调用`get()`会抛出已存储的异常
+当调用抛出一个异常时，这个异常会存储到 future 中，future 的状态置为“就绪”，之后调用`get()`会抛出已存储的异常
 
 ```cpp
 int main()
@@ -481,7 +471,7 @@ assert(!f.valid()); // f 现在是不合法的
 assert(sf.valid()); // sf 现在是合法的
 ```
 
-future也有`wait_for()`与 `wait_util()`，并返回`future_status`
+future 也有`wait_for()`与 `wait_util()`，并返回`future_status`
 
 | 常量                      | 解释                                                         |
 | ------------------------- | ------------------------------------------------------------ |
@@ -522,15 +512,13 @@ int main()
 }
 ```
 
-
-
 ## std::async
 
-启动一个异步任务。 std::async 允许通过添加额外的调用参数，向函数传递额外的参数。
+启动一个异步任务。 std:: async 允许通过添加额外的调用参数，向函数传递额外的参数。
 
-std::launch枚举类型：
+std:: launch 枚举类型：
 
-- `launch::defered`：表明函数调用延迟到wait()或get()函数调用时才执行
+- `launch::defered`：表明函数调用延迟到 wait () 或 get () 函数调用时才执行
 - `launch::async`：表明函数必须在其所在的独立线程上执行
 - `launch::deferred | launch::async`：`std::async`的默认参数，系统会自行决定异步（创建新线程）还是同步（不创建新线程）方式运行。
 
@@ -546,7 +534,7 @@ int main()
 
 ## std::packaged_task
 
-打包任务，把任务包装起来。会将future与函数或可调用对象进行绑定。当调用 `std::packaged_task`对象时，就会调用相关函数或可调用对象，当future状态为就绪时，会存储返回值。这可以用在构建线程池或其他任务的管理中。
+打包任务，把任务包装起来。会将 future 与函数或可调用对象进行绑定。当调用 `std::packaged_task`对象时，就会调用相关函数或可调用对象，当 future 状态为就绪时，会存储返回值。这可以用在构建线程池或其他任务的管理中。
 
 ```cpp
 int f(int x, int y) { return std::pow(x,y); }
@@ -587,7 +575,7 @@ void task_thread()
 
 ## std::promise
 
- `std::promise`和`std::future` 提供一种机制：future可以阻塞等待线程，提供数据的线程可以使用promise对 相关值进行设置，并将future的状态置为“就绪”。
+ `std::promise`和`std::future` 提供一种机制：future 可以阻塞等待线程，提供数据的线程可以使用 promise 对相关值进行设置，并将 future 的状态置为“就绪”。
 
 ```cpp
 void accumulate(std::vector<int>::iterator first,
@@ -628,3 +616,8 @@ int main()
 }
 ```
 
+
+
+> [并发支持库 ](https://zh.cppreference.com/w/cpp/thread)
+>
+> [C++ 并发编程（从C++11到C++17](https://paul.pub/cpp-concurrency/)
