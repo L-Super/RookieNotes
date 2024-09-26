@@ -240,7 +240,7 @@ void job(int id)
 }
 ```
 
-### std:: shared_mutex 
+### std::shared_mutex 
 
 C++ 17 读写锁，写线程独占访问，读线程共享并发访问。
 
@@ -342,8 +342,6 @@ int main()
 }
 ```
 
-
-
 ## 条件变量
 
 `std::condition_variable` 和 `std::condition_variable_any`，前者和 mutex 工作，后者和合适的互斥量工作。 `std::condition_variable_any` 更加通用，但在性能和系统资源的使用方面会有更多的开销。
@@ -417,7 +415,13 @@ C++标准库中有两种 future，unique future ( `std::future` ) 和 shared fut
 
 当线程需要等待特定事件时，某种程度上来说需要知道期望的结果。
 
-当调用抛出一个异常时，这个异常会存储到 future 中，future 的状态置为“就绪”，之后调用`get()`会抛出已存储的异常
+当调用抛出一个异常时，这个异常会存储到 future 中，future 的状态置为“就绪”，之后调用 `get()` 会抛出已存储的异常。
+
+> [!note]
+> 一个 future 上只能调用一次 `get()` 函数，第二次调用为未定义行为，通常导致程序崩溃。
+> 每个 `shared_future` 上仍然还是只能调用一次 `get()` 函数。
+
+> C++ 标准建议实现在调用 `get()` 前检测 ` valid () ` 是 ` false ` 的情况，并抛出以 ` std::future_errc::no_state ` 作为错误条件的 ` std::future_error `。
 
 ```cpp
 int main()
@@ -620,4 +624,4 @@ int main()
 
 > [并发支持库 ](https://zh.cppreference.com/w/cpp/thread)
 >
-> [C++ 并发编程（从C++11到C++17](https://paul.pub/cpp-concurrency/)
+> [C++ 并发编程（从C++11到C++17）](https://paul.pub/cpp-concurrency/)
