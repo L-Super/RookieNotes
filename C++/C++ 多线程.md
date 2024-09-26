@@ -536,6 +536,15 @@ int main()
 }
 ```
 
+>[!note]
+>如果从 `std::async` 获得的 `std::future` 没有被移动或绑定到引用，那么在完整表达式结尾， `std::future`的析构函数将阻塞到异步计算完成，实质上令如下代码同步：
+>
+>```cpp
+>std::async(std::launch::async, []{ f(); }); // 临时量的析构函数等待f()
+>std::async(std::launch::async, []{ g(); }); // f() 完成前不开始
+>```
+>
+
 ## std::packaged_task
 
 打包任务，把任务包装起来。会将 future 与函数或可调用对象进行绑定。当调用 `std::packaged_task`对象时，就会调用相关函数或可调用对象，当 future 状态为就绪时，会存储返回值。这可以用在构建线程池或其他任务的管理中。
