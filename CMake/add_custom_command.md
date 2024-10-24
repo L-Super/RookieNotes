@@ -31,5 +31,5 @@ add_custom_command(TARGET <target>
                    [COMMAND_EXPAND_LISTS])
 ```
 - PRE_BUILD 将在此目标的任何其他规则之前运行 (仅 Visual Studio 生成器; 对于其他的生成器，其行为像 PRE_LINK)。
-- PRE_LINK 绑定要在编译所有源之后但在链接 (或存档) 目标之前运行的命令。不适用于自定 义目标。
+- PRE_LINK 绑定要在编译所有源之后但在链接 (或存档) 目标之前运行的命令。不适用于自定义目标。
 - POST_BUILD 在执行完目标中的所有其他规则后运​​行。
