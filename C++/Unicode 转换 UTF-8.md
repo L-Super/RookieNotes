@@ -84,9 +84,8 @@ int MultiByteToWideChar(
 
 std::wstring char_to_wchar(const char* str)  
 {  
-    wchar_t* wc;  
     int len = MultiByteToWideChar(CP_ACP, 0, str, (int) strlen(str), NULL, 0);  
-    wc = new wchar_t[len + 1];  
+    wchar_t* wc = new wchar_t[len + 1];  
     MultiByteToWideChar(CP_ACP, 0, str, (int) strlen(str), wc, len);  
     wc[len] = '\0';  
     std::wstring wstr = wc;  
