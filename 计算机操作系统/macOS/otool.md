@@ -37,6 +37,7 @@
 ```
 
 示例：
+查看动态库依赖：
 ```zsh
 otool -L demo.app/Contents/MacOS/demo
 
