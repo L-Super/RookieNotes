@@ -38,3 +38,32 @@ let s = "initial contents".to_string();
 
 let s = String::from("initial contents");
 ```
+
+以Unicode 字符的方式遍历字符串，最好的办法是使用 `chars` 方法：
+```rust
+for c in "中文".chars() {
+    println!("{}", c);
+}
+
+output:
+中
+文
+```
+返回字符串的底层字节数组：
+```rust
+for b in "中国人".bytes() {
+    println!("{}", b);
+}
+
+output:
+228
+184
+173
+229
+155
+189
+228
+186
+186
+
+```
