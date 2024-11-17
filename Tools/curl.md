@@ -117,3 +117,5 @@ $ curl --trace - https://www.example.com
 > [curl 的用法指南](https://www.ruanyifeng.com/blog/2019/09/curl-reference.html)
 >
 > [Curl Cookbook](https://catonmat.net/cookbooks/curl)
+>
+> [curl工具 · 周先生 学习笔记](http://www.peter-zhou.com/pa-chong/curl-gong-ju.html)
