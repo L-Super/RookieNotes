@@ -60,3 +60,8 @@ demo:
 ```
 
 通常会配合 `install_name_tool` 修改 rpath
+
+查看可执行文件 rpath 设置：
+```bash
+otool -l demo | grep -a2 LC_RPATH
+```
