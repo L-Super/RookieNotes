@@ -11,4 +11,4 @@
 void (*signal(int sig, void (*func)(int)))(int)
 ```
 
-> [Linux Signal - 魅族内核团队 ](https://kernel.meizu.com/linux-signal.html)
+> [Linux Signal - 魅族内核团队 ](https://kernel.meizu.com/2016/07/04//linux-signal.html/)
