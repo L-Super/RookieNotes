@@ -1,4 +1,13 @@
-闭包或 lambda 表达式具有无法命名的类型。不过，它们会实现特殊的 [`Fn`](https://doc.rust-lang.org/std/ops/trait.Fn.html)， [`FnMut`](https://doc.rust-lang.org/std/ops/trait.FnMut.html) 和 [`FnOnce`](https://doc.rust-lang.org/std/ops/trait.FnOnce.html) 特征：
+闭包或 lambda 表达式具有无法命名的类型。不过，它们会实现特殊的 [`Fn`](https://doc.rust-lang.org/std/ops/trait.Fn.html)， [`FnMut`](https://doc.rust-lang.org/std/ops/trait.FnMut.html) 和 [`FnOnce`](https://doc.rust-lang.org/std/ops/trait.FnOnce.html) 特征。
+
+```rust
+let add_one_v1 = |x: u32| -> u32 { x + 1 };
+// 省略类型标注
+let add_one_v2 = |x|             { x + 1 };
+// 省略花括号
+let add_one_v3 = |x|               x + 1  ;
+```
+
 ```rust
 fn apply_with_log(func: impl FnOnce(i32) -> i32, input: i32) -> i32 {
     println!("Calling function on {input}");
