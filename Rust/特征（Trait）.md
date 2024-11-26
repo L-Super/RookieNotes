@@ -51,7 +51,7 @@ fn main() {
 可使用默认实现，如果没有其他定义， `impl Pet for Dog {}` 需要指定一个空的 `impl` 块。
 默认实现允许调用相同 trait 中的其他方法，哪怕这些方法没有默认实现。
 
-### trait 作为参数
+## trait 作为参数
 
 如何使用 trait 来接受多种不同类型的参数。
 
@@ -65,7 +65,7 @@ pub fn notify(item: &impl Pet) {
 
 对于 `item` 参数，我们指定了 `impl` 关键字和 trait 名称，而不是具体的类型。该参数支持任何实现了指定 trait 的类型。在 `notify` 函数体中，可以调用任何来自 `Pet` trait 的方法，比如 `greet`。
 
-#### Trait Bound 语法
+## 特征约束（Trait Bound） 语法
 
 `impl Trait` 语法适用于直观的例子，它实际上是一种较长形式我们称为 *trait bound* 语法的语法糖：
 ```rust
@@ -94,7 +94,7 @@ pub fn notify<T: Pet>(item1: &T, item2: &T) {
 
 泛型 `T` 被指定为 `item1` 和 `item2` 的参数限制，如此传递给参数 `item1` 和 `item2` 值的具体类型必须一致。
 
-#### 通过 `+` 指定多个 trait bound
+### 多重约束
 
 如果 `notify` 需要显示 `item` 的格式化形式，同时也要使用 `greet` 方法，那么 `item` 就需要同时实现两个不同的 trait：`Display` 和 `Pet`。这可以通过 `+` 语法实现：
 
@@ -110,24 +110,25 @@ pub fn notify<T: Pet + Display>(item: &T) {
 
 通过指定这两个 trait bound，`notify` 的函数体可以调用 `greet` 并使用 `{}` 来格式化 `item`。
 
-#### 通过 `where` 简化 trait bound
+### where 约束
+通过 `where` 简化 trait bound
 
-然而，使用过多的 trait bound 也有缺点。每个泛型有其自己的 trait bound，所以有多个泛型参数的函数在名称和参数列表之间会有很长的 trait bound 信息，这使得函数签名难以阅读。为此，Rust 有另一个在函数签名之后的 `where` 从句中指定 trait bound 的语法。
+当特征约束变得很多时，函数的签名将变得很复杂。为此，Rust 有另一个在函数签名之后的 `where` 从句中指定 trait bound 的语法。
 
 如：
 
 ```rust
-fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
+fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {}
 ```
 
 使用 `where` 从句：
 
 ```rust
-fn some_function<T, U>(t: &T, u: &U) -> i32 where     T: Display + Clone,     U: Clone + Debug, {
+fn some_function<T, U>(t: &T, u: &U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+{}
 ```
-
-这个函数签名就显得不那么杂乱，函数名、参数列表和返回值类型都离得很近，看起来跟没有那么多 trait bounds 的函数很像。
-
 ## 派生特征
 系统可以自动为您的自定义类型实现支持的 trait。
 派生功能是通过宏实现的，并且许多 crate 提供有用的[派生宏](宏.md)，以添加实用功能。
