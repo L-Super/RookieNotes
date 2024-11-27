@@ -148,3 +148,5 @@ fn main() {
     println!("{:?} vs. {:?}", p1, p2);
 }
 ```
+常用 trait：
+![](../images/Pasted%20image%2020241127111916.png)
