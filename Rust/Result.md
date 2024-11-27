@@ -1,5 +1,6 @@
-`Result` 与 `Option` 相似，但表示操作成功或失败，且每个操作的类型不同。这类似于表达式练习中定义的 `Res`，但是一个泛型：`Result<T, E>`，其中 `T` 用于 `Ok` 变体，`E` 出现在 `Err` 变体中。
+`Result` 与 `Option` 相似，但表示操作成功或失败，且每个操作的类型不同。是一个泛型：`Result<T, E>`，其中 `T` 用于 `Ok` 变体，`E` 出现在 `Err` 变体中。
 
+`Result` 的定义：
 ```rust
 enum Result<T, E> {
     Ok(T),
