@@ -1,4 +1,5 @@
-[`String`](https://doc.rust-lang.org/std/string/struct.String.html) 是标准堆分配的可扩容 UTF-8 编码字符串缓冲区
+[`String`](https://doc.rust-lang.org/std/string/struct.String.html) 是标准堆分配的可扩容 UTF-8 编码字符串缓冲区。
+内部是 `Vec<u8>`，String [源码](https://doc.rust-lang.org/src/alloc/string.rs.html#362-364)
 
 ```rust
 fn main() {

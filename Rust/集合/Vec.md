@@ -1,4 +1,7 @@
 [`Vec`](https://doc.rust-lang.org/std/vec/struct.Vec.html) 是标准的可调整大小堆分配缓冲区。它包含的数据存储在堆中，这意味着在编译时不需要知道数据量，它可以在运行时增长或收缩。它在内存中彼此相邻地排列所有的值。vector 只能储存相同类型的值。
+
+`Vec<T>` 结构是 3 个 word 的胖指针，包含：一个指向堆内存的指针 pointer、分配的堆内存的容量 capacity，以及数据在堆内存的长度 length
+
 ```rust
 fn main() {
     let mut v1 = Vec::new();
