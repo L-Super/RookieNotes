@@ -53,7 +53,7 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 0.21s
 ```
 
-这个命令会将可执行程序生成在路径 target/debug/hello_ cargo（或者 Windows 系统下的 target\debug\hello_cargo. exe）下。
+这个命令会将可执行程序生成在路径 `target/debug/hello_cargo`（或者 Windows 系统下的 `target\debug\hello_cargo.exe`）下。
 
 可以通过如下的命令运行这个可执行程序：
 ```bash
@@ -63,7 +63,7 @@ Hello, world!
 
 首次使用命令 `cargo build` 构建的时候，它还会在项目根目录下创建一个名为 `Cargo.lock` 的新文件，这个文件记录了当前项目所有依赖库的具体版本号。你**最好不要手动编辑其中的内容，Cargo 可以帮助你自动维护它。**
 
-可以简单地使用 `cargo run` 命令来依次完成编译和运行任务：
+可以使用 `cargo run` 命令来依次完成编译和运行任务：
 ```bash
 $ cargo run
     Compiling hello_cargo v0.1.0 (/home/virtual/Desktop/rust_code/hello_cargo)
@@ -71,6 +71,8 @@ $ cargo run
      Running `target/debug/hello_cargo`
 Hello, world!!!
 ```
+
+使用 `cargo run -- xxx`，可以传入参数运行。
 
 Cargo 还提供了一个叫作 `cargo check` 的命令，你可以使用这个命令来快速检查当前的代码是否可以通过编译，而不需要花费额外的时间去真正生成可执行程序：
 
