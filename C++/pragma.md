@@ -1,9 +1,9 @@
-在所有的预处理指令中，#pragma 指令可能是最复杂的了，它的作用是设定编译器的状态或者是指示编译器完成一些特定的动作。#pragma指令对每个编译器给出了一个方法，在保持与C和C++语言完全兼容的情况下，给出主机或操作系统专有的特征。依据定义，编译指示是机器或操作系统专有的，且对于每个编译器都是不同的。
+在所有的预处理指令中，`#pragma` 指令可能是最复杂的了，它的作用是设定编译器的状态或者是指示编译器完成一些特定的动作。 `#pragma` 指令对每个编译器给出了一个方法，在保持与C和C++语言完全兼容的情况下，给出主机或操作系统专有的特征。依据定义，编译指示是机器或操作系统专有的，且对于每个编译器都是不同的。
 
 **一般格式**
 其格式一般为: \#pragma Para。其中Para 为参数，下面来看一些常用的参数
 
-## \#pragma once
+## `#pragma once`
 
 只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在VC6中就已经有了，但是考虑到兼容性并没有太多的使用它。
 
@@ -11,7 +11,7 @@
 
 \#ifndef，\#define，\#endif这个是C++语言相关，这是C++语言中的宏定义，通过宏定义避免文件多次编译。所以在所有支持C++语言的编译器上都是有效的，如果写的程序要**跨平台，最好使用这种方式**。
 
-## \#pragma comment
+## `#pragma comment`
 该指令将一个注释记录放入一个对象文件或可执行文件中。
 
 ` #pragma comment(comment-type,["commentstring"])`
@@ -34,4 +34,11 @@ comment string是一个提供为comment-type提供附加信息的字符串。
 
 下面的编译指示导致连接程序在连接时搜索EMAPI.LIB库。连接程序首先在当前工作目录然后在LIB环境变量指定的路径中搜索。
 
-`#pragma comment( lib, "emapi" )`
+```
+#pragma comment( lib, "emapi" )
+```
+
+> https://learn.microsoft.com/zh-cn/cpp/preprocessor/pragma-directives-and-the-pragma-keyword?view=msvc-170
+> https://gcc.gnu.org/onlinedocs/gcc/Pragmas.html
+> https://zh.cppreference.com/w/cpp/preprocessor/impl
+
