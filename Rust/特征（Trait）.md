@@ -20,6 +20,7 @@ struct Cat {
 trait Pet {
     fn talk(&self) -> String;
 
+	// 默认实现
     fn greet(&self) {
         println!("Oh you're a cutie! What's your name? {}", self.talk());
     }
