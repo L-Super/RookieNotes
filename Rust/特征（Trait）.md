@@ -152,3 +152,35 @@ fn main() {
 ```
 常用 trait：
 ![](../images/Pasted%20image%2020241127111916.png)
+### 用于开发输出的 `Debug`
+
+`Debug` 特征可以让指定对象输出调试格式的字符串，通过在 `{}` 占位符中增加 `:?` 表明，例如`println!("show you some debug info: {:?}", MyObject);`.
+
+`Debug` 特征允许以调试为目的来打印一个类型的实例，所以程序员可以在执行过程中看到该实例的具体信息。
+
+### 等值比较的 `PartialEq` 和 `Eq`
+
+`PartialEq` 特征可以比较一个类型的实例以检查是否相等，并开启了 `==` 和 `!=` 运算符的功能。
+
+派生的 `PartialEq` 实现了 `eq` 方法。当 `PartialEq` 在结构体上派生时，只有_所有_ 的字段都相等时两个实例才相等，同时只要有任何字段不相等则两个实例就不相等。当在枚举上派生时，每一个成员都和其自身相等，且和其他成员都不相等。
+
+### 次序比较的 `PartialOrd` 和 ` Ord `
+
+`PartialOrd` 特征可以让一个类型的多个实例实现排序功能。实现了 `PartialOrd` 的类型可以使用 `<`、 `>`、`<=` 和 `>=` 操作符。一个类型想要实现 `PartialOrd` 的前提是该类型已经实现了 `PartialEq` 。
+
+派生 `PartialOrd` 实现了 `partial_cmp` 方法，一般情况下其返回一个 `Option<Ordering>`，但是当给定的值无法进行排序时将返回 `None`。尽管大多数类型的值都可以比较，但一个无法产生顺序的例子是：浮点类型的非数字值。当在浮点数上调用 `partial_cmp` 时， `NaN` 的浮点数将返回 `None`。
+
+当在结构体上派生时， `PartialOrd` 以在结构体定义中字段出现的顺序比较每个字段的值来比较两个实例。当在枚举上派生时，认为在枚举定义中声明较早的枚举项小于其后的枚举项。
+
+### 复制值的 `Clone` 和 `Copy`
+
+`Clone` 特征用于创建一个值的深拷贝（deep copy），复制过程可能包含代码的执行以及堆上数据的复制。查阅 [通过 Clone 进行深拷贝](https://course.rs/basic/ownership/ownership.html#%E5%85%8B%E9%9A%86%E6%B7%B1%E6%8B%B7%E8%B4%9D)获取有关 `Clone` 的更多信息。
+
+派生 `Clone` 实现了 `clone` 方法，当为整个的类型实现 `Clone` 时，在该类型的每一部分上都会调用 `clone` 方法。这意味着类型中所有字段或值也必须实现了 `Clone`，这样才能够派生 `Clone` 。
+
+`Copy` 特征允许你通过只拷贝存储在栈上的数据来复制值 (浅拷贝), 而无需复制存储在堆上的底层数据。查阅 [通过 Copy 复制栈数据](https://course.rs/basic/ownership/ownership.html#%E6%8B%B7%E8%B4%9D%E6%B5%85%E6%8B%B7%E8%B4%9D) 的部分来获取有关 `Copy` 的更多信息。
+
+当一个类型的内部字段全部实现了 `Copy` 时，你就可以在该类型上派上 `Copy` 特征。一个类型如果要实现 `Copy` 它必须先实现 `Clone` ，因为一个类型实现 `Clone` 后，就等于顺便实现了 `Copy` 。
+### 默认值的 `Default`
+
+`Default` 特征会帮你创建一个类型的默认值。 派生 `Default` 意味着自动实现了 `default` 函数。 `default` 函数的派生实现调用了类型每部分的 `default` 函数，这意味着类型中所有的字段也必须实现了 `Default`，这样才能够派生 `Default` 。
