@@ -270,7 +270,26 @@ public:
 }; 
 ```
 
+### 互斥总结
 
+互斥锁类：
+
+| 互斥类型                       | 可访问            | 可递归 | 可超时 |
+| -------------------------- | -------------- | --- | --- |
+| std::mutex                 | 独占             | No  | No  |
+| std::recursive_mutex       | 独占             | Yes | No  |
+| std::shared_mutex          | 1-独占<br />N-共享 | No  | No  |
+| std::timed_mutex           | 独占             | No  | Yes |
+| std::recursive_timed_mutex | 独占             | Yes | Yes |
+| std::shared_timed_mutex    | 1-独占<br />N-共享 | No  | Yes |
+管理互斥锁类：
+
+| 互斥管理器类           | 支持的互斥锁类型                                       | 互斥对象管理 |
+| ---------------- | ---------------------------------------------- | ------ |
+| std::lock_guard  | 所有类型                                           | 1      |
+| std::scoped_lock | 所有类型                                           | 零或更多   |
+| std::unique_lock | 所有类型                                           | 1      |
+| std::shared_lock | std::shared_mutex<br />std::shared_timed_mutex | 1      |
 ## 死锁
 
 死锁通常是对锁的使用不当造成。
