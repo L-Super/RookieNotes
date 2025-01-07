@@ -73,7 +73,18 @@ let five = Some(5);
 let six = plus_one(five);
 let none = plus_one(None);
 ```
-
+## 匹配元祖
+```rust
+pub fn describe_number(n: i32) -> String {
+    match (n, n % 2 == 0) {
+        (0, _) => "Zero".to_string(),
+        (x, true) if x > 0 => "Positive even".to_string(),
+        (x, false) if x > 0 => "Positive odd".to_string(),
+        (_, true) => "Negative even".to_string(),
+        (_, false) => "Negative odd".to_string(),
+    }
+}
+```
 ## 通配模式和 _ 占位符
 注：通配分支必须放在最后，否则通配分支之后的其他分支将不会被匹配
 ```rust
