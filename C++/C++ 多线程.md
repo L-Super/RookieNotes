@@ -564,6 +564,8 @@ int main()
 >```
 > `std::async` 返回的 Future 在调用其析构函数时的行为与从 Promise 获得的 Future 不同。当这些 Future 销毁时，会调用 future 析构函数，会执行 `wait()` 函数，使得创建时生成的线程汇入主线程。
 
+>  Windows 平台，`std::async` 从 Windows 线程池中获取线程。并发线程数限制为线程池默认值，即 500 个线程。
+>  https://learn.microsoft.com/zh-cn/cpp/standard-library/future-functions?view=msvc-170
 ## std::packaged_task
 
 打包任务，把任务包装起来。会将 future 与函数或可调用对象进行绑定。当调用 `std::packaged_task`对象时，就会调用相关函数或可调用对象，当 future 状态为就绪时，会存储返回值。这可以用在构建线程池或其他任务的管理中。
@@ -682,7 +684,12 @@ int main()
 
 
 > 《C++ 并发编程-第 2 版》
-> 
+>
+> 《Asynchronous Programming with C++》
+>
 > [并发支持库 ](https://zh.cppreference.com/w/cpp/thread)
 >
 > [C++ 并发编程（从C++11到C++17）](https://paul.pub/cpp-concurrency/)
+>
+> https://learn.microsoft.com/zh-cn/cpp/standard-library/future-functions?view=msvc-170
+
