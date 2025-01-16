@@ -562,7 +562,7 @@ int main()
 >std::async(std::launch::async, []{ f(); }); // 临时量的析构函数等待f()
 >std::async(std::launch::async, []{ g(); }); // f() 完成前不开始
 >```
->
+> `std::async` 返回的 Future 在调用其析构函数时的行为与从 Promise 获得的 Future 不同。当这些 Future 销毁时，会调用 future 析构函数，会执行 `wait()` 函数，使得创建时生成的线程汇入主线程。
 
 ## std::packaged_task
 
