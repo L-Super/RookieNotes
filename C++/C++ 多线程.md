@@ -182,7 +182,7 @@ class dns_cache
 public: 
   dns_entry find_entry(std::string const& domain) const 
   { 
-    // 护共享和只读权限，得多线程可以同时调用
+    // 保护共享和只读权限，使得多线程可以同时调用
     std::shared_lock<std::shared_mutex> lk(entry_mutex);
     std::map<std::string,dns_entry>::const_iterator const it= 
        entries.find(domain); 
