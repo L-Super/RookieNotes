@@ -44,94 +44,22 @@ int main()
 
 上面是一些在线程内部使用的 API，它们用来对当前线程做一些控制。
 
-## 互斥量
+## 线程同步
 
-### std::mutex
+### 互斥锁
 
-通过实例化 `std::mutex` 创建互斥量实例，`lock()` 可对互斥量上锁，`unlock()` 为解锁。
+#### std::mutex
+
+`std::mutex` 是一个同步原语，可用于保护共享数据不被多个线程同时访问。`std::mutex` 类提供独占、非递归所有权语义。
+
+通过实例化 `std::mutex` 创建互斥量实例，`lock()` 或 `try_lock()` 可对互斥量上锁，`unlock()` 为释放锁。
 
 > [!note]
 >
 > 成对使用，不允许非对称调用。
 
-### std::lock_guard
 
-RAII 模板类，在构造时提供已锁的互斥量，并在析构时进行解锁，从而保证了互斥量能被正确解锁。
-
-```cpp
-std::lock_guard<std::mutex> guard(some_mutex);
-
-std::lock_guard guard(some_mutex); // C++17 模板类参数推导
-
-// 锁定两个互斥体而不死锁
-std::lock(m1, m2);
-// 保证两个已锁定互斥体在作用域结尾解锁
-std::lock_guard<std::mutex> lock1(m1, std::adopt_lock);
-std::lock_guard<std::mutex> lock2(m2, std::adopt_lock);
-```
-
-### std::unique_lock
-
-`std::unique_lock` 比 `std::lock_guard` 更灵活，但效率差一点，内存占用多一点。
-
-可在构造函数传入第二个参数进行管理：
-
-- `std::adopt_lock`：表示互斥量已经 `lock()`，不需要再次 `lock()`
-- `std::try_to_lock`：尝试用 lock () 去锁定 mutex，如果没有锁定成功，也会立即返回，并不会阻塞在那里。
-
-- `std::defer_lock`：不进行加锁
-
-```cpp
-/*********/
-// 锁定两个互斥体而不死锁
-std::lock(m1, m2);
-// 保证两个已锁定互斥体在作用域结尾解锁
-std::unique_lock<std::mutex> lock1(m1, std::adopt_lock);
-std::unique_lock<std::mutex> lock2(m2, std::adopt_lock);
-
-/*********/
-unique_lock<mutex> lk_1(mymutex, try_to_lock);
-if(lk_1.owns_lock())
-{
-	//拿到锁, 执行操作
-}
-
-/*********/
-unique_lock<mutex> lk_2(mymutex, defer_lock); // 未加锁的mymutex
-lk_2.lock();
-// some process
-lk_2.unlock();
-// ........
-
-lk_2.lock();//可再次lock
-```
-
-成员函数：
-
-- `lock()` ：加锁
-- `unlock()`：解锁
-- `try_lock() `：尝试给互斥量加锁，如果拿不到锁，则返回 false；拿到锁，返回 true。不阻塞
-- `release()`：返回它所管理的 mutex 对象指针，并释放所有权。即，unique_lock 和 mutex 不再有关系
-
-### std::lock
-
-处理多个互斥量，避免死锁。
-
-```cpp
-std::lock(mymutex1, mymutex2);
-
-std::lock_guard<mutex> myguard(mymutex1, std::adopt_lock);
-std::lock_guard<mutex> myguard(mymutex2, std::adopt_lock);
-```
-
-### std::scoped_lock
-
-C++17 提供。`std::lock` 的 RAII 包装类，通常它比裸调用 `std::lock` 更好。
-
-```cpp
-std::scoped_lock lock(m1, m2);
-```
-### std::recursive_mutex
+#### std::recursive_mutex
 
 递归锁允许同一线程多次获得该互斥锁，用于解决同一线程需要多次获取互斥量时死锁的问题。
 
@@ -214,7 +142,7 @@ int main()
 > - 递归锁效率更低一些
 > - 虽然递归锁可以允许同一线程多次获得同一个互斥量，可重复获得的最大次数未定义，一旦超过一定次数，再对 lock 进行调用会抛出`std::system`错误
 
-### std::timed_mutex
+#### std::timed_mutex
 
 超时的独占锁。通过 `try_lock_for()` 和 `try_lock_until()` 方法，提供尝试带超时的互斥量。
 
@@ -240,7 +168,7 @@ void job(int id)
 }
 ```
 
-### std::shared_mutex 
+#### std::shared_mutex 
 
 C++ 17 读写锁，写线程独占访问，读线程共享并发访问。
 
@@ -270,6 +198,85 @@ public:
 }; 
 ```
 
+### 管理锁类
+
+#### std::lock_guard
+
+RAII 模板类，在构造时提供已锁的互斥量，并在析构时进行解锁，从而保证了互斥量能被正确解锁。
+
+```cpp
+std::lock_guard<std::mutex> guard(some_mutex);
+
+std::lock_guard guard(some_mutex); // C++17 模板类参数推导
+```
+
+#### std::unique_lock
+
+`std::unique_lock` 比 `std::lock_guard` 更灵活，但效率差一点，内存占用多一点。
+
+可在构造函数传入第二个参数进行管理：
+
+- `std::adopt_lock`：表示互斥量已经 `lock()`，不需要再次 `lock()`
+- `std::try_to_lock`：尝试用 lock () 去锁定 mutex，如果没有锁定成功，也会立即返回，并不会阻塞在那里。
+
+- `std::defer_lock`：不进行加锁
+
+```cpp
+/*********/
+// 锁定两个互斥体而不死锁
+std::lock(m1, m2);
+// 保证两个已锁定互斥体在作用域结尾解锁
+std::unique_lock<std::mutex> lock1(m1, std::adopt_lock);
+std::unique_lock<std::mutex> lock2(m2, std::adopt_lock);
+
+/*********/
+unique_lock<mutex> lk_1(mymutex, try_to_lock);
+if(lk_1.owns_lock())
+{
+	//拿到锁, 执行操作
+}
+
+/*********/
+unique_lock<mutex> lk_2(mymutex, defer_lock); // 未加锁的mymutex
+lk_2.lock();
+// some process
+lk_2.unlock();
+// ........
+
+lk_2.lock();//可再次lock
+```
+
+成员函数：
+
+- `lock()` ：加锁
+- `unlock()`：解锁
+- `try_lock() `：尝试给互斥量加锁，如果拿不到锁，则返回 false；拿到锁，返回 true。不阻塞
+- `release()`：返回它所管理的 mutex 对象指针，并释放所有权。即，unique_lock 和 mutex 不再有关系
+
+#### std::lock
+
+处理多个互斥量，避免死锁。
+
+```cpp
+// 锁定两个互斥体而不死锁
+std::lock(m1, m2);
+// 保证两个已锁定互斥体在作用域结尾解锁
+std::unique_lock<std::mutex> lock1(m1, std::adopt_lock);
+std::unique_lock<std::mutex> lock2(m2, std::adopt_lock);
+```
+
+#### std::scoped_lock
+
+C++17 提供。`std::lock` 的 RAII 包装类，通常它比裸调用 `std::lock` 更好。`std::scoped_lock` 包装零个或多个互斥锁。此外，互斥锁的获取顺序与 传递给 `std::scoped_lock` 构造函数的顺序相同，可以避免死锁。
+
+```cpp
+std::scoped_lock lock(m1, m2);
+```
+
+#### std::shared_lock
+
+用于在共享模式下获取/释放包装的互斥锁
+
 ### 互斥总结
 
 互斥锁类：
@@ -282,6 +289,7 @@ public:
 | std::timed_mutex           | 独占             | No  | Yes |
 | std::recursive_timed_mutex | 独占             | Yes | Yes |
 | std::shared_timed_mutex    | 1-独占<br />N-共享 | No  | Yes |
+
 管理互斥锁类：
 
 | 互斥管理器类           | 支持的互斥锁类型                                       | 互斥对象管理 |
