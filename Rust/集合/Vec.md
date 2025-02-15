@@ -25,6 +25,16 @@ fn main() {
     println!("{v3:?}");
 }
 ```
+## 创建 Vec
+使用 `Vec::new` 创建动态数组：
+```rust
+let v: Vec<i32> = Vec::new();
+```
+使用宏 `vec!` 来创建数组：
+```rust
+let v = vec![1, 2, 3];
+```
+
 ## 读取元素
 有两种方法引用 vector 中储存的值：通过索引或使用 `get` 方法。
 ```rust
