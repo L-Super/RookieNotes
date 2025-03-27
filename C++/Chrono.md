@@ -94,7 +94,7 @@ Timepoint和clock的关系确实有点微妙：
 
 + Clock定义出一个epoch（起始点）和一个tick周期。例如某个clock也许定义tick周期为毫秒，起始点是UNIX epoch（1970年1月1日），或定义tick周期为纳秒，起始点是程序开始时间。此外，clock还提供一个类型给“与此clock关联”的任何timepoint使用。
 
-Clock提供的函数now（）可以产出一个代表“现在时刻”的timepoint对象。
+Clock提供的函数 `now()` 可以产出一个代表“现在时刻”的timepoint对象。
 
 + Timepoint表现出某个特定时间点，关联至某个clock的某个正值或负值duration。因此，如果duration是10天而其所关联的clock epoch是“1970年1月1日”，那么这个timepoint表现的就是1970年1月11日。Timepoint提供的能力包括：产出epoch、产出“与其clock相应”的所有timepoint中的最小值和最大值，以及timepoint的各种算术运算。
 
@@ -150,6 +150,6 @@ namespace std
 下面四个特定的timepoint扮演了特殊角色：
 
 1. Epoch，由任何clock的time_point的default构造函数产出。
-2. Current time，由任何clock的static成员函数now（）产出。
-3. Minimum timepoint，由任何clock的time_point的static成员函数min（）产出。
-4. Maximum timepoint，由任何clock的time_point的static成员函数max（）产出。
+2. Current time，由任何clock的static成员函数 `now()` 产出。
+3. Minimum timepoint，由任何clock的time_point的static成员函数 `min()` 产出。
+4. Maximum timepoint，由任何clock的time_point的static成员函数 `max()` 产出。
