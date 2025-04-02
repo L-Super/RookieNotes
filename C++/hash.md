@@ -1,4 +1,4 @@
-std:: hash 返回 hash
+`std::hash` 返回哈希值
 
 用法：
 ```cpp
