@@ -58,13 +58,11 @@ FetchContent_MakeAvailable(googletest Catch2 myCompanyIcons)
 cmake_minimum_required(VERSION 3.14)
 cmake_policy(SET CMP0077 NEW)
 
-include(FetchContent)
-
-# 设置这些变量，必须用 CACHE 模式，且在 FetchContent 前
 set(LEVELDB_BUILD_TESTS OFF CACHE BOOL "Don't build leveldb tests")  
 set(LEVELDB_BUILD_BENCHMARKS OFF CACHE BOOL "Don't build leveldb benchmarks")  
 set(LEVELDB_INSTALL OFF CACHE BOOL "Don't install leveldb")
 
+include(FetchContent)
 FetchContent_Declare(
   leveldb
   GIT_REPOSITORY https://github.com/google/leveldb.git
