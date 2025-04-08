@@ -51,4 +51,26 @@ FetchContent_Declare(
 # 在以下调用之后，由 googletest 和 Catch2将可用于构建的其余部分
 FetchContent_MakeAvailable(googletest Catch2 myCompanyIcons)
 ```
-[`FetchContent_MakeAvailable()`](https://cmake-doc.readthedocs.io/zh-cn/latest/module/FetchContent.html#command:fetchcontent_makeavailable "fetchcontent_makeavailable") 命令确保指定的依赖项已被填充，无论是通过较早的调用还是通过自己填充它们。执行填充时，如果可能的话，它还会将它们添加到主构建中，以便主构建可以使用填充项目的目标等。
+[`FetchContent_MakeAvailable ()`]( https://cmake-doc.readthedocs.io/zh-cn/latest/module/FetchContent.html#command:fetchcontent_makeavailable "fetchcontent_makeavailable") 命令确保指定的依赖项已被填充，无论是通过较早的调用还是通过自己填充它们。执行填充时，如果可能的话，它还会将它们添加到主构建中，以便主构建可以使用填充项目的目标等。
+
+有时，我们需要在 `CMakeLists.txt` 里关闭库的选项开关：
+```cmake
+cmake_minimum_required(VERSION 3.14)
+cmake_policy(SET CMP0077 NEW)
+
+include(FetchContent)
+
+# 设置这些变量，必须用 CACHE 模式，且在 FetchContent 前
+set(LEVELDB_BUILD_TESTS OFF CACHE BOOL "Don't build leveldb tests")  
+set(LEVELDB_BUILD_BENCHMARKS OFF CACHE BOOL "Don't build leveldb benchmarks")  
+set(LEVELDB_INSTALL OFF CACHE BOOL "Don't install leveldb")
+
+FetchContent_Declare(
+  leveldb
+  GIT_REPOSITORY https://github.com/google/leveldb.git
+  GIT_TAG main
+)
+
+FetchContent_MakeAvailable(leveldb)
+```
+注意：这些变量需要以 **CACHE BOOL** 形式设置，否则 leveldb 项目里的 option(...) 会覆盖掉你设置的值（尤其在没有 CMP0077 NEW 的时候）
