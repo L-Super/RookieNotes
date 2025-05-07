@@ -126,6 +126,11 @@ docker exec -d daemon_dave touch /etc/new_config_file
 docker exec -t -i daemon_dave /bin/bash
 ```
 这条命令会在 daemon_dave 容器内从创建一个新的 bash 会话。
+
+直接执行特定命令：
+```bash
+docker exec daemon_dave ls -la /
+```
 ## 停止守护式容器
 ```sh
 docker stop daemon_dave
