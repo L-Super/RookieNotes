@@ -71,4 +71,18 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(leveldb)
 ```
-注意：这些变量需要以 **CACHE BOOL** 形式设置，否则 leveldb 项目里的 option(...) 会覆盖掉你设置的值（尤其在没有 CMP0077 NEW 的时候）
+注意：这些变量需要以 **CACHE BOOL** 形式设置，否则 leveldb 项目里的 option (...) 会覆盖掉你设置的值（尤其在没有 CMP0077 NEW 的时候）
+
+还有一种场景，需要更改第三方库的代码，可以通过 patch 的方式，在下载之后 apply patch 完成更改：
+```cmake
+set(hiberlite_patch git apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/hiberlite.patch)
+
+FetchContent_Declare(hiberlite
+        GIT_REPOSITORY https://github.com/paulftw/hiberlite
+        GIT_TAG master
+        PATCH_COMMAND ${hiberlite_patch}
+        UPDATE_DISCONNECTED 1
+        )
+```
+- **PATCH_COMMAND**：指定下载后执行的补丁命令。
+- **UPDATE_DISCONNECTED**：设置是否在后续构建中更新项目。为 1，表示在第一次下载后，后续构建不会尝试从远程仓库更新项目。
