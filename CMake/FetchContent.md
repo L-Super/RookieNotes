@@ -81,8 +81,8 @@ FetchContent_Declare(hiberlite
         GIT_REPOSITORY https://github.com/paulftw/hiberlite
         GIT_TAG master
         PATCH_COMMAND ${hiberlite_patch}
-        UPDATE_DISCONNECTED 1
+        UPDATE_DISCONNECTED ON
         )
 ```
 - **PATCH_COMMAND**：指定下载后执行的补丁命令。
-- **UPDATE_DISCONNECTED**：设置是否在后续构建中更新项目。为 1，表示在第一次下载后，后续构建不会尝试从远程仓库更新项目。
+- **UPDATE_DISCONNECTED**：设置是否在后续构建中更新项目。为 ON，表示在第一次下载后，后续构建不会尝试从远程仓库更新项目。
