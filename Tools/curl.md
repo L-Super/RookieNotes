@@ -111,6 +111,21 @@ $ curl --trace - https://www.example.com
 ```
 
 
+分析 HTTP 请求各阶段耗时：
+```bash
+$ curl -o /dev/null -s -w \
+  "namelookup: %{time_namelookup}\nconnect: %{time_connect}\nappconnect: %{time_appconnect}\npretransfer: %{time_pretransfer}\nstarttransfer: %{time_starttransfer}\ntotal: %{time_total}\n" \
+  https://baidu.com
+```
+输出：
+``` 
+namelookup: 0.003507          - DNS解析时间
+connect: 0.016623             -	TCP连接时间
+appconnect: 0.062802          - SSL握手时间
+pretransfer: 0.062863         - 预传输时间
+starttransfer: 0.080660       - 首字节传输时间
+total: 0.080700               - 总请求时间
+```
 
 
 
