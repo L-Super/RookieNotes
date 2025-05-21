@@ -1,3 +1,5 @@
+`docker compose down`
+
 停止容器并移除容器及网络
 
 ```bash
