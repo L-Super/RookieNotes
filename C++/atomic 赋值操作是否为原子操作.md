@@ -76,7 +76,30 @@ https://godbolt.org/z/n4bs3e3Kn
 > ai-=17;
 > ```
 
-那么，这里也进一步证实了，问题的答案。
+
+
+通过源码也可获知，重载了`operator=(const _Ty _Value)`运算符，调用了`store()`，实现了原子操作。同理，其他运算符`==`、`++`等，皆重载了对应的运算符。
+
+```cpp
+// MSVC atomic
+_EXPORT_STD template <class _Ty>
+struct atomic : _Choose_atomic_base_t<_Ty> { // atomic value
+	_Ty operator=(const _Ty _Value) volatile noexcept {
+        static_assert(_Deprecate_non_lock_free_volatile<_Ty>, "Never fails");
+        this->store(_Value);
+        return _Value;
+    }
+
+    _Ty operator=(const _Ty _Value) noexcept {
+        this->store(_Value);
+        return _Value;
+    }
+}；
+```
+
+
+
+那么，问题的答案，现在清楚了。
 
 ## 补充
 
