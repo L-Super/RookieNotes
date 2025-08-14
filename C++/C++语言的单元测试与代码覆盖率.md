@@ -1,3 +1,6 @@
+---
+url: https://paul.pub/gtest-and-coverage/
+---
 对代码进行单元测试是几乎每个软件工程师都要完成的工作。本文以C++语言为基础，讲解如何进行单元测试并生成测试报告。
 
 # 前言
@@ -26,7 +29,7 @@
 
 你可以通过下面几条命令下载和运行这个项目：
 
-```
+```bash
 git clone https://github.com/paulQuei/gtest-and-coverage.git
 cd gtest-and-coverage
 ./make_all.sh
@@ -36,7 +39,7 @@ cd gtest-and-coverage
 
 > 如果你使用的是Mac系统，下文假设你的系统上已经安装了[brew](https://brew.sh/)包管理器。如果没有，请通过下面这条命令安装它：
 
-```
+```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
@@ -65,33 +68,14 @@ cd gtest-and-coverage
 
 演示项目中的文件说明如下：
 
-文件名称
-
-说明
-
-make_all.sh
-
-入口文件，会执行：编译，测试和生成报告等所有工作
-
-CMakeLists.txt
-
-项目的编译文件
-
-googletest-release-1.8.1.zip
-
-google test源码压缩包
-
-utility.h
-
-待测试的软件库的头文件
-
-utility.cpp
-
-待测试的软件库的实现文件
-
-unit_test.cpp
-
-对软件库进行单元测试的代码
+| 文件名称                     | 说明                                             |
+| ---------------------------- | ------------------------------------------------ |
+| make_all.sh                  | 入口文件，会执行：编译，测试和生成报告等所有工作 |
+| CMakeLists.txt               | 项目的编译文件                                   |
+| googletest-release-1.8.1.zip | google test源码压缩包                            |
+| utility.h                    | 待测试的软件库的头文件                           |
+| utility.cpp                  | 待测试的软件库的实现文件                         |
+| unit_test.cpp                | 对软件库进行单元测试的代码                       |
 
 ## 测试环境
 
@@ -110,7 +94,7 @@ unit_test.cpp
     -   Google Test：1.8.1
     -   lcov：lcov version 1.12
 
-# 关于[CMake 案例](CMake%20案例.md)
+# 关于CMake
 
 为了简化编译的过程，这里使用CMake作为编译工具。关于CMake的更多内容请参见请官网：[https://cmake.org](https://cmake.org/)。
 
@@ -134,7 +118,7 @@ sudo apt install cmake
 
 这里仅仅对演示项目中用到的内容做一下说明。演示项目中的`CMakeLists.txt`内容如下：
 
-```
+```cmake
 cmake_minimum_required(VERSION 2.8.11) ①
 project(utility) ②
 
@@ -225,7 +209,7 @@ Google Test支持的操作系统包含下面这些：
 
 演示项目中的软件库包含一个头文件和一个实现文件。头文件内容如下：
 
-```
+```cpp
 // utility.h
 
 #ifndef INCLUDE_UTILITY_
@@ -262,7 +246,7 @@ public:
 
 这三个函数的实现也不复杂：
 
-```
+```cpp
 // utility.cpp
 
 #include "utility.h"
@@ -331,7 +315,7 @@ bool Utility::IsLeapYear(int year) {
 
 并且，测试代码写起来也非常的简单，像下面这样：
 
-```
+```cpp
 #include "utility.h"
 
 #include "gtest/gtest.h"
@@ -377,67 +361,21 @@ Google Test对于结果的判断，有两种形式：
 
 ### 布尔判断
 
-Fatal
-
-Nonfatal
-
-说明
-
-`ASSERT_TRUE(condition)`
-
-`EXPECT_TRUE(condition)`
-
-判断 condition 为 true
-
-`ASSERT_FALSE(condition)`
-
-`EXPECT_FALSE(condition)`
-
-判断 condition 为 false
+| Fatal                     | Nonfatal                  | 说明                    |
+| ------------------------- | ------------------------- | ----------------------- |
+| `ASSERT_TRUE(condition)`  | `EXPECT_TRUE(condition)`  | 判断 condition 为 true  |
+| `ASSERT_FALSE(condition)` | `EXPECT_FALSE(condition)` | 判断 condition 为 false |
 
 ### 二进制判断
 
-Fatal
-
-Nonfatal
-
-说明
-
-`ASSERT_EQ(expected, actual)`
-
-`EXPECT_EQ(expected, actual)`
-
-判断两个数值相等
-
-`ASSERT_NE(val1, val2)`
-
-`EXPECT_NE(val1, val2)`
-
-val1 != val2
-
-`ASSERT_LT(val1, val2)`
-
-`EXPECT_LT(val1, val2)`
-
-val1 < val2
-
-`ASSERT_LE(val1, val2)`
-
-`EXPECT_LE(val1, val2)`
-
-val1 <= val2
-
-`ASSERT_GT(val1, val2)`
-
-`EXPECT_GT(val1, val2)`
-
-val1 > val2
-
-`ASSERT_GE(val1, val2)`
-
-`EXPECT_GE(val1, val2)`
-
-val1 >= val2
+| Fatal                         | Nonfatal                      | 说明             |
+| ----------------------------- | ----------------------------- | ---------------- |
+| `ASSERT_EQ(expected, actual)` | `EXPECT_EQ(expected, actual)` | 判断两个数值相等 |
+| `ASSERT_NE(val1, val2)`       | `EXPECT_NE(val1, val2)`       | val1 != val2     |
+| `ASSERT_LT(val1, val2)`       | `EXPECT_LT(val1, val2)`       | val1 < val2      |
+| `ASSERT_LE(val1, val2)`       | `EXPECT_LE(val1, val2)`       | val1 <= val2     |
+| `ASSERT_GT(val1, val2)`       | `EXPECT_GT(val1, val2)`       | val1 > val2      |
+| `ASSERT_GE(val1, val2)`       | `EXPECT_GE(val1, val2)`       | val1 >= val2     |
 
 说明：
 
@@ -450,87 +388,28 @@ val1 >= val2
 
 ### 字符串判断
 
-Fatal
-
-Nonfatal
-
-说明
-
-`ASSERT_STREQ(expected, actual)`
-
-`EXPECT_STREQ(expected, actual)`
-
-两个C string相同
-
-`ASSERT_STRNE(str1, str2)`
-
-`EXPECT_STRNE(str1, str2)`
-
-两个C string不相同
-
-`ASSERT_STRCASEEQ(exp, act)`
-
-`EXPECT_STRCASEEQ(exp, act)`
-
-忽略大小写，两个C string相同
-
-`ASSERT_STRCASENE(str1, str2)`
-
-`EXPECT_STRCASENE(str1, str2)`
-
-忽略大小写，两个C string不相同
+| Fatal                            | Nonfatal                         | 说明                           |
+| -------------------------------- | -------------------------------- | ------------------------------ |
+| `ASSERT_STREQ(expected, actual)` | `EXPECT_STREQ(expected, actual)` | 两个C string相同               |
+| `ASSERT_STRNE(str1, str2)`       | `EXPECT_STRNE(str1, str2)`       | 两个C string不相同             |
+| `ASSERT_STRCASEEQ(exp, act)`     | `EXPECT_STRCASEEQ(exp, act)`     | 忽略大小写，两个C string相同   |
+| `ASSERT_STRCASENE(str1, str2)`   | `EXPECT_STRCASENE(str1, str2)`   | 忽略大小写，两个C string不相同 |
 
 ### 浮点数判断
 
-Fatal
-
-Nonfatal
-
-说明
-
-`ASSERT_FLOAT_EQ(exp, act)`
-
-`EXPECT_FLOAT_EQ(exp, act)`
-
-两个float数值相等
-
-`ASSERT_DOUBLE_EQ(exp, act)`
-
-`EXPECT_DOUBLE_EQ(exp, act)`
-
-两个double数值相等
-
-`ASSERT_NEAR(val1, val2, abs_err)`
-
-`EXPECT_NEAR(val1, val2, abs_err)`
-
-val1和val2的差距不超过abs_err
+| Fatal                              | Nonfatal                           | 说明                          |
+| ---------------------------------- | ---------------------------------- | ----------------------------- |
+| `ASSERT_FLOAT_EQ(exp, act)`        | `EXPECT_FLOAT_EQ(exp, act)`        | 两个float数值相等             |
+| `ASSERT_DOUBLE_EQ(exp, act)`       | `EXPECT_DOUBLE_EQ(exp, act)`       | 两个double数值相等            |
+| `ASSERT_NEAR(val1, val2, abs_err)` | `EXPECT_NEAR(val1, val2, abs_err)` | val1和val2的差距不超过abs_err |
 
 ### 异常判断
 
-Fatal
-
-Nonfatal
-
-说明
-
-`ASSERT_THROW(stmt, exc_type)`
-
-`EXPECT_THROW(stmt, exc_type)`
-
-stmt抛出了exc_type类型的异常
-
-`ASSERT_ANY_THROW(stmt)`
-
-`EXPECT_ANY_THROW(stmt)`
-
-stmt抛出了任意类型的异常
-
-`ASSERT_NO_THROW(stmt)`
-
-`EXPECT_NO_THROW(stmt)`
-
-stmt没有抛出异常
+| Fatal                          | Nonfatal                       | 说明                         |
+| ------------------------------ | ------------------------------ | ---------------------------- |
+| `ASSERT_THROW(stmt, exc_type)` | `EXPECT_THROW(stmt, exc_type)` | stmt抛出了exc_type类型的异常 |
+| `ASSERT_ANY_THROW(stmt)`       | `EXPECT_ANY_THROW(stmt)`       | stmt抛出了任意类型的异常     |
+| `ASSERT_NO_THROW(stmt)`        | `EXPECT_NO_THROW(stmt)`        | stmt没有抛出异常             |
 
 ## Test Fixture
 
@@ -552,7 +431,7 @@ stmt没有抛出异常
 
 使用Test Fixture后，我们的代码如下所示：
 
-```
+```cpp
 class UtilityTest : public ::testing::Test {
 
 protected:
@@ -623,7 +502,7 @@ TEST_F(UtilityTest, ArithmeticCalculationIsLeapYear) {
 
 像下面这样：
 
-```
+```bash
 $ ./build/unit_test --gtest_filter=*ArithmeticCalculationInt
 Running main() from googletest/src/gtest_main.cc
 Note: Google Test filter = *ArithmeticCalculationInt
@@ -676,7 +555,7 @@ CANNO Divided by 0
 
 以下面这个C语言函数为例：
 
-```
+```c
 int foo (int x, int y) {
     int z = 0;
     if ((x > 0) && (y > 0)) {
@@ -721,7 +600,7 @@ int foo (int x, int y) {
 
 这段代码如下：
 
-```
+```c
 // test.c
 
 #include <stdio.h>
@@ -745,7 +624,7 @@ int main (void) {
 
 要通过gcov生成代码覆盖率。需要在编译时，增加参数`--coverage`：
 
-```
+```bash
 gcc --coverage test.c
 ```
 
@@ -763,7 +642,7 @@ gcc --coverage test.c
 
 回顾一下我们刚刚的操作内容：
 
-```
+```bash
 $ gcc --coverage test.c
 $ ll
 total 72
