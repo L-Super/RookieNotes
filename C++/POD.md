@@ -27,4 +27,5 @@ static_assert(std::is_pod_v<C> == false);
 > [C++ 具名要求：简旧数据类型 (PODType) - cppreference.com](https://zh.cppreference.com/w/cpp/named_req/PODType)
 > [平凡类类型](https://zh.cppreference.com/w/cpp/language/classes#.E5.B9.B3.E5.87.A1.E7.B1.BB "cpp/language/classes")
 > [POD 类 - cppreference.com](https://zh.cppreference.com/w/cpp/language/classes#POD_.E7.B1.BB)
-> [is_pod](https://zh.cppreference.com/w/cpp/types/is_pod "cpp/types/is pod")
+> [is_pod]( https://zh.cppreference.com/w/cpp/types/is_pod "cpp/types/is pod")
+> [普通、标准布局、POD 和文本类型](https://learn.microsoft.com/zh-cn/cpp/cpp/trivial-standard-layout-and-pod-types?view=msvc-170)
