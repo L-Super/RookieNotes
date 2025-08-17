@@ -208,6 +208,11 @@ SectionEnd
 
 NSIS 3.07版本开始，默认为 Unicode 版本。
 
+涉及多语言时，需要注意文件编码。可以指定编码：
+```bash
+makensis /INPUTCHARSET UTF8  test.nsi
+```
+
 ## [NsProcess plugin](https://nsis.sourceforge.io/NsProcess_plugin)
 
 检测进程插件
