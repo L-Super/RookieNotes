@@ -25,7 +25,7 @@ NSIS 可下载 HM NIS Edit 插件，进行图形化创建脚本。
 
 ; !define MUI_HEADERIMAGE
 ; !define MUI_HEADERIMAGE_BITMAP "logohead.bmp"
-; !define MUI_WELCOMEFINISHPAGE_BITMAP "banner_min.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "banner_min.bmp"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -37,8 +37,15 @@ NSIS 可下载 HM NIS Edit 插件，进行图形化创建脚本。
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${PRODUCT_NAME}.exe"
 !insertmacro MUI_PAGE_FINISH
 
+;--------------------------------
 ; Uninstaller pages
+; Show a page where the user needs to confirm the uninstall
+!insertmacro MUI_UNPAGE_CONFIRM
+; Show a page where the progress of the uninstall is listed
 !insertmacro MUI_UNPAGE_INSTFILES
+; Show a page after the finished uninstallation
+!insertmacro MUI_UNPAGE_FINISH
+;--------------------------------
 
 ; Language files
 !insertmacro MUI_LANGUAGE "SimpChinese"
@@ -47,7 +54,7 @@ NSIS 可下载 HM NIS Edit 插件，进行图形化创建脚本。
 ; MUI end ------
 
 ;--------------------------------
-;Version Information
+; Version Information
 !getdllversion "QClipboard/${PRODUCT_NAME}.exe" ver 
 !define PRODUCT_VERSION "${ver1}.${ver2}.${ver3}.${ver4}" 
 VIProductVersion "${PRODUCT_VERSION}" 
@@ -93,21 +100,6 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
 
-LangString UninstSuccess ${LANG_SIMPCHINESE} "已成功地从你的计算机移除。"
-LangString UninstSuccess ${LANG_ENGLISH} "Has been successfully removed from your computer."
-LangString UninstConfirm ${LANG_SIMPCHINESE} "你确实要完全移除 $(^Name) ，其及所有的组件？"
-LangString UninstConfirm ${LANG_ENGLISH} "Are you sure you want to completely remove $(^Name) and all of its components?"
-
-Function un.onUninstSuccess
-  HideWindow
-  MessageBox MB_ICONINFORMATION|MB_OK "$(UninstSuccess)"
-FunctionEnd
-
-Function un.onInit
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "$(UninstConfirm)" IDYES +2
-  Abort
-FunctionEnd
-
 Section Uninstall
   Delete "$INSTDIR\uninst.exe"
 
@@ -128,6 +120,23 @@ SectionEnd
 需要注意的地方：
 图片需要为 bmp 格式，且尺寸有要求。
 
+通过 HM NIS Edit 工具生成的卸载代码配合多语言示例（由 `MUI_UNPAGE_CONFIRM`, `MUI_UNPAGE_FINISH` 替代）：
+```nsis
+LangString UninstSuccess ${LANG_SIMPCHINESE} "已成功地从你的计算机移除。"
+LangString UninstSuccess ${LANG_ENGLISH} "Has been successfully removed from your computer."
+LangString UninstConfirm ${LANG_SIMPCHINESE} "你确实要完全移除 $(^Name) ，其及所有的组件？"
+LangString UninstConfirm ${LANG_ENGLISH} "Are you sure you want to completely remove $(^Name) and all of its components?"
+
+Function un.onUninstSuccess
+  HideWindow
+  MessageBox MB_ICONINFORMATION|MB_OK "$(UninstSuccess)"
+FunctionEnd
+
+Function un.onInit
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "$(UninstConfirm)" IDYES +2
+  Abort
+FunctionEnd
+```
 ## NSIS 坑
 
 NSIS 3.07版本开始，默认为 Unicode 版本。
