@@ -264,3 +264,4 @@ fi
 ```
 
 > https://www.debian.org/doc/manuals/debian-reference/ch12.zh-cn.html
+> [开发者平台](https://uosdn.uniontech.com/#document3?dirid=656ef27dbd766615b0b0300e&id=65702eaebd766615b0b0310d)
