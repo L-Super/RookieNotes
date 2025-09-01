@@ -94,6 +94,58 @@ std::wstring char_to_wchar(const char* str)
 }
 ```
 
+C++ 17 之后（`std::string` 17 之前是 `const CharT* data()`, 之后为 `CharT* data()`）：
+```cpp
+std::wstring ansi_to_wstring(const std::string &s) {
+    // ACP = ANSI Code Page，告诉他字符串里的是当前区域设置指定的编码（在中国区，ANSI 就是 GBK 了）
+    int len = MultiByteToWideChar(CP_ACP, 0,
+                                  s.c_str(), s.size(),
+                                  nullptr, 0);
+    std::wstring ws(len, 0);
+    MultiByteToWideChar(CP_ACP, 0,
+                        s.c_str(), s.size(), 
+                        ws.data(), ws.size());
+    return ws;
+}
+
+std::string wstring_to_ansi(const std::wstring &ws) {
+    int len = WideCharToMultiByte(CP_ACP, 0,
+                                  ws.c_str(), ws.size(),
+                                  nullptr, 0,
+                                  nullptr, nullptr);
+    std::string s(len, 0);
+    WideCharToMultiByte(CP_ACP, 0,
+                        ws.c_str(), ws.size(),
+                        s.data(), s.size(),
+                        nullptr, nullptr);
+    return s;
+}
+
+std::wstring utf8_to_wstring(const std::string &s) {
+    int len = MultiByteToWideChar(CP_UTF8, 0,
+                                  s.c_str(), s.size(),
+                                  nullptr, 0);
+    std::wstring ws(len, 0);
+    MultiByteToWideChar(CP_UTF8, 0,
+                        s.c_str(), s.size(), 
+                        ws.data(), ws.size());
+    return ws;
+}
+
+std::string wstring_to_utf8(const std::wstring &ws) {
+    int len = WideCharToMultiByte(CP_UTF8, 0,
+                                  ws.c_str(), ws.size(),
+                                  nullptr, 0,
+                                  nullptr, nullptr);
+    std::string s(len, 0);
+    WideCharToMultiByte(CP_UTF8, 0,
+                        ws.c_str(), ws.size(),
+                        s.data(), s.size(),
+                        nullptr, nullptr);
+    return s;
+}
+```
+
 
 
 
