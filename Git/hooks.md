@@ -33,5 +33,16 @@ Git 支持的所有钩子：
 | p4-post-changelist    | `git-p4 submit`执行后                                                                                                |                                             |
 | post-index-change     | 索引被写入到`read-cache.c do_write_locked_index`后                                                                       |                                             |
 
+Git 提交工作流：
+
+```mermaid
+flowchart TD
+    A[开始提交] --> B[pre-commit<br/>检查代码/测试/风格]
+    B --> C[prepare-commit-msg<br/>生成或修改默认提交信息]
+    C --> D[commit-msg<br/>验证提交信息格式/规范]
+    D --> E[post-commit<br/>提交完成后执行<br/>如通知]
+    E --> F[提交完成]
+```
+
 >  https://git-scm.cn/docs/githooks
 >  https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90
