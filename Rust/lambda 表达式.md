@@ -1,4 +1,5 @@
-闭包或 lambda 表达式具有无法命名的类型。不过，它们会实现特殊的 [`Fn`](https://doc.rust-lang.org/std/ops/trait.Fn.html)， [`FnMut`](https://doc.rust-lang.org/std/ops/trait.FnMut.html) 和 [`FnOnce`](https://doc.rust-lang.org/std/ops/trait.FnOnce.html) 特征。
+闭包（closures）或 lambda 表达式是可以保存在变量中或作为参数传递给其他函数的匿名函数。
+具有无法命名的类型，不过，它们会实现特殊的 [`Fn`](https://doc.rust-lang.org/std/ops/trait.Fn.html)， [`FnMut`](https://doc.rust-lang.org/std/ops/trait.FnMut.html) 和 [`FnOnce`](https://doc.rust-lang.org/std/ops/trait.FnOnce.html) 特征。
 
 ```rust
 let add_one_v1 = |x: u32| -> u32 { x + 1 };
