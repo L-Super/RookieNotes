@@ -22,3 +22,13 @@
 | version                   | 显示 uv 的版本                          |
 | generate-shell-completion | 生成 shell 自动补全脚本                 |
 | help                      | 显示某个命令的文档命令                  |
+
+升级某个依赖到可用的最新版本：
+```bash
+uv add --upgrade requests
+```
+
+升级全部依赖的最新版本并同步安装：
+```bash
+uv sync --upgrade
+```
