@@ -8,12 +8,13 @@ subprocess.run(args, *, stdin=None, input=None, stdout=None, stderr=None, captur
 
 运行 args 指令，等待指令完成,，然后返回一个 [`CompletedProcess`](https://docs.python.org/zh-cn/3.11/library/subprocess.html#subprocess.CompletedProcess) 实例。
 
-参数：
+常见参数：
 
 - args：执行的命令，可以为列表，字符串（当 shell=True 时）
 - stdin、stdout 和 stderr：子进程的标准输入、输出和错误
 - capture_output： 为 True 时，则 stdout 和 stderr 将被捕获
 - timeout：设置以秒为单位的超时，达到超时限制，子进程将被杀掉并弹出 TimeoutExpired 异常
+- check：如果为 True, 并且进程以非零状态码退出,  [`CalledProcessError`]( https://docs.python.org/zh-cn/3.11/library/subprocess.html#subprocess.CalledProcessError "subprocess. CalledProcessError") 异常将被抛出.
 - text / encoding：字符串处理。text=True：以文本模式打开 stdout、stderr 和 stdin（等同于 universal_newlines=True）
 -  shell：如果为 True，通过 shell 执行命令（⚠️ 警告：shell=True 存在安全风险，特别是处理用户输入时）
 - cwd：工作目录
@@ -24,9 +25,9 @@ subprocess.run(args, *, stdin=None, input=None, stdout=None, stderr=None, captur
 CompletedProcess 参数：
 
 - **args**：执行的命令
-- **returncode**：退出状态码。0 表示运行正常
-- **stdout**：标准输出
-- **stderr**：标准错误输出
+- **returncode**：退出状态码。0 表示运行正常。一个负值 `-N` 表示子进程被信号 `N` 中断 (仅 POSIX)
+- **stdout**：标准输出，如果未捕获, 则为 `None`
+- **stderr**：标准错误输出，如果未捕获, 则为 `None`
 - **check_returncode**()：如果 `returncode` 非零, 抛出 [`CalledProcessError`](https://docs.python.org/zh-cn/3.11/library/subprocess.html#subprocess.CalledProcessError)
 
 ## 示例
