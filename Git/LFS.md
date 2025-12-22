@@ -1,5 +1,5 @@
 Git 大文件存储 (LFS) 用 Git 内部的文本指针替换大文件，比如音频样本、视频、数据集和图形，同时将文件内容存储在 GitHub.com 这样的远程服务器上。
-## 安装 git LFS
+## 安装 Git LFS
 
 - macOS：
 ```bash
@@ -28,6 +28,26 @@ $ git lfs install
 git add .gitattributes
 ```
 
+## 常用命令
+```bash
+# 查看当前使用 Git LFS 管理的匹配列表
+git lfs track
+
+# 使用 Git LFS 管理指定的文件
+git lfs track "*.psd"
+
+# 不再使用 Git LFS 管理指定的文件
+git lfs untrack "*.psd"
+
+# 类似 `git status`，查看当前 Git LFS 对象的状态
+git lfs status
+
+# 枚举目前所有被 Git LFS 管理的具体文件
+git lfs ls-files
+
+# 检查当前所用 Git LFS 的版本
+git lfs version
+```
 
 将之前的提交历史记录中的文件加入 LFS 可以使用 `git lfs migrate`命令
 
