@@ -116,21 +116,24 @@ docker top daemon_dave
 ## 在容器内运行进程
 可通过 `docker exec` 命令在容器内部额外启动新进程。可用在容器内运行的进程有两种类型：后台任务和交互式任务。
 
-在容器中运行后台任务：
-```sh
-docker exec -d daemon_dave touch /etc/new_config_file
+**直接执行特定命令**：
+```bash
+docker exec daemon_dave ls -la /
+
+docker exec nginx nginx -s reload
 ```
-+ -d：表明需要运行一个后台进程。-d 之后指定容器名以及要执行的命令。
-在容器中运行交互式任务：
+
+**在容器中运行交互式任务**：
 ```sh
 docker exec -t -i daemon_dave /bin/bash
 ```
 这条命令会在 daemon_dave 容器内从创建一个新的 bash 会话。
 
-直接执行特定命令：
-```bash
-docker exec daemon_dave ls -la /
+**在容器中运行后台任务**：
+```sh
+docker exec -d daemon_dave touch /etc/new_config_file
 ```
++ -d：表明需要运行一个后台进程。-d 之后指定容器名以及要执行的命令。
 ## 停止守护式容器
 ```sh
 docker stop daemon_dave
