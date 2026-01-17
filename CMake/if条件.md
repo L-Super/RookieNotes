@@ -50,3 +50,20 @@ if(<string>)
 3. 二元测试： [EQUAL](https://cmake.org/cmake/help/latest/command/if.html#equal), [LESS](https://cmake.org/cmake/help/latest/command/if.html#less), [LESS_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#less-equal), [GREATER](https://cmake.org/cmake/help/latest/command/if.html#greater), [GREATER_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#greater-equal), [STREQUAL](https://cmake.org/cmake/help/latest/command/if.html#strequal), [STRLESS](https://cmake.org/cmake/help/latest/command/if.html#strless), [STRLESS_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#strless-equal), [STRGREATER](https://cmake.org/cmake/help/latest/command/if.html#strgreater), [STRGREATER_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#strgreater-equal), [VERSION_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#version-equal), [VERSION_LESS](https://cmake.org/cmake/help/latest/command/if.html#version-less), [VERSION_LESS_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#version-less-equal), [VERSION_GREATER](https://cmake.org/cmake/help/latest/command/if.html#version-greater), [VERSION_GREATER_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#version-greater-equal), [PATH_EQUAL](https://cmake.org/cmake/help/latest/command/if.html#path-equal), and [MATCHES](https://cmake.org/cmake/help/latest/command/if.html#matches).
 4. 一元逻辑运算符： [NOT](https://cmake.org/cmake/help/latest/command/if.html#not).
 5. 二元逻辑运算符： [AND](https://cmake.org/cmake/help/latest/command/if.html#and) and [OR](https://cmake.org/cmake/help/latest/command/if.html#or)，从左到右，没有任何短路。
+
+## 示例
+```cmake
+if (WIN32)
+    add_definitions(-DNOMINMAX -D_USE_MATH_DEFINES)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")  
+	message(STATUS "Building in ${CMAKE_BUILD_TYPE} mode.") 
+else() 
+ 	message(STATUS "Building in ${CMAKE_BUILD_TYPE} mode.") 
+endif() 
+
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+```
