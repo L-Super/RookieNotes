@@ -142,8 +142,9 @@ int main() {
 2.  **`std::stop_token`**：停止信号的**接收者/观察者**（信号灯）。
 3.  **`std::stop_callback`**：停止信号发出时的**回调注册者**。
 
-4. `std::stop_source` 
+---
 
+1. `std::stop_source` 
 *   **作用**：用于发起停止请求。
 *   **原理**：它持有一个指向共享状态的引用。当调用 `request_stop()` 时，它会触发所有注册的回调函数。
 *   **在 `jthread` 中**：`std::jthread` 内部包含一个 `std::stop_source` 成员变量。
@@ -335,6 +336,58 @@ private:
 };
 ```
 
+### stop_token
+
+```cpp
+class stop_token {
+    friend stop_source;
+    friend _Stop_callback_base;
+
+public:
+    stop_token() noexcept : _State{} {}
+    stop_token(const stop_token& _Other) noexcept : _State{_Other._State} {
+        const auto _Local = _State;
+        if (_Local != nullptr) {
+            _Local->_Stop_tokens.fetch_add(1, memory_order_relaxed);
+        }
+    }
+
+    stop_token(stop_token&& _Other) noexcept : _State{exchange(_Other._State, nullptr)} {}
+    stop_token& operator=(const stop_token& _Other) noexcept {
+        stop_token{_Other}.swap(*this);
+        return *this;
+    }
+
+    stop_token& operator=(stop_token&& _Other) noexcept {
+        stop_token{move(_Other)}.swap(*this);
+        return *this;
+    }
+
+    ~stop_token() {
+        const auto _Local = _State;
+        if (_Local != nullptr) {
+            if (_Local->_Stop_tokens.fetch_sub(1, memory_order_acq_rel) == 1) {
+                delete _Local;
+            }
+        }
+    }
+
+    bool stop_requested() const noexcept {
+        const auto _Local = _State;
+        return _Local != nullptr && _Local->_Stop_requested();
+    }
+
+    bool stop_possible() const noexcept {
+        const auto _Local = _State;
+        return _Local != nullptr && _Local->_Stop_possible();
+    }
+
+private:
+    explicit stop_token(_Stop_state* const _State_) : _State{_State_} {}
+
+    _Stop_state* _State;
+};
+```
 ### stop_state
 
 ```cpp
