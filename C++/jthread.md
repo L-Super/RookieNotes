@@ -106,24 +106,31 @@ int main() {
 `stop_callback` 使用：
 
 ```cpp
-int main() {
-    std::jthread t([](std::stop_token st) {
-        // 注册一个回调：一旦有人请求停止，会立即在发出停止信号的线程中执行回调
-        std::stop_callback cb(st, []{
-            std::cout << "Callback: Stop requested!\n";
-        });
-        
-        // 模拟一个耗时操作
-        for (int i = 0; i < 10; ++i) {
-            if (st.stop_requested()) break;
-            
-            std::cout << "Thread: Processing " << i << "...\n";
-            std::this_thread::sleep_for(200ms);
-        }
-    });
-    std::this_thread::sleep_for(600ms);
-    std::cout << "Main: Requesting stop!\n";
-    t.request_stop(); // 此时会触发子线程内部注册的回调
+int main() {  
+    std::jthread t([](std::stop_token st) {  
+        // 注册一个回调：一旦有人请求停止，会立即在发出停止信号的线程中执行回调  
+        std::stop_callback cb(st, []{  
+            std::cout << "Callback: Stop requested!\n";  
+        });  
+  
+        // 模拟一个耗时操作  
+        for (int i = 0; i < 10; ++i) {  
+            if (st.stop_requested()) break;  
+  
+            std::cout << "Thread: Processing " << i << "...\n";  
+            std::this_thread::sleep_for(200ms);  
+        }  
+    });  
+    std::this_thread::sleep_for(600ms);  
+    std::cout << "Main: Requesting stop!\n";  
+    t.request_stop(); // 此时会触发子线程内部注册的回调  
+  
+    std::cout << "Main thread: " << std::this_thread::get_id() << "\n";  
+    // 在构造函数注册之前已经请求了停止，则回调函数将在构造的当前线程中被立即调用。  
+    std::stop_callback callback_after_stop(t.get_stop_token(), [] {  
+        std::cout << "Stop callback executed by thread: "  
+            << std::this_thread::get_id() << '\n';  
+    });  
 }
 ```
 
