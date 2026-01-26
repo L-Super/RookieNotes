@@ -76,7 +76,7 @@ int main() {
 
 > [!NOTE]
 >
-> 示例一使用的是 `jthread` 自身内部的 `stop_source`，所以调用 `jthread.request_stop()` 停止，而示例二是采用的外部传入的 `stop_source`，调用 `jthread.request_stop()` 是无法成功停止的，需要使用 `stop_source.request_stop()`
+> 示例一使用的是 `jthread` 自身内部的 `stop_source`，所以调用 `jthread.request_stop()` 停止，而示例二是采用的外部传入的 `stop_source`，调用 `jthread.request_stop()` 是无法成功停止的，因为不是同一个 `stop_token` ，需要使用 `stop_source.request_stop()`
 
 取消多个线程：
 
@@ -265,3 +265,127 @@ std::is_invocable_v<decltype(worker), std::stop_token, std::stop_token, int>;
 ```cpp
 _Impl._Start(_STD forward<_Fn>(func), _STD forward<_Args>(args)...);
 ```
+
+### stop_source
+`stop_source` 管理一个共享的停止状态（`_Stop_state`），通过引用计数实现资源共享和生命周期管理。
+
+```cpp
+class stop_source {  
+public:  
+    stop_source() : _State{new _Stop_state} {}  
+    explicit stop_source(nostopstate_t) noexcept : _State{} {}  
+    stop_source(const stop_source& _Other) noexcept : _State{_Other._State} {  
+        const auto _Local = _State;  
+        if (_Local != nullptr) { 
+        	// `fetch_add(2)` 而非1
+        	// 原因：`_Stop_sources`的最低位用于标记，实际计数是 `值/2` 
+            _Local->_Stop_sources.fetch_add(2, memory_order_relaxed);  
+        }  
+    }  
+  
+    stop_source(stop_source&& _Other) noexcept : _State{ exchange(_Other._State, nullptr)} {}  
+    stop_source& operator=(const stop_source& _Other) noexcept {  
+        stop_source{_Other}.swap(*this);  
+        return *this;  
+    }  
+  
+    stop_source& operator=(stop_source&& _Other) noexcept {  
+        stop_source{move(_Other)}.swap(*this);  
+        return *this;  
+    }  
+  
+    ~stop_source() {  
+        const auto _Local = _State;  
+        if (_Local != nullptr) {  
+        	// 1. source计数-1（实际-2）
+            if ((_Local->_Stop_sources.fetch_sub(2, memory_order_acq_rel) >> 1) == 1) {  
+                if (_Local->_Stop_tokens.fetch_sub(1, memory_order_acq_rel) == 1) {  
+                	// 2. 最后一个source，尝试释放token计数
+                    delete _Local;  
+                }  
+            }  
+        }  
+    }  
+  
+    stop_token get_token() const noexcept {  
+        const auto _Local = _State;  
+        if (_Local != nullptr) {  
+            _Local->_Stop_tokens.fetch_add(1, memory_order_relaxed);  
+        }  
+  
+        return stop_token{_Local};  
+    }  
+    bool stop_requested() const noexcept {  
+        const auto _Local = _State;  
+        return _Local != nullptr && _Local->_Stop_requested();  
+    }  
+  
+    bool stop_possible() const noexcept {  
+        return _State != nullptr;  
+    }  
+  
+    bool request_stop() noexcept {  
+        const auto _Local = _State;  
+        return _Local && _Local->_Request_stop();  
+    }  
+  
+private:  
+    _Stop_state* _State;  // 指向共享停止状态的指针
+};
+```
+
+### stop_state
+
+```cpp
+struct _Stop_state {  
+    atomic<uint32_t> _Stop_tokens  = 1; // plus one shared by all stop_sources  
+    atomic<uint32_t> _Stop_sources = 2; // plus the low order bit is the stop requested bit  
+    _Locked_pointer<_Stop_callback_base> _Callbacks;  
+    // always uses relaxed operations; ordering provided by the _Callbacks lock  
+    // (atomic just to get wait/notify support)    atomic<const _Stop_callback_base*> _Current_callback = nullptr;  
+    _Thrd_id_t _Stopping_thread                          = 0;  
+      
+    bool _Stop_requested() const noexcept {  
+        return (_Stop_sources.load() & uint32_t{1}) != 0;  
+    }  
+  
+    bool _Stop_possible() const noexcept {  
+        return _Stop_sources.load() != 0;  
+    }  
+  
+    bool _Request_stop() noexcept {  
+        // Attempts to request stop and call callbacks, returns whether request was successful  
+        if ((_Stop_sources.fetch_or(uint32_t{1}) & uint32_t{1}) != 0) {  
+            // another thread already requested  
+            return false;  
+        }  
+  
+        _Stopping_thread = _Thrd_id();  
+        for (;;) {  
+            auto _Head = _Callbacks._Lock_and_load();  
+            _Current_callback.store(_Head, memory_order_relaxed);  
+            _Current_callback.notify_all();  
+            if (_Head == nullptr) {  
+                _Callbacks._Store_and_unlock(nullptr);  
+                return true;  
+            }  
+  
+            const auto _Next = _STD exchange(_Head->_Next, nullptr);  
+            _STL_INTERNAL_CHECK(_Head->_Prev == nullptr);  
+            if (_Next != nullptr) {  
+                _Next->_Prev = nullptr;  
+            }  
+  
+            _Callbacks._Store_and_unlock(_Next); // unlock before running _Head so other registrations  
+            // can detach without blocking on the callback  
+            _Head->_Fn(_Head); // might destroy *_Head  
+        }  
+    }  
+};
+```
+
+`_Stop_state` 内部主要维护两个原子计数器和一个链表：
+
+- `_Stop_sources`: source 引用计数（实际值/2）（位运算技巧，同时存储两个信息）
+- `_Stop_tokens`: token 引用计数（实际值/1）
+- `_Callbacks`：`stop_callback` 链表
