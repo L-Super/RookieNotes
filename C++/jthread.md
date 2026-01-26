@@ -298,6 +298,7 @@ public:
         const auto _Local = _State;  
         if (_Local != nullptr) {  
         	// 1. source计数-1（实际-2）
+        	// 右移1位忽略标志位，2>>1 == 1说明是最后一个
             if ((_Local->_Stop_sources.fetch_sub(2, memory_order_acq_rel) >> 1) == 1) {  
                 if (_Local->_Stop_tokens.fetch_sub(1, memory_order_acq_rel) == 1) {  
                 	// 2. 最后一个source，尝试释放token计数
@@ -340,10 +341,11 @@ private:
 struct _Stop_state {  
     atomic<uint32_t> _Stop_tokens  = 1; // plus one shared by all stop_sources  
     atomic<uint32_t> _Stop_sources = 2; // plus the low order bit is the stop requested bit  
-    _Locked_pointer<_Stop_callback_base> _Callbacks;  
+    _Locked_pointer<_Stop_callback_base> _Callbacks;  // 存储所有注册的停止回调
     // always uses relaxed operations; ordering provided by the _Callbacks lock  
-    // (atomic just to get wait/notify support)    atomic<const _Stop_callback_base*> _Current_callback = nullptr;  
-    _Thrd_id_t _Stopping_thread                          = 0;  
+    // (atomic just to get wait/notify support)    
+    atomic<const _Stop_callback_base*> _Current_callback = nullptr; // 当前执行的回调
+    _Thrd_id_t _Stopping_thread = 0; // 停止线程ID
       
     bool _Stop_requested() const noexcept {  
         return (_Stop_sources.load() & uint32_t{1}) != 0;  
@@ -355,19 +357,22 @@ struct _Stop_state {
   
     bool _Request_stop() noexcept {  
         // Attempts to request stop and call callbacks, returns whether request was successful  
+        // 原子地设置停止位，检查是否首次请求
         if ((_Stop_sources.fetch_or(uint32_t{1}) & uint32_t{1}) != 0) {  
             // another thread already requested  
             return false;  
         }  
   
+  		// 记录停止线程
         _Stopping_thread = _Thrd_id();  
+        // 执行所有回调
         for (;;) {  
             auto _Head = _Callbacks._Lock_and_load();  
             _Current_callback.store(_Head, memory_order_relaxed);  
             _Current_callback.notify_all();  
             if (_Head == nullptr) {  
                 _Callbacks._Store_and_unlock(nullptr);  
-                return true;  
+                return true;  // 所有回调已执行完
             }  
   
             const auto _Next = _STD exchange(_Head->_Next, nullptr);  
@@ -389,3 +394,17 @@ struct _Stop_state {
 - `_Stop_sources`: source 引用计数（实际值/2）（位运算技巧，同时存储两个信息）
 - `_Stop_tokens`: token 引用计数（实际值/1）
 - `_Callbacks`：`stop_callback` 链表
+
+```cpp
+atomic<uint32_t> _Stop_sources = 2;
+// 二进制: ...00000010
+// 第0位(LSB): 停止请求标志位
+// 第1-31位: 实际的source引用计数
+```
+
+`_Stop_sources` 用一个 32 位整数同时存储两个信息：是否请求停止，source 引用数
+
+```cpp
+atomic<uint32_t> _Stop_tokens = 1;
+```
+所有`stop_source`共享一个"虚拟token"
