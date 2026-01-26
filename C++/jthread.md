@@ -201,10 +201,10 @@ public:
         // 1. 检查 func 是否接受 stop_token 作为第一个参数调用
         if constexpr (is_invocable_v<decay_t<_Fn>, stop_token, decay_t<_Args>...>) {
             // 2. 接受，从 source 获取 token 并传递进去
-            _Impl._Start(_STD forward<_Fn>(func), _Ssource.get_token(), _STD forward<_Args>(args)...);
+            _thread._Start(_STD forward<_Fn>(func), _ssource.get_token(), _STD forward<_Args>(args)...);
         } else {
             // 3. 不接受，以普通 thread 启动
-            _Impl._Start(_STD forward<_Fn>(func), _STD forward<_Args>(args)...);
+            _thread._Start(_STD forward<_Fn>(func), _STD forward<_Args>(args)...);
         }
     }
 
