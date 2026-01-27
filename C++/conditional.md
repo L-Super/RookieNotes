@@ -1,4 +1,4 @@
-`std::conditional`
+`std::conditional` 根据指定的条件，从两种类型中选择一种。
 
 ```cpp
 template< bool B, class T, class F >
@@ -24,7 +24,7 @@ using type = F; // If B is false
 };
 ```
 
-应用场景：
+## 应用场景 
 
 有时我们需要根据一个在编译时已知的条件，在两种类型之间做出选择。
 
