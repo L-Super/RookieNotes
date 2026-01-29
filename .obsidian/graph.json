@@ -5,13 +5,13 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
+  "collapse-color-groups": false,
   "colorGroups": [
     {
       "query": "path:C++",
       "color": {
         "a": 1,
-        "rgb": 14048348
+        "rgb": 22940
       }
     },
     {
@@ -19,6 +19,20 @@
       "color": {
         "a": 1,
         "rgb": 15906358
+      }
+    },
+    {
+      "query": "path:Rust  ",
+      "color": {
+        "a": 1,
+        "rgb": 14591364
+      }
+    },
+    {
+      "query": "path:Docker  ",
+      "color": {
+        "a": 1,
+        "rgb": 2332397
       }
     }
   ],
@@ -32,6 +46,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.2280507689573701,
-  "close": true
+  "scale": 0.3197232779029221,
+  "close": false
 }
