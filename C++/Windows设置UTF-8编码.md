@@ -25,3 +25,5 @@ int main() {
     return 0;
 }
 ```
+
+> [指定编译器UTF-8编码](../CMake/指定编译器UTF-8编码.md)
