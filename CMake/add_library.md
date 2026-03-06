@@ -13,6 +13,36 @@ add_library(<name> [STATIC | SHARED | MODULE]
 >[!note]
 > `BUILD_SHARED_LIBS` 作用于全局，将导致所有库以动态库方式构建，除非库被显式添加为静态库。
 
+当为 `SHARED` 时，CMake 会自动生成 `XXX_EXPORTS` 宏，不需额外定义导出宏。
+如：
+```cmake
+add_library(np_tunnel SHARED  
+        np_tunnel.cpp np_tunnel.h  
+)
+```
+会生成 `np_tunnel_EXPORTS` 宏，但命名不规范，可以采用以下方式改为全大写：
+```cmake
+add_library(np_tunnel SHARED  
+        np_tunnel.cpp np_tunnel.h  
+) 
+  
+set_target_properties(np_tunnel PROPERTIES  
+        OUTPUT_NAME "np_tunnel"  
+        DEFINE_SYMBOL "NP_TUNNEL_EXPORTS"  
+)
+```
+之后， `NP_TUNNEL_EXPORTS` 宏为已定义：
+```cpp
+#ifdef _WIN32  
+#ifdef NP_TUNNEL_EXPORTS  
+#define NP_TUNNEL_API __declspec(dllexport)  
+#else  
+#define NP_TUNNEL_API __declspec(dllimport)  
+#endif  
+#else  
+#define NP_TUNNEL_API __attribute__((visibility("default")))  
+#endif
+```
 ## 对象库
 ```
 add_library(<name> OBJECT [<source>...])
