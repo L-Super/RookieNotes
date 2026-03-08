@@ -27,7 +27,6 @@ add_library(np_tunnel SHARED
 ) 
   
 set_target_properties(np_tunnel PROPERTIES  
-        OUTPUT_NAME "np_tunnel"  
         DEFINE_SYMBOL "NP_TUNNEL_EXPORTS"  
 )
 ```
