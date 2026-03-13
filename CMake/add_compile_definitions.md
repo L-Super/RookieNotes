@@ -11,6 +11,8 @@ add_compile_definitions(<definition> ...)
 > - 使用 `include_directories()` 添加包含目录。
 > - 使用 `add_compile_options()` 添加其他选项。
 
+`add_compile_definitions()` 的定义是全局的，会影响所有目标
+
 **示例：**
 定义平台宏：
 ```cmake
@@ -25,4 +27,8 @@ endif()
 定义变量：
 ```cmake
 add_compile_definitions(DEFAULT_LOGLEVEL=1)
+```
+只针对特定目标设置宏：
+```cmake
+target_compile_definitions(my_target PRIVATE ENABLE_FEATURE)
 ```
