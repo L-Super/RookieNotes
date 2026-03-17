@@ -1,4 +1,4 @@
-打印目标文件相关信息的工具，类似于 [Linux ldd](Linux%20ldd.md)
+打印目标文件相关信息的工具，类似于 [Linux ldd](../Linux/Linux%20ldd.md)
 
 ```zsh
 -f print the fat headers
