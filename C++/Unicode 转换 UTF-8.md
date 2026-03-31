@@ -152,3 +152,5 @@ std::string wstring_to_utf8(const std::wstring &ws) {
 > [MultiByteToWideChar 函数 (stringapiset.h) - Win32 apps | Microsoft Learn](https://learn.microsoft.com/zh-cn/windows/win32/api/stringapiset/nf-stringapiset-multibytetowidechar)
 >
 > [wcstombs_s、_wcstombs_s_l | Microsoft Learn](https://learn.microsoft.com/zh-cn/cpp/c-runtime-library/reference/wcstombs-s-wcstombs-s-l?view=msvc-170)
+> [Win32 API 中A、W区别](../计算机操作系统/Windows/Win32%20API%20中A、W区别.md)
+
