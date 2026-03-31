@@ -9,7 +9,7 @@ Win32 API 中 A 和 W 的区别
 - 日文系统默认代码页为 **CP932 (Shift-JIS)**
 - 西欧系统默认代码页为 **CP1252**
 
-**W 后缀 (Unicode 版本)** 的函数使用 **双字节字符集（DBCS）**，即 Unicode 编码（在 Windows 中通常是 UTF-16），每个编码单元固定 2 字节（`wchar_t`）。BMP 之外的字符使用代理对（surrogate pair），占 4 字节。Unicode 支持更广泛的字符集，适用于多语言环境。例如 `CreateWindowW` 接收 `const wchar_t*`（即 `LPCWSTR`）类型的 Unicode 字符串。
+**W 后缀 (Wide)** 的函数 使用 **UTF-16** 编码，即 Unicode 编码，每个编码单元固定 2 字节（`wchar_t`）。BMP 之外的字符使用代理对（surrogate pair），占 4 字节。Unicode 支持更广泛的字符集，适用于多语言环境。例如 `CreateWindowW` 接收 `const wchar_t*`（即 `LPCWSTR`）类型的 Unicode 字符串。
 
 **Ex 后缀**的函数表示拓展版本，提供更多参数或更强功能。Ex 后缀同样存在 A/W 两个版本
 
@@ -37,7 +37,19 @@ Win32 API 中 A 和 W 的区别
 
 - 定义了宏时，函数会默认使用 Unicode 版本（W 后缀的函数）。
 - 未定义宏时，函数会默认使用 ANSI 版本（A 后缀的函数）。
+### 内部调用关系
+**从 Windows NT 内核开始，系统内部统一使用 Unicode（UTF-16）。** ANSI 版本（A 后缀）的函数在内部会：
 
-**一般来说，ANSI 版本的实现会调用 Unicode 版本，并对 ANSI 参数和结构字段与 Unicode 之间进行必要的转换。**
+1. 将传入的 ANSI 字符串通过 `MultiByteToWideChar` 转换为 UTF-16
+2. 调用对应的 Unicode 版本（W 后缀）函数
+3. 将返回的 Unicode 结果通过 `WideCharToMultiByte` 转换回 ANSI
+
+即：**一般来说，ANSI 版本的实现会调用 Unicode 版本，并对 ANSI 参数和结构字段与 Unicode 之间进行必要的转换。**
 
 在现代 Windows 系统中，**推荐使用 Unicode 版本（W 后缀）**，因为它支持更广泛的字符集，适合多语言开发，并且在性能和兼容性上更优。
+
+
+> https://learn.microsoft.com/zh-cn/windows/win32/intl/character-sets
+> https://learn.microsoft.com/zh-cn/windows/win32/tapi/functions-with-unicode-w-versions
+> https://medium.com/@ophirharpaz/from-a-to-w-character-conversion-in-windows-api-9d4bee098d99
+> 《Windows 核心编程》第 2 章 Unicode
