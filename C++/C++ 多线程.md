@@ -281,23 +281,23 @@ std::scoped_lock lock(m1, m2);
 
 互斥锁类：
 
-| 互斥类型                       | 可访问            | 可递归 | 可超时 |
-| -------------------------- | -------------- | --- | --- |
-| std::mutex                 | 独占             | No  | No  |
-| std::recursive_mutex       | 独占             | Yes | No  |
-| std::shared_mutex          | 1-独占<br />N-共享 | No  | No  |
-| std::timed_mutex           | 独占             | No  | Yes |
-| std::recursive_timed_mutex | 独占             | Yes | Yes |
-| std::shared_timed_mutex    | 1-独占<br />N-共享 | No  | Yes |
+| 互斥类型                         | 可访问            | 可递归 | 可超时 |
+| ---------------------------- | -------------- | --- | --- |
+| `std::mutex`                 | 独占             | No  | No  |
+| `std::recursive_mutex`       | 独占             | Yes | No  |
+| `std::shared_mutex`          | 1-独占<br />N-共享 | No  | No  |
+| `std::timed_mutex`           | 独占             | No  | Yes |
+| `std::recursive_timed_mutex` | 独占             | Yes | Yes |
+| `std::shared_timed_mutex`    | 1-独占<br />N-共享 | No  | Yes |
 
 管理互斥锁类：
 
-| 互斥管理器类           | 支持的互斥锁类型                                       | 互斥对象管理 |
-| ---------------- | ---------------------------------------------- | ------ |
-| std::lock_guard  | 所有类型                                           | 1      |
-| std::scoped_lock | 所有类型                                           | 零或更多   |
-| std::unique_lock | 所有类型                                           | 1      |
-| std::shared_lock | std::shared_mutex<br />std::shared_timed_mutex | 1      |
+| 互斥管理器类             | 支持的互斥锁类型                                             | 互斥对象管理 |
+| ------------------ | ---------------------------------------------------- | ------ |
+| `std::lock_guard`  | 所有类型                                                 | 1      |
+| `std::scoped_lock` | 所有类型                                                 | 零或更多   |
+| `std::unique_lock` | 所有类型                                                 | 1      |
+| `std::shared_lock` | `std::shared_mutex` <br /> `std::shared_timed_mutex` | 1      |
 ## 死锁
 
 死锁通常是对锁的使用不当造成。
@@ -545,11 +545,11 @@ int main()
 
 ## std::async
 
-启动一个异步任务。 std:: async 允许通过添加额外的调用参数，向函数传递额外的参数。
+启动一个异步任务。 `std::async` 允许通过添加额外的调用参数，向函数传递额外的参数。
 
-std:: launch 枚举类型：
+`std::launch` 枚举类型：
 
-- `launch::defered`：表明函数调用延迟到 wait () 或 get () 函数调用时才执行
+- `launch::defered`：表明函数调用延迟到 `wait()` 或 `get()` 函数调用时才执行
 - `launch::async`：表明函数必须在其所在的独立线程上执行
 - `launch::deferred | launch::async`：`std::async`的默认参数，系统会自行决定异步（创建新线程）还是同步（不创建新线程）方式运行。
 
@@ -574,8 +574,8 @@ int main()
 
 >  Windows 平台，`std::async` 从 Windows 线程池中获取线程。并发线程数限制为线程池默认值，即 500 个线程。
 >  https://learn.microsoft.com/zh-cn/cpp/standard-library/future-functions?view=msvc-170
-
 >  https://ddanilov.me/std-async-implementations/
+>  https://limuran.top/p/c-stdasync-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90/
 ## std::packaged_task
 
 打包任务，把任务包装起来。会将 future 与函数或可调用对象进行绑定。当调用 `std::packaged_task`对象时，就会调用相关函数或可调用对象，当 future 状态为就绪时，会存储返回值。这可以用在构建线程池或其他任务的管理中。
