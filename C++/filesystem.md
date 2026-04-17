@@ -260,6 +260,9 @@ target_compile_definitions(my_target PRIVATE UNICODE _UNICODE)
 - Win32 API 默认映射到 `W` 版本
 - 避免误用 ANSI API
 
+> [!warning]
+> `fs::path(std::string)` 在 Windows 上按 **ACP（系统区域设置的代码页）** 解码，不是 UTF-8。即使你传入的是 UTF-8 编码的 `std::string`，它也会被当作 ACP 解码，中文路径就会乱码。
+
 ## 综合示例
 
 ```cpp
