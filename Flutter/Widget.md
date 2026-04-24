@@ -195,10 +195,9 @@ abstract class StatefulWidget extends Widget {
 
     > 而在 StatefulWidget 中，State 对象和 `StatefulElement` 具有一一对应的关系，所以在 Flutter 的 SDK 文档中，可以经常看到“从树中移除 State 对象”或“插入 State 对象到树中”这样的描述，此时的树指通过 widget 树生成的 Element 树。Flutter 的 SDK 文档中经常会提到“树” ，可以根据语境来判断到底指的是哪棵树。其实，无论是哪棵树，最终的目标都是为了描述 UI 的结构和绘制信息。
 
-
 ## State
 
-一个 StatefulWidget 类会对应一个 State 类，State 表示与其对应的 StatefulWidget 要维护的状态，State 中的保存的状态信息可以：
+一个 StatefulWidget 类会对应一个 State 类，State 表示与其对应的 StatefulWidget 要维护的状态，State 中保存的状态信息可以：
 
 1. 在 widget 构建时可以被同步读取。
 2. 在 widget 生命周期中可以被改变，当 State 被改变时，可以手动调用其 `setState()` 方法通知状态发生改变，Flutter 框架在收到消息后，会重新调用其 `build` 方法重新构建 widget 树，从而达到更新 UI 的目的。
@@ -285,7 +284,7 @@ class _CounterWidgetState extends State<CounterWidget> {
 }
 ```
 
-接下来，我们创建一个新路由，在新路由中，我们只显示一个 `CounterWidget`：
+接下来，创建一个新路由，只显示一个 `CounterWidget`：
 
 ```dart
 class StateLifecycleTest extends StatelessWidget {
@@ -320,7 +319,7 @@ I/flutter ( 5436): build
 
 接下来，我们在 widget 树中移除 `CounterWidget`，将 StateLifecycleTest 的 `build` 方法改为：
 
-```
+```dart
  Widget build(BuildContext context) {
   //移除计数器 
   //return CounterWidget ();
