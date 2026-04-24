@@ -143,8 +143,9 @@ class Echo extends StatelessWidget  {
 
 ### Context
 
-`build` 方法有一个 `context` 参数，它是 `BuildContext` 类的一个实例，表示当前 widget 在 widget 树中的上下文，每一个 widget 都会对应一个 context 对象（因为每一个 widget 都是 widget 树上的一个节点）。
-实际上，`context` 是当前 widget 在 widget 树中位置中执行”相关操作“的一个句柄 (handle)，比如它提供了从当前 widget 开始向上遍历 widget 树以及按照 widget 类型查找父级 widget 的方法。
+`build` 方法有一个 `context` 参数，表示当前 widget 在 widget 树中的上下文。
+每一个 widget 都会对应一个 context 对象（因为每一个 widget 都是 widget 树上的一个节点）。
+实际上，`context` 是当前 widget 在 widget 树的位置中执行”相关操作“的一个句柄 (handle)，比如提供了从当前 widget 开始向上遍历 widget 树以及按照 widget 类型查找父级 widget 的方法。
 
 在子树中获取父级 widget 示例：
 ```dart
