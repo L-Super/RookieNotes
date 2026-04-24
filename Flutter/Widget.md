@@ -341,40 +341,36 @@ I/flutter ( 5436): dispose
 下面我们来看看各个回调函数：
 
 - `initState`：当 widget 第一次插入到 widget 树时会被调用，对于每一个 State 对象，Flutter 框架只会调用一次该回调，所以，通常在该回调中做一些一次性的操作，如状态初始化、订阅子树的事件通知等。不能在该回调中调用 `BuildContext.dependOnInheritedWidgetOfExactType`（该方法用于在 widget 树上获取离当前 widget 最近的一个父级 `InheritedWidget`，关于 `InheritedWidget` 我们将在后面章节介绍），原因是在初始化完成后， widget 树中的 `InheritFrom widget` 也可能会发生变化，所以正确的做法应该在在 `build（）` 方法或 `didChangeDependencies()` 中调用它。
-    
-- `didChangeDependencies()`：当 State 对象的依赖发生变化时会被调用；例如：在之前 `build()` 中包含了一个 `InheritedWidget` （第七章介绍），然后在之后的 `build()` 中 `Inherited widget` 发生了变化，那么此时 `InheritedWidget` 的子 widget 的 `didChangeDependencies()` 回调都会被调用。典型的场景是当系统语言 Locale 或应用主题改变时，Flutter 框架会通知 widget 调用此回调。需要注意，组件第一次被创建后挂载的时候（包括重创建）对应的 `didChangeDependencies` 也会被调用。
-    
-- `build()`：此回调读者现在应该已经相当熟悉了，它主要是用于构建 widget 子树的，会在如下场景被调用：
-    
+- `didChangeDependencies()`：当 State 对象的依赖发生变化时会被调用；例如：在之前 `build()` 中包含了一个 `InheritedWidget` ，然后在之后的 `build()` 中 `Inherited widget` 发生了变化，那么此时 `InheritedWidget` 的子 widget 的 `didChangeDependencies()` 回调都会被调用。典型的场景是当系统语言 Locale 或应用主题改变时，Flutter 框架会通知 widget 调用此回调。需要注意，组件第一次被创建后挂载的时候（包括重创建）对应的 `didChangeDependencies` 也会被调用。
+- `build()`：主要是用于构建 widget 子树的，会在如下场景被调用：
     1. 在调用 `initState()` 之后。
     2. 在调用 `didUpdateWidget()` 之后。
     3. 在调用 `setState()` 之后。
     4. 在调用 `didChangeDependencies()` 之后。
     5. 在 State 对象从树中一个位置移除后（会调用 deactivate）又重新插入到树的其他位置之后。
-- `reassemble()`：此回调是专门为了开发调试而提供的，在热重载 (hot reload) 时会被调用，此回调在 Release 模式下永远不会被调用。
-    
+- `reassemble()`：为了开发调试而提供的，在热重载 (hot reload) 时会被调用，此回调在 Release 模式下永远不会被调用。
 - `didUpdateWidget ()`：在 widget 重新构建时，Flutter 框架会调用 `widget.canUpdate` 来检测 widget 树中同一位置的新旧节点，然后决定是否需要更新，如果 `widget.canUpdate` 返回 `true` 则会调用此回调。正如之前所述，`widget.canUpdate` 会在新旧 widget 的 `key` 和 `runtimeType` 同时相等时会返回 true，也就是说在在新旧 widget 的 key 和 runtimeType 同时相等时 `didUpdateWidget()` 就会被调用。
-    
 - `deactivate()`：当 State 对象从树中被移除时，会调用此回调。在一些场景下，Flutter 框架会将 State 对象重新插到树中，如包含此 State 对象的子树在树的一个位置移动到另一个位置时（可以通过 GlobalKey 来实现）。如果移除后没有重新插入到树中则紧接着会调用 `dispose()` 方法。
-    
 - `dispose()`：当 State 对象从树中被永久移除时调用；通常在此回调中释放资源。
-    
 
-StatefulWidget 生命周期如图 2-5 所示：
+
+StatefulWidget 生命周期如图所示：
 
 ![图2-5](https://book.flutterchina.club/assets/img/2-5.a59bef97.jpg)
 
 > **注意**：在继承 `StatefulWidget` 重写其方法时，对于包含 `@mustCallSuper` 标注的父类方法，都要在子类方法中调用父类方法。
 
-## [#](https://book.flutterchina.club/chapter2/flutter_widget_intro.html#_2-2-7-%E5%9C%A8-widget-%E6%A0%91%E4%B8%AD%E8%8E%B7%E5%8F%96state%E5%AF%B9%E8%B1%A1) 2.2.7 在 widget 树中获取 State 对象
+## 在 widget 树中获取 State 对象
 
 由于 StatefulWidget 的具体逻辑都在其 State 中，所以很多时候，我们需要获取 StatefulWidget 对应的 State 对象来调用一些方法，比如 `Scaffold` 组件对应的状态类 `ScaffoldState` 中就定义了打开 SnackBar（路由页底部提示条）的方法。我们有两种方法在子 widget 树中获取父级 StatefulWidget 的 State 对象。
 
-### [#](https://book.flutterchina.club/chapter2/flutter_widget_intro.html#_1-%E9%80%9A%E8%BF%87context%E8%8E%B7%E5%8F%96) 1. 通过 Context 获取
+### 通过 Context 获取
 
-`context` 对象有一个 `findAncestorStateOfType()` 方法，该方法可以从当前节点沿着 widget 树向上查找指定类型的 StatefulWidget 对应的 State 对象。下面是实现打开 SnackBar 的示例：
+`context` 对象有一个 `findAncestorStateOfType()` 方法，可以从当前节点沿着 widget 树向上查找指定类型的 StatefulWidget 对应的 State 对象。
 
-```
+实现打开 SnackBar 的示例：
+
+```dart
 class GetStateObjectRoute extends StatefulWidget {
   const GetStateObjectRoute({Key? key}) : super(key: key);
 
@@ -412,9 +408,11 @@ class _GetStateObjectRouteState extends State<GetStateObjectRoute> {
 }
 ```
 
-一般来说，如果 StatefulWidget 的状态是私有的（不应该向外部暴露），那么我们代码中就不应该去直接获取其 State 对象；如果 StatefulWidget 的状态是希望暴露出的（通常还有一些组件的操作方法），我们则可以去直接获取其 State 对象。但是通过 `context.findAncestorStateOfType` 获取 StatefulWidget 的状态的方法是通用的，我们并不能在语法层面指定 StatefulWidget 的状态是否私有，所以在 Flutter 开发中便有了一个默认的约定：如果 StatefulWidget 的状态是希望暴露出的，应当在 StatefulWidget 中提供一个 `of` 静态方法来获取其 State 对象，开发者便可直接通过该方法来获取；如果 State 不希望暴露，则不提供 `of` 方法。这个约定在 Flutter SDK 里随处可见。所以，上面示例中的 `Scaffold` 也提供了一个 `of` 方法，我们其实是可以直接调用它的：
+一般来说，如果 StatefulWidget 的状态是私有的，那么代码中就不应该去直接获取其 State 对象；如果 StatefulWidget 的状态是希望暴露出的（通常还有一些组件的操作方法），可以去直接获取其 State 对象。但是通过 `context.findAncestorStateOfType` 获取 StatefulWidget 的状态的方法是通用的，并不能在语法层面指定 StatefulWidget 的状态是否私有，所以在 Flutter 开发中便有了一个默认的约定：如果 StatefulWidget 的状态是希望暴露出的，应当在 StatefulWidget 中提供一个 `of` 静态方法来获取其 State 对象，开发者便可直接通过该方法来获取；如果 State 不希望暴露，则不提供 `of` 方法。
 
-```
+上面示例中的 `Scaffold` 也提供了一个 `of` 方法，我们其实是可以直接调用它的：
+
+```dart
 Builder(builder: (context) {
   return ElevatedButton(
     onPressed: () {
