@@ -143,11 +143,12 @@ class Echo extends StatelessWidget  {
 
 ### Context
 
-`build` 方法有一个 `context` 参数，它是 `BuildContext` 类的一个实例，表示当前 widget 在 widget 树中的上下文，每一个 widget 都会对应一个 context 对象（因为每一个 widget 都是 widget 树上的一个节点）。实际上，`context` 是当前 widget 在 widget 树中位置中执行”相关操作“的一个句柄 (handle)，比如它提供了从当前 widget 开始向上遍历 widget 树以及按照 widget 类型查找父级 widget 的方法。
+`build` 方法有一个 `context` 参数，它是 `BuildContext` 类的一个实例，表示当前 widget 在 widget 树中的上下文，每一个 widget 都会对应一个 context 对象（因为每一个 widget 都是 widget 树上的一个节点）。
+实际上，`context` 是当前 widget 在 widget 树中位置中执行”相关操作“的一个句柄 (handle)，比如它提供了从当前 widget 开始向上遍历 widget 树以及按照 widget 类型查找父级 widget 的方法。
 
 在子树中获取父级 widget 示例：
 ```dart
-class ContextRoute extends StatelessWidget  {
+class ContextRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,10 +168,9 @@ class ContextRoute extends StatelessWidget  {
 }
 ```
 
-运行后效果如图 2-4 所示：
+运行后效果如图所示：
 
 ![图2-4](https://book.flutterchina.club/assets/img/2-4.63daca67.png)
-
 
 ## StatefulWidget
 
