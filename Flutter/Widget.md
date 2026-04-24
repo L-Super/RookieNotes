@@ -122,7 +122,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-![Echo 效果](https://book.flutterchina.club/assets/img/2-3.587e85ad.png)
+![Echo 效果](../images/Echo_效果.png)
 
 > **构造函数惯例：** 使用命名参数，必需参数加 `required`；第一个参数通常是 `Key`；`child`/`children` 放最后；属性声明为 `final`。
 
@@ -148,7 +148,7 @@ class ContextRoute extends StatelessWidget {
 }
 ```
 
-![Context 效果](https://book.flutterchina.club/assets/img/2-4.63daca67.png)
+![Context 效果](../images/Context_效果.png)
 
 
 ## StatefulWidget
@@ -270,7 +270,7 @@ class _CounterWidgetState extends State<CounterWidget> {
 
 **生命周期流程图：**
 
-![State 生命周期](https://book.flutterchina.club/assets/img/2-5.a59bef97.jpg)
+![State 生命周期](../images/State_生命周期.png)
 
 **调用顺序验证：**
 
@@ -308,7 +308,7 @@ ScaffoldMessenger.of(context).showSnackBar(
 
 > **约定：** 如果 `State` 希望被外部访问，应提供 `of` 静态方法；如果是私有的，则不提供。
 
-![SnackBar 效果](https://book.flutterchina.club/assets/img/2-6.913db569.png)
+![SnackBar 效果](../images/SnackBar_效果.png)
 
 ### 方式二：通过 GlobalKey
 
@@ -431,4 +431,4 @@ class CupertinoTestRoute extends StatelessWidget {
 }
 ```
 
-![Cupertino 效果](https://book.flutterchina.club/assets/img/2-7.dbd6084c.png)
+![Cupertino 效果](../images/Cupertino_效果.png)
