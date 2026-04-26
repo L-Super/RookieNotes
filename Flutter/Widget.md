@@ -44,7 +44,7 @@ abstract class Widget extends DiagnosticableTree {
 
 - `@immutable`：`Widget` 不可变，属性必须是 `final`。因为属性变化时会重建整棵 Widget 树（新实例替换旧实例），所以允许属性可变没有意义
 - `DiagnosticableTree`：诊断树，主要作用是提供调试信息。
-- `Key`:  类似 React/Vue 的 `key`，用于在 `build` 时决定是否复用旧 Widget（见 `canUpdate()`）。
+- `Key`:  Flutter 用来**唯一标识 Widget** 的标记，用于在 `build` 时决定是否复用旧 Widget 还是重建（见 `canUpdate()`）。
 - `createElement()`：构建 UI 树时隐式调用，生成对应的 `Element` 对象。
 - `debugFillProperties(...)`：主要是设置诊断树的一些特性。
 - `canUpdate(...)`：静态方法。当 `runtimeType` 和 `key` 都相等时返回 `true`，表示用新 Widget 更新旧 `Element` 的配置；否则创建新 `Element`
