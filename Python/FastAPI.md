@@ -1,7 +1,5 @@
 FastAPI 是一个用 Python 编写 Web API 的框架。它可以根据函数的类型注解解析和校验请求参数，并自动生成 OpenAPI 文档。
 
-## 安装和运行
-
 ```bash
 python -m pip install "fastapi[standard]"
 ```
@@ -71,9 +69,9 @@ async def create_item(item: Item):
 
 在 `/docs` 中向 `POST /items` 发送 `{"name":"键盘","price":199.5}`，接口返回 HTTP 201 和请求中的商品数据。
 
-## lifespan 管理数据库连接
+## 生命周期事件
 
-应用启动时可以建立数据库连接或连接池，供路由复用，应用关闭时再释放这些资源。FastAPI 用 `FastAPI(lifespan=lifespan)` 注册这段逻辑。
+应用启动时可以创建资源，供路由复用，应用关闭时再释放这些资源。FastAPI 用 `FastAPI(lifespan=lifespan)` 注册这段逻辑。
 
 
 ```python
@@ -96,9 +94,5 @@ async def predict(x: float):
 
 旧项目可能用 `@app.on_event('startup')` 和 `@app.on_event('shutdown')`。这组接口已经弃用。迁移时，把初始化放到 `yield` 前，把清理放到退出上下文时执行。资源没有异步上下文管理器时，可以用 `try/finally` 包住 `yield`，在 `finally` 中关闭资源。传入 `lifespan` 后，旧的事件处理器不会执行。
 
-- [FastAPI CLI](https://fastapi.tiangolo.com/fastapi-cli/)
-- [手动运行 ASGI 服务器](https://fastapi.tiangolo.com/deployment/manually/)
 - [FastAPI 入门](https://fastapi.tiangolo.com/tutorial/first-steps/)
 - [FastAPI 生命周期](https://fastapi.tiangolo.com/advanced/events/)
-- [测试生命周期](https://fastapi.tiangolo.com/advanced/testing-events/)
-- [aiosqlite API](https://aiosqlite.omnilib.dev/en/stable/api.html)
